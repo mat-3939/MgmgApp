@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS products (
     price DECIMAL(10, 2) NOT NULL,
     stock INTEGER NOT NULL,
     imge_path TEXT NOT NULL,
-    category_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL REFERENCES categories(id),
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL
 ); 

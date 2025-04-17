@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS orders (
+    id SERIAL PRIMARY KEY,
+    cart_id INTEGER NOT NULL REFERENCES cart_items(id),
+    customer_name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    postcode VARCHAR(50) NOT NULL,
+    address TEXT NOT NULL,
+    tel VARCHAR(50) ,
+    total_price NUMERIC(10, 2) ,
+    order_data TIMESTAMP NOT NULL,
+    status BOOLEAN NOT NULL DEFAULT FALSE
+    );
