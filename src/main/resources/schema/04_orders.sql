@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS orders (
     address TEXT NOT NULL,
     tel VARCHAR(50) ,
     total_price NUMERIC(10, 2) ,
-    order_data TIMESTAMP NOT NULL,
+    order_date TIMESTAMP NOT NULL,
     status BOOLEAN NOT NULL DEFAULT FALSE
     );

@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS admins (
     id SERIAL PRIMARY KEY,
-    user_name VARCHAR(50) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    user_name VARCHAR(50) NOT NULL REFERENCES users(user_name),
+    password VARCHAR(255) NOT NULL UNIQUE
 );
