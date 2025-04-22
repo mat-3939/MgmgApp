@@ -13,13 +13,22 @@ import lombok.Data;
 @Table(name = "admins")
 public class Admins {
 
+    /**
+     * 管理者ID（主キー）
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    /**
+     * 管理者名（not null）
+     */
     @Column(name = "user_name", nullable = false)
     private String user_name;
 
+    /**
+     * 管理者パスワード（not null）
+     */
     @Column(name = "password", nullable = false)
     private String password;
 }
