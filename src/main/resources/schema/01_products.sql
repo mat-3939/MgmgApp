@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS products (
     stock INTEGER NOT NULL DEFAULT 100,
     image_path TEXT NOT NULL,
     category_id INTEGER NOT NULL REFERENCES categories(id),
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    updated_at TIMESTAMP NOT 
 ); 
