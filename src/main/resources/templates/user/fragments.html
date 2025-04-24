@@ -1,0 +1,67 @@
+<!-- templates/fragments/common.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <div th:fragment="siteHeader">
+    <header class="header">
+      <div class="header-container">
+        <div class="logo">
+          <a href="/" th:href="@{/}">ロゴ</a>
+        </div>
+        <div class="search-bar">
+          <form action="/search" method="get">
+            <input type="text" name="q" placeholder="検索" th:value="${searchQuery}" />
+            <button type="submit">🔍</button>
+          </form>
+        </div>
+        <div class="nav-buttons">
+          <a>カテゴリー一覧</a>
+          <a href="/products" class="nav-button" th:href="@{/products}">商品一覧</a>
+          <a href="/cart" class="nav-button" th:href="@{/cart}">🛒 カート</a>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- フッター -->
+  <div th:fragment="siteFooter">
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <a href="/" class="footer-logo" th:href="@{/}">ロゴ</a>
+          <a>店舗情報</a>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>カテゴリ</h4>
+            <a>商品一覧</a>
+            <a>カート</a>
+          </div>
+          <div class="footer-column">
+            <h4>ガイド</h4>
+            <a>利用規約</a>
+            <a>特定商取引に基づく表記</a>
+            <a>プライバシーポリシー</a>
+          </div>
+          <div class="footer-column">
+            <h4>サイトマップ</h4>
+            <a>ホーム</a>
+            <a>お問い合わせ</a>
+            <a>店舗情報</a>
+          </div>
+        </div>
+        <div class="footer-sns">
+          <a>X</a>
+          <a>Instagram</a>
+          <a>Tiktok</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+
