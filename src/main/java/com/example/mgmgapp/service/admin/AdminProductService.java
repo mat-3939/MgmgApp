@@ -103,6 +103,13 @@ public class AdminProductService {
     public List<Product> searchByKeyword(String keyword) {
         return adminProductRepository.findByNameContaining(keyword);
     }
+    
+    /**
+     * 指定したカテゴリの商品一覧を取得する
+     */
+    public List<Product> findByCategoryId(Integer categoryId) {
+        return adminProductRepository.findByCategoryId(categoryId);
+    }
 
     /**
      * 指定された価格帯の商品を検索する

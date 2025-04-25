@@ -30,9 +30,9 @@ public interface AdminProductRepository extends JpaRepository<Product, Integer> 
     List<Product> findByNameContaining(String name);
 
     /**
-     * 指定カテゴリに属する商品を取得
+     * 指定したカテゴリの商品一覧を取得
      */
-    List<Product> findByCategory_Id(Integer categoryId);
+    List<Product> findByCategoryId(Integer categoryId);
 
     // --- 価格範囲検索 ---
 

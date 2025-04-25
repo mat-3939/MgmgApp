@@ -65,6 +65,16 @@ public class AdminProductController {
 		model.addAttribute("products", products);
 		return "admin/products";
 	}
+	
+	/**
+	 * 指定したカテゴリの商品一覧を表示
+	 */
+	@GetMapping("/category/{categoryId}")
+	public String listByCategory(@PathVariable Integer categoryId, Model model) {
+		List<Product> products = adminProductService.findByCategoryId(categoryId);
+		model.addAttribute("products", products);
+		return "admin/products";
+	}
 
 	/**
 	 * 商品新規登録画面を表示
