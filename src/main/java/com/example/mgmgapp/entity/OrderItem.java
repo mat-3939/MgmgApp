@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import lombok.Data;
 
 /**
@@ -32,14 +33,14 @@ public class OrderItem {
      */
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Orders order_id;
+    private Orders order;
 
     /**
      * 商品ID（not null、多対一の関連）
      */
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product_id;
+    private Product product;
 
     /**
      * 注文数量（not null）

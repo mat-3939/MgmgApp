@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import lombok.Data;
 
 /**
@@ -29,14 +30,14 @@ public class CartItem {
      * セッションID（not null、一意）
      */
     @Column(name = "session_id", nullable = false, unique = true)
-    private String session_id;
+    private String sessionId;
 
     /**
      * 商品ID（not null、一意、多対一の関連）
      */
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, unique = true)
-    private Product product_id;
+    private Product product;
 
     /**
      * 商品数量（not null）
