@@ -5,11 +5,10 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.math.BigDecimal;
-
 import com.example.mgmgapp.entity.Orders;
 
 @Repository
-public interface AdminOrderRepository extends JpaRepository<Orders, Long> {
+public interface AdminOrderRepository extends JpaRepository<Orders, Integer> {
     
     /* 姓で検索 */
     List<Orders> findByLastNameOrderByOrderDateDesc(String lastName);

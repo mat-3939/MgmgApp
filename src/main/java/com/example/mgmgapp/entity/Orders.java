@@ -30,13 +30,13 @@ public class Orders {
      * 名（not null）
      */
     @Column(name = "first_name", nullable = false)
-    private String first_name;
+    private String firstName;
 
     /**
      * 姓（not null）
      */
     @Column(name = "last_name", nullable = false)
-    private String last_name;
+    private String lastName;
 
     /**
      * メールアドレス（not null）
@@ -66,13 +66,13 @@ public class Orders {
      * 合計金額（not null、小数点以下2桁まで）
      */
     @Column(name = "total_price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal total_price;
+    private BigDecimal totalPrice;
     
     /**
      * 注文作成日時（not null）
      */
     @Column(name = "order_date", nullable = false)
-    private LocalDateTime order_date;
+    private LocalDateTime orderDate;
 
     /**
      * 注文ステータス（not null）
