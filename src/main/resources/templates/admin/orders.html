@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文一覧 - 管理画面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .search-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .detail-search {
+            display: none;
+        }
+        .detail-search.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>注文一覧 注文管理</h1>
+        </div>
+
+        <!-- 検索フォーム -->
+        <div class="search-section">
+            <form th:action="@{/admin/orders/search}" method="get">
+                <div class="mb-3">
+                    <label for="keyword" class="form-label">注文ID・お名前・メールアドレス・電話番号</label>
+                    <input type="text" class="form-control" id="keyword" name="keyword" th:value="${keyword}">
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">対応状況</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" id="statusAll" value="" checked>
+                        <label class="form-check-label" for="statusAll">すべて</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" id="statusCompleted" value="true">
+                        <label class="form-check-label" for="statusCompleted">対応済み</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" id="statusPending" value="false">
+                        <label class="form-check-label" for="statusPending">未対応</label>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <button type="button" class="btn btn-secondary btn-sm" id="toggleDetailSearch">
+                        <span class="d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            詳細検索
+                        </span>
+                    </button>
+                </div>
+                
+                <!-- 詳細検索（トグルで表示/非表示） -->
+                <div class="detail-search" id="detailSearchSection">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="startDate" class="form-label">注文日（開始）</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="endDate" class="form-label">注文日（終了）</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="minAmount" class="form-label">最低金額</label>
+                        <input type="number" class="form-control" id="minAmount" name="minAmount" th:value="${minAmount}">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">検索</button>
+            </form>
+        </div>
+
+        <!-- 注文一覧テーブル -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <!-- ページネーション情報などを表示する場所 -->
+            </div>
+            <div class="d-flex">
+                <select class="form-select me-2" id="sortOrder">
+                    <option value="desc">絞り込み</option>
+                    <option value="asc">対応済み</option>
+                    <option value="asc">未対応</option>
+                </select>
+                <select class="form-select" id="pageSize">
+                    <option value="10">並び替え</option>
+                    <option value="20">注文日（新しい順）</option>
+                    <option value="50">注文日（古い順）</option>
+                    <option value="100">金額（高い順）</option>
+                    <option value="100">金額（安い順）</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>注文者</th>
+                        <th>支払い方法</th>
+                        <th>購入金額</th>
+                        <th>ステータス</th>
+                        <th>注文日</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.id}">10</td>
+                        <td>
+                            <a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.lastName + ' ' + order.firstName}">山田太郎</a>
+                        </td>
+                        <td th:text="${order.paymentMethod}">クレジットカード</td>
+                        <td th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}">¥6,000</td>
+                        <td>
+                            <select class="form-select status-select" th:data-order-id="${order.id}">
+                                <option value="false" th:selected="${!order.status}">未対応</option>
+                                <option value="true" th:selected="${order.status}">対応済み</option>
+                            </select>
+                        </td>
+                        <td th:text="${#temporals.format(order.orderDate, 'yyyy/MM/dd')}">2025/04/22</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ページネーション -->
+        <nav aria-label="Page navigation" th:if="${orders != null && !orders.isEmpty()}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">前へ</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">次へ</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 詳細検索の表示/非表示を切り替える
+        document.getElementById('toggleDetailSearch').addEventListener('click', function() {
+            const detailSection = document.getElementById('detailSearchSection');
+            detailSection.classList.toggle('show');
+        });
+        
+        // ステータス変更の処理
+        document.querySelectorAll('.status-select').forEach(select => {
+            select.addEventListener('change', function() {
+                const orderId = this.getAttribute('data-order-id');
+                const status = this.value === 'true';
+                
+                // ステータス更新のAjaxリクエスト
+                fetch(`/admin/orders/${orderId}/status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ status: status })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // 成功時の処理
+                        console.log('ステータスが更新されました');
+                    } else {
+                        // エラー時の処理
+                        console.error('ステータスの更新に失敗しました');
+                        // 選択を元に戻す
+                        this.value = this.value === 'true' ? 'false' : 'true';
+                    }
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                    // 選択を元に戻す
+                    this.value = this.value === 'true' ? 'false' : 'true';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
