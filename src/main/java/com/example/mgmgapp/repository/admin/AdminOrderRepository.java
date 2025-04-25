@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import com.example.mgmgapp.entity.Orders;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Orders, Long> {
+public interface AdminOrderRepository extends JpaRepository<Orders, Long> {
     
     /* 姓で検索 */
     List<Orders> findByLastNameOrderByOrderDateDesc(String lastName);
