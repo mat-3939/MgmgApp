@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品一覧</title>
+    <style>
+        table, th, td {
+            border: 1px solid #aaa;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>商品一覧</h1>
+
+<a th:href="@{/admin/products/register}">＋ 新規登録</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>画像</th>
+            <th>商品名</th>
+            <th>説明</th>
+            <th>価格</th>
+            <th>カテゴリ</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="product : ${productList}">
+            <td th:text="${product.id}"></td>
+            <td>
+                <img th:src="@{'/img/' + ${product.category.romajiName} + '/' + ${product.imageFileName}}" alt="画像なし">
+            </td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${#numbers.formatInteger(product.price, 1, 'COMMA')} + '円'"></td>
+            <td th:text="${product.category.name}"></td>
+            <td>
+                <a th:href="@{'/admin/products/edit/' + ${product.id}}">編集</a> |
+                <form th:action="@{'/admin/products/delete/' + ${product.id}}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('削除しますか？')">削除</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

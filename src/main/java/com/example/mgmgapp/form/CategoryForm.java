@@ -16,7 +16,7 @@ public class CategoryForm {
      * カテゴリ名（必須、最大200文字）
      */
     @NotBlank(message = "カテゴリ名は必須です")
-    @Size(max = 200, message = "商品説明は200文字以内で入力してください")
+    @Size(max = 200, message = "カテゴリ名は200文字以内で入力してください")
     private String name;
 
 }

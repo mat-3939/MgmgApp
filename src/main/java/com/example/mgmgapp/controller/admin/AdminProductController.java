@@ -143,7 +143,7 @@ public class AdminProductController {
 		existingProduct.setDescription(productForm.getDescription());
 		existingProduct.setPrice(productForm.getPrice());
 		existingProduct.setStock(productForm.getStock());
-		existingProduct.setCategory_id(category);
+		existingProduct.setCategory(category);
 
 		adminProductService.updateProduct(existingProduct);
 
@@ -171,7 +171,7 @@ public class AdminProductController {
 
 		Categories category = adminCategoryService.getCategoryById(form.getCategoryId())
 				.orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
-		product.setCategory_id(category);
+		product.setCategory(category);
 
 		if (imageFile != null && !imageFile.isEmpty()) {
 			String imagePath = adminProductService.saveImage(imageFile, category);
@@ -190,7 +190,7 @@ public class AdminProductController {
 		form.setDescription(product.getDescription());
 		form.setPrice(product.getPrice());
 		form.setStock(product.getStock());
-		form.setCategoryId(product.getCategory_id().getId());
+		form.setCategoryId(product.getCategory().getId());
 
 		return form;
 	}

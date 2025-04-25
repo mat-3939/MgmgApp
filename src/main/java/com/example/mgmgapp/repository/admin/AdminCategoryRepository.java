@@ -25,5 +25,5 @@ public interface AdminCategoryRepository extends JpaRepository<Categories, Integ
     /**
      * 並び順でソートされたカテゴリ一覧を取得
      */
-    List<Categories> findAllByOrderBySortOrderAsc();
+//    List<Categories> findAllByOrderBySortOrderAsc();
 }
