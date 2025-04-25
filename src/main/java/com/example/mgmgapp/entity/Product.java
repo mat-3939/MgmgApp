@@ -1,11 +1,20 @@
 package com.example.mgmgapp.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 import org.hibernate.annotations.UpdateTimestamp;
+
+import lombok.Data;
 
 /**
  * 商品情報を管理するエンティティクラス
@@ -57,7 +66,7 @@ public class Product {
      */
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Categories category_id;
+    private Categories category;
     
     /**
      * 作成日時（not null）
