@@ -15,9 +15,9 @@
 	<p style="color: blue">ログアウトしました</p>
 	</div>
 	<form th:action="@{/authentication}" method="post" th:object="${loginForm}">
-	<div><!-- ログインID -->
-	<label for="loginIdInput">ログインID</label>
-	<input type="text" th:field="*{loginIdInput}">
+	<div><!-- ユーザーネーム -->
+	<label for="user_NameInput">ログインID</label>
+	<input type="text" th:field="*{user_NameInput}">
 	</div>
 	<div><!-- パスワード -->
 	<label for="passwordInput">パスワード</label>

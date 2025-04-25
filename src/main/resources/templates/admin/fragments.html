@@ -1,0 +1,21 @@
+<!-- templates/fragments/common.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <div th:fragment="siteHeader">
+    <header class="header">
+      <div class="header-container">
+        <div class="logo">
+	<!--管理者トップページに遷移-->
+          <a href="/products" th:href="@{/products}">ロゴ</a>  
+        </div>
+      </div>
+    </header>
+  </div>
+</body>
+</html>
+

@@ -20,7 +20,11 @@ public class AdminSecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/admin/login")
-                .defaultSuccessUrl("/admin/", true)
+                .loginProcessingUrl("/authentication")         // form の action と一致させる
+                .usernameParameter("user_NameInput")            // フォーム側の name 属性
+                .passwordParameter("passwordInput")            // フォーム側の name 属性
+                .defaultSuccessUrl("/admin/", true)            // 成功時 ←マージ後に成功後のトップページ「/～」を付け足す必要あり。
+                .failureUrl("/admin/login?error")              // 失敗時
                 .permitAll()
             )
             .logout(logout -> logout

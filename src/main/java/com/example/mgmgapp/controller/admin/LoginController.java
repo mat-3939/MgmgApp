@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.mgmgapp.form.LoginForm;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/admin/login")
 public class LoginController {
 @GetMapping
 public String showLogin(@ModelAttribute LoginForm form) {
 // templates配下のlogin.htmlに遷移
-return "login";
+return "admin/login";
 }
 }
