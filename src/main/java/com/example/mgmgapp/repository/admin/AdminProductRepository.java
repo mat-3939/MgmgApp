@@ -1,0 +1,78 @@
+package com.example.mgmgapp.repository.admin;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.mgmgapp.entity.Product;
+
+/**
+ * 商品情報に関するリポジトリインタフェース。
+ * Spring Data JPAを利用して、商品の検索・保存・削除などの操作を行う。
+ * 通常のCRUD処理はJpaRepositoryで自動的に反映。
+ */
+@Repository
+public interface AdminProductRepository extends JpaRepository<Product, Integer> {
+
+    // --- 基本検索 ---
+
+    /**
+     * 商品名が完全一致する商品を検索
+     */
+    Optional<Product> findByName(String name);
+
+    /**
+     * 商品名に部分一致する商品を検索
+     */
+    List<Product> findByNameContaining(String name);
+
+    /**
+     * 指定カテゴリに属する商品を取得
+     */
+    List<Product> findByCategory_Id(Integer categoryId);
+
+    // --- 価格範囲検索 ---
+
+    /**
+     * 指定した価格帯の商品を取得（例：1000円以上、5000円以下）
+     *
+     * @param min 最低価格
+     * @param max 最高価格
+     */
+    List<Product> findByPriceBetween(BigDecimal min, BigDecimal max);
+
+    // --- ソート検索 ---
+
+    /**
+     * 登録日が新しい順（降順）
+     */
+    List<Product> findAllByOrderByCreatedAtDesc();
+
+    /**
+     * 登録日が古い順（昇順）
+     */
+    List<Product> findAllByOrderByCreatedAtAsc();
+
+    /**
+     * 価格が高い順（降順）
+     */
+    List<Product> findAllByOrderByPriceDesc();
+
+    /**
+     * 価格が安い順（昇順）
+     */
+    List<Product> findAllByOrderByPriceAsc();
+
+    /**
+     * 名前順：五十音順（昇順）
+     */
+    List<Product> findAllByOrderByNameAsc();
+
+    /**
+     * 名前順：逆順（降順）
+     */
+    List<Product> findAllByOrderByNameDesc();
+}
