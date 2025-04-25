@@ -30,7 +30,7 @@ public class CartItem {
      * セッションID（not null、一意）
      */
     @Column(name = "session_id", nullable = false, unique = true)
-    private String session_id;
+    private String sessionId;
 
     /**
      * 商品ID（not null、一意、多対一の関連）
