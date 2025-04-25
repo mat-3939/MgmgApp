@@ -28,6 +28,8 @@ dependencies {
 	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'    //セキュリティの依存関係でいるため追記しました（山中）
+	implementation 'org.springframework.boot:spring-boot-starter-web'  //同上
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
