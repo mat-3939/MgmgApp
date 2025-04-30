@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.mgmgapp.entity.Categories;
-import com.example.mgmgapp.entity.Product;
+import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.form.ProductForm;
 import com.example.mgmgapp.service.admin.AdminCategoryService;
 import com.example.mgmgapp.service.admin.AdminProductService;
@@ -52,7 +52,7 @@ public class AdminProductController {
 			@RequestParam(required = false, defaultValue = "new") String sort,
 			Model model) {
 
-		List<Product> products;
+		List<Products> products;
 
 		if (keyword != null && !keyword.isEmpty()) {
 			products = adminProductService.searchByKeyword(keyword);
@@ -71,7 +71,7 @@ public class AdminProductController {
 	 */
 	@GetMapping("/category/{categoryId}")
 	public String listByCategory(@PathVariable Integer categoryId, Model model) {
-		List<Product> products = adminProductService.findByCategoryId(categoryId);
+		List<Products> products = adminProductService.findByCategoryId(categoryId);
 		model.addAttribute("products", products);
 		return "admin/products";
 	}
@@ -101,7 +101,7 @@ public class AdminProductController {
 		}
 
 		// フォーム → エンティティ変換 & 画像保存
-		Product product = convertToEntity(productForm, imageFile);
+		Products product = convertToEntity(productForm, imageFile);
 
 		adminProductService.createProduct(product);
 
@@ -113,7 +113,7 @@ public class AdminProductController {
 	 */
 	@GetMapping("/{id}/edit")
 	public String showEditForm(@PathVariable Integer id, Model model) {
-		Product product = adminProductService.getProductById(id).orElseThrow();
+		Products product = adminProductService.getProductById(id).orElseThrow();
 		ProductForm form = convertToForm(product);
 
 		model.addAttribute("productForm", form);
@@ -136,7 +136,7 @@ public class AdminProductController {
 			return "admin/product_form";
 		}
 
-		Product existingProduct = adminProductService.getProductById(id).orElseThrow();
+		Products existingProduct = adminProductService.getProductById(id).orElseThrow();
 
 		// カテゴリ取得
 		Categories category = adminCategoryService.getCategoryById(productForm.getCategoryId())
@@ -172,8 +172,8 @@ public class AdminProductController {
 	/**
 	 * ProductForm → Product への変換
 	 */
-	public Product convertToEntity(ProductForm form, MultipartFile imageFile) {
-		Product product = new Product();
+	public Products convertToEntity(ProductForm form, MultipartFile imageFile) {
+		Products product = new Products();
 		product.setName(form.getName());
 		product.setDescription(form.getDescription());
 		product.setPrice(form.getPrice());
@@ -194,7 +194,7 @@ public class AdminProductController {
 	/**
 	 * Product → ProductForm への変換（編集画面で初期値表示）
 	 */
-	public ProductForm convertToForm(Product product) {
+	public ProductForm convertToForm(Products product) {
 		ProductForm form = new ProductForm();
 		form.setName(product.getName());
 		form.setDescription(product.getDescription());

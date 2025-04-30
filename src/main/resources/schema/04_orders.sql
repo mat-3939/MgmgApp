@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS orders (
     total_price NUMERIC(10, 2) ,
     
     -- 注文日時（not null）
-    order_date TIMESTAMP NOT NULL DEFAULT now(),
+    order_date TIMESTAMP WITHOUT TIME ZONE,
     
     -- 注文ステータス（not null）
     status BOOLEAN NOT NULL DEFAULT FALSE

@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "cart_items")
-public class CartItem {
+public class CartItems {
 
     /**
      * カートアイテムID（主キー）
@@ -30,14 +30,14 @@ public class CartItem {
      * セッションID（not null、一意）
      */
     @Column(name = "session_id", nullable = false, unique = true)
-    private String session_id;
+    private String sessionId;
 
     /**
      * 商品ID（not null、一意、多対一の関連）
      */
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, unique = true)
-    private Product product;
+    private Products product;
 
     /**
      * 商品数量（not null）

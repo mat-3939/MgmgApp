@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.mgmgapp.entity.Product;
+import com.example.mgmgapp.entity.Products;
 
 /**
  * 商品情報に関するリポジトリインタフェース。
@@ -15,24 +15,24 @@ import com.example.mgmgapp.entity.Product;
  * 通常のCRUD処理はJpaRepositoryで自動的に反映。
  */
 @Repository
-public interface AdminProductRepository extends JpaRepository<Product, Integer> {
+public interface AdminProductRepository extends JpaRepository<Products, Integer> {
 
     // --- 基本検索 ---
 
     /**
      * 商品名が完全一致する商品を検索
      */
-    Optional<Product> findByName(String name);
+    Optional<Products> findByName(String name);
 
     /**
      * 商品名に部分一致する商品を検索
      */
-    List<Product> findByNameContaining(String name);
+    List<Products> findByNameContaining(String name);
 
     /**
      * 指定したカテゴリの商品一覧を取得
      */
-    List<Product> findByCategoryId(Integer categoryId);
+    List<Products> findByCategoryId(Integer categoryId);
 
     // --- 価格範囲検索 ---
 
@@ -42,37 +42,37 @@ public interface AdminProductRepository extends JpaRepository<Product, Integer> 
      * @param min 最低価格
      * @param max 最高価格
      */
-    List<Product> findByPriceBetween(BigDecimal min, BigDecimal max);
+    List<Products> findByPriceBetween(BigDecimal min, BigDecimal max);
 
     // --- ソート検索 ---
 
     /**
      * 登録日が新しい順（降順）
      */
-    List<Product> findAllByOrderByCreatedAtDesc();
+    List<Products> findAllByOrderByCreatedAtDesc();
 
     /**
      * 登録日が古い順（昇順）
      */
-    List<Product> findAllByOrderByCreatedAtAsc();
+    List<Products> findAllByOrderByCreatedAtAsc();
 
     /**
      * 価格が高い順（降順）
      */
-    List<Product> findAllByOrderByPriceDesc();
+    List<Products> findAllByOrderByPriceDesc();
 
     /**
      * 価格が安い順（昇順）
      */
-    List<Product> findAllByOrderByPriceAsc();
+    List<Products> findAllByOrderByPriceAsc();
 
     /**
      * 名前順：五十音順（昇順）
      */
-    List<Product> findAllByOrderByNameAsc();
+    List<Products> findAllByOrderByNameAsc();
 
     /**
      * 名前順：逆順（降順）
      */
-    List<Product> findAllByOrderByNameDesc();
+    List<Products> findAllByOrderByNameDesc();
 }

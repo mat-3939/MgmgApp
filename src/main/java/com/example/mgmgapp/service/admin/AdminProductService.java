@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.mgmgapp.entity.Categories;
-import com.example.mgmgapp.entity.Product;
+import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.repository.admin.AdminProductRepository;
 import com.example.mgmgapp.util.CategoryDirectoryMapper;
 
@@ -38,7 +38,7 @@ public class AdminProductService {
     /**
      * 全商品の一覧を取得（登録日が新しい順）
      */
-    public List<Product> getAllProducts() {
+    public List<Products> getAllProducts() {
         return adminProductRepository.findAllByOrderByCreatedAtDesc();
     }
 
@@ -48,7 +48,7 @@ public class AdminProductService {
      * @param id 商品ID
      * @return 商品情報（見つからなければ空）
      */
-    public Optional<Product> getProductById(Integer id) {
+    public Optional<Products> getProductById(Integer id) {
         return adminProductRepository.findById(id);
     }
 
@@ -58,7 +58,7 @@ public class AdminProductService {
      * @param name 商品名
      * @return 商品情報（存在すれば）
      */
-    public Optional<Product> getProductByName(String name) {
+    public Optional<Products> getProductByName(String name) {
         return adminProductRepository.findByName(name);
     }
 
@@ -69,7 +69,7 @@ public class AdminProductService {
      * @return 登録後の商品エンティティ
      */
     @Transactional
-    public Product createProduct(Product product) {
+    public Products createProduct(Products product) {
         return adminProductRepository.save(product);
     }
 
@@ -80,7 +80,7 @@ public class AdminProductService {
      * @return 更新後の商品
      */
     @Transactional
-    public Product updateProduct(Product product) {
+    public Products updateProduct(Products product) {
         return adminProductRepository.save(product);
     }
 
@@ -100,28 +100,28 @@ public class AdminProductService {
      * @param keyword キーワード
      * @return 一致する商品一覧
      */
-    public List<Product> searchByKeyword(String keyword) {
+    public List<Products> searchByKeyword(String keyword) {
         return adminProductRepository.findByNameContaining(keyword);
     }
     
     /**
      * 指定したカテゴリの商品一覧を取得する
      */
-    public List<Product> findByCategoryId(Integer categoryId) {
+    public List<Products> findByCategoryId(Integer categoryId) {
         return adminProductRepository.findByCategoryId(categoryId);
     }
 
     /**
      * 指定された価格帯の商品を検索する
      */
-    public List<Product> searchByPriceRange(BigDecimal min, BigDecimal max) {
+    public List<Products> searchByPriceRange(BigDecimal min, BigDecimal max) {
         return adminProductRepository.findByPriceBetween(min, max);
     }
 
     /**
      * ソート付きで商品を取得（ControllerでsortKeyによって分岐）
      */
-    public List<Product> getSortedProducts(String sortKey) {
+    public List<Products> getSortedProducts(String sortKey) {
         return switch (sortKey) {
             case "price_asc" -> adminProductRepository.findAllByOrderByPriceAsc();
             case "price_desc" -> adminProductRepository.findAllByOrderByPriceDesc();
