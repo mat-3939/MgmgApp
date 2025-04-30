@@ -13,8 +13,6 @@ import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.repository.user.ProductRepository;
 
 @Controller
-//@RequestMapping("/products")
-//@RequiredArgsConstructor
 public class ProductController {
 	
 	@Autowired
@@ -34,43 +32,4 @@ public class ProductController {
 
         return "user/products";
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//DI
-	/*private final ProductService productService;
-	
-	
-	//一覧表示
-	@GetMapping
-	public String list(@RequestParam(value = "sort", defaultValue = "id_desc") String sort, Model model) {
-	    // ソートを実行
-	    model.addAttribute("products", productService.findAllSorted(sort));
-	    return "user/products";
-	}
-	
-	//詳細表示
-	@GetMapping("/{id}")
-	public String detail(@PathVariable Integer id, Model model, RedirectAttributes attributes) {
-		//各情報の詳細を取得する
-		Products p = productService.findByIdProduct(id);
-		if (p != null) {
-			model.addAttribute("products", productService.findByIdProduct(id));
-			return "user/product_detail";
-		}else {
-			//対象が無いときは一覧ページにリダイレクト
-			return "redirect:/products";
-		}
-	}*/
 }
