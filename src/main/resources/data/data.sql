@@ -1,4 +1,7 @@
 INSERT INTO categories (name) VALUES ('和食');
+INSERT INTO categories (name) VALUES ('洋食');
+INSERT INTO categories (name) VALUES ('中華');
+INSERT INTO categories (name) VALUES ('その他');
 
 INSERT INTO products (id, name, description, price, stock, image_path, category_id) 
-VALUES (1, 'おかず12マス弁当～瑞～', '店主がおすすめ！是非食べて頂きたいおかずを12マスにお詰めしました。なかでもおすすめはマヨネーズインハンバーグです。冷めても美味しくてご飯が進む味わいとなっています。', 1180, 100, 'wa_1.jpg', 1);
+VALUES (1, 'おかず12マス弁当～瑞～', '店主がおすすめ！是非食べて頂きたいおかずを12マスにお詰めしました。なかでもおすすめはマヨネーズインハンバーグです。冷めても美味しくてご飯が進む味わいとなっています。', 1180, 100, 'w_01.jpg', 1);

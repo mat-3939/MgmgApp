@@ -25,7 +25,7 @@ public class ProductForm {
      * 一意である必要があるため、登録時に重複チェックを行う。
      */
 	@NotBlank(message = "商品名を入力してください")
-    @Size(max = 200, message = "商品名は200文字以内で入力してください")
+    @Size(max = 30, message = "商品名は30文字以内で入力してください")
     private String name;
 
     /**
