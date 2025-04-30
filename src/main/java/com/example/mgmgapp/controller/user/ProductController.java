@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.mgmgapp.entity.Product;
+import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.service.user.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class ProductController {
 	@GetMapping("/{id}")
 	public String detail(@PathVariable Integer id, Model model, RedirectAttributes attributes) {
 		//各情報の詳細を取得する
-		Product p = productService.findByIdProduct(id);
+		Products p = productService.findByIdProduct(id);
 		if (p != null) {
 			model.addAttribute("products", productService.findByIdProduct(id));
 			return "user/product_detail";

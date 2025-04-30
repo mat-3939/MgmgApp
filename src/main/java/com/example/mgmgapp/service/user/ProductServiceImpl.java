@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.mgmgapp.entity.Product;
+import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.repository.user.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public List<Product> findAllSorted(String sortBy) {
+    public List<Products> findAllSorted(String sortBy) {
         return productRepository.findAll();
     }
 
     @Override
-    public Product findByIdProduct(Integer id) {
+    public Products findByIdProduct(Integer id) {
         return productRepository.findById(id).orElse(null);
     }
 }
