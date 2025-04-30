@@ -1,5 +1,28 @@
 package com.example.mgmgapp.controller.admin;
 
-public class AdminSalesController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.mgmgapp.service.admin.AdminSalesService;
+
+import org.springframework.ui.Model;
+import lombok.RequiredArgsConstructor;
+
+@Controller
+@RequiredArgsConstructor
+public class AdminSalesController {
+    /*DI*/
+    private final AdminSalesService adminSalesService;
+
+    /*ホーム*/
+    @GetMapping("/admin")
+    public String showAdminHome(Model model) {
+        /*注文数の合計*/
+        model.addAttribute("orderCount", adminSalesService.getOrderCount());
+        /*注文数の対応済みの合計*/
+        model.addAttribute("completedOrderCount", adminSalesService.getCompletedOrderCount());
+        /*注文数の未対応の合計*/
+        model.addAttribute("pendingOrderCount", adminSalesService.getPendingOrderCount());
+        return "admin/home";
+    }
 }
