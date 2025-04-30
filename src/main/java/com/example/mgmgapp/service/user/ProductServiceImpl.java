@@ -7,24 +7,21 @@ import org.springframework.stereotype.Service;
 import com.example.mgmgapp.entity.Product;
 import com.example.mgmgapp.repository.user.ProductRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-	//DI
-	private final ProductRepository productRepository;
-	
-	public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    private final ProductRepository productRepository;
+
+    @Override
+    public List<Product> findAllSorted(String sortBy) {
+        return productRepository.findAll();
     }
-	
-	@Override
-	public List<Product> findAllSorted(String sortBy) {
-	    return productRepository.selectAllSorted(sortBy);
-	}
 
-	@Override
-	public Product findByIdProduct(Integer id) {
-		return productRepository.selectById(id);
-	}
-
+    @Override
+    public Product findByIdProduct(Integer id) {
+        return productRepository.findById(id).orElse(null);
+    }
 }

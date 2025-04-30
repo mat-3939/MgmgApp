@@ -12,17 +12,17 @@
 		<!--<p th:if="${errorMessage}" th:text="${errorMessage}" style="color:#700">エラーメッセージ</p>-->
 		
 		<table border="1" width="300">
-			<thread>
+			<thead>
 				<tr>
 					<th>ID</th>
 					<th>商品名</th>
 					<th>価格</th>
 				</tr>
-			</thread>
+			</thead>
 			<tbody>
 				<tr th:each="product : ${products}">
-					<td th:text="${product.name}"></td>
-					<td th:text="${product.price}"></td>
+					<td th:text="${product.name}">商品名</td>
+					<td th:text="${product.price}">価格</td>
 					<td>
 						<a th:href="@{/products/{id}(id=${product.id})}">詳細</a>
 					</td>
