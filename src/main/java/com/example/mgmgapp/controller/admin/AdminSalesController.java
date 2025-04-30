@@ -23,6 +23,14 @@ public class AdminSalesController {
         model.addAttribute("completedOrderCount", adminSalesService.getCompletedOrderCount());
         /*注文数の未対応の合計*/
         model.addAttribute("pendingOrderCount", adminSalesService.getPendingOrderCount());
+        
+        /*本日の売上金額*/
+        model.addAttribute("todaySalesAmount", adminSalesService.getTodaySalesAmount());
+        /*週間の売上金額*/
+        model.addAttribute("weeklySalesAmount", adminSalesService.getWeeklySalesAmount());
+        /*月間の売上金額*/
+        model.addAttribute("monthlySalesAmount", adminSalesService.getMonthlySalesAmount());
+        
         return "admin/home";
     }
 }

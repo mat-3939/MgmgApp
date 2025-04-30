@@ -1,5 +1,8 @@
 package com.example.mgmgapp.service.admin;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Service;
 
 import com.example.mgmgapp.repository.admin.AdminOrderItemRepository;
@@ -37,11 +40,27 @@ public class AdminSalesService {
     }
 
     /*本日の売上金額を取得*/
-    public int getTodaySalesAmount() {
+    public BigDecimal getTodaySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().equals(LocalDate.now()))
-            .mapToInt(orderItem -> orderItem.getProduct().getPrice())
-            .sum();
+            .map(orderItem -> orderItem.getProduct().getPrice())
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /*週間の売上金額を取得*/
+    public BigDecimal getWeeklySalesAmount() {
+        return adminOrderItemRepository.findAll().stream()
+            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
+            .map(orderItem -> orderItem.getProduct().getPrice())
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /*月間の売上金額を取得*/
+    public BigDecimal getMonthlySalesAmount() {
+        return adminOrderItemRepository.findAll().stream()
+            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusMonths(1)))
+            .map(orderItem -> orderItem.getProduct().getPrice())
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     
