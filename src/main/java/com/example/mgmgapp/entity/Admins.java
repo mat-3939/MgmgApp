@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 import lombok.Data;
 
 @Data
@@ -24,11 +25,13 @@ public class Admins {
      * 管理者名（not null）
      */
     @Column(name = "user_name", nullable = false)
-    private String user_name;
+    private String userName;
 
     /**
      * 管理者パスワード（not null）
      */
     @Column(name = "password", nullable = false)
     private String password;
+
+
 }
