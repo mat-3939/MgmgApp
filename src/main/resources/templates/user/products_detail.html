@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>products</title>
+</head>
+<body>
+	<h2>products 詳細</h2>
+		
+		<div th:if="${product != null}">
+			<!--左サイド　商品画像-->
+			<div>
+				<img th:src="@{'/img/washoku/' + ${product.imagePath}}" alt="商品画像">
+			</div>
+			<!--右サイド　テキスト-->
+			<div>
+				<!--商品名-->
+				<p th:text="${product.name}"></p>
+				<!--価格-->
+				<p th:text="${product.price}"></p>
+				<!--説明文-->
+				<p th:text="${product.description}"></p>
+			</div>
+		</div>
+		
+		<!--<a th:href="@{/products/form}">新規登録</a>-->
+		<br>
+		<!-- top画面へ -->
+		<!--<a th:href="@{/}">topへ戻る</a>-->
+</body>
+</html>
