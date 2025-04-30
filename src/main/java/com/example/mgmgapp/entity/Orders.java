@@ -70,9 +70,9 @@ public class Orders {
     private BigDecimal totalPrice;
     
     /**
-     * 注文作成日時（not null）
+     * 注文作成日時
      */
-    @Column(name = "order_date", nullable = false)
+    @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     /**
