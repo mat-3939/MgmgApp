@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>products</title>
+</head>
+<body>
+	<h2>products 一覧</h2>
+		<!--完了アラート-->
+		<!--<p th:if="${message}" th:text="${message}" style="color:#00a">完了メッセージ</p>-->
+		<!--エラーアラート-->
+		<!--<p th:if="${errorMessage}" th:text="${errorMessage}" style="color:#700">エラーメッセージ</p>-->
+		
+		<table border="1" width="300">
+			<thread>
+				<tr>
+					<th>ID</th>
+					<th>商品名</th>
+					<th>価格</th>
+				</tr>
+			</thread>
+			<tbody>
+				<tr th:each="product : ${products}">
+					<td th:text="${product.name}"></td>
+					<td th:text="${product.price}"></td>
+					<td>
+						<a th:href="@{/products/{id}(id=${product.id})}">詳細</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--<a th:href="@{/products/form}">新規登録</a>-->
+		<br>
+		<!-- top画面へ -->
+		<!--<a th:href="@{/}">topへ戻る</a>-->
+</body>
+</html>

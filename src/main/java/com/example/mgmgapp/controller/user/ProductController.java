@@ -14,17 +14,18 @@ import com.example.mgmgapp.service.user.ProductService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/producs")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
 	//DI
-	private final ProductService service;
+	private final ProductService productService;
+	
 	
 	//一覧表示
 	@GetMapping
 	public String list(@RequestParam(value = "sort", defaultValue = "id_desc") String sort, Model model) {
 	    // ソートを実行
-	    model.addAttribute("products", service.findAllSorted(sort));
+	    model.addAttribute("products", productService.findAllSorted(sort));
 	    return "user/products";
 	}
 	
@@ -32,9 +33,9 @@ public class ProductController {
 	@GetMapping("/{id}")
 	public String detail(@PathVariable Integer id, Model model, RedirectAttributes attributes) {
 		//各情報の詳細を取得する
-		Product p = service.findByIdProduct(id);
+		Product p = productService.findByIdProduct(id);
 		if (p != null) {
-			model.addAttribute("products", service.findByIdProduct(id));
+			model.addAttribute("products", productService.findByIdProduct(id));
 			return "user/product_detail";
 		}else {
 			//対象が無いときは一覧ページにリダイレクト

@@ -2,11 +2,12 @@ package com.example.mgmgapp.repository.user;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.example.mgmgapp.entity.Product;
 
-public interface ProductRepository {
+public interface ProductRepository extends JpaRepository<Product, Integer>{
 	// すべての一覧データを表示（ソート前提）
 	List<Product> selectAllSorted(@Param("sortBy") String sortBy);
 	
