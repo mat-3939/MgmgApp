@@ -3,62 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <title>商品登録</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding-bottom: 100px; /* フッター分の余白確保 */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: flex;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .form-section, .category-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            flex: 2;
+        }
+
+        .category-section {
+            flex: 1;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .required::after {
+            content: " 必須";
+            color: #fff;
+            background-color: #007BFF;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .image-upload {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 6px;
+            background-color: #fafafa;
+            position: relative;
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .image-upload label {
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            padding: 8px 16px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .category-option {
+            margin-bottom: 10px;
+        }
+
+        .footer-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #444;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .footer-buttons button,
+        .footer-buttons a {
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+
+        .back-button {
+            background-color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .submit-button {
+            background-color: #007BFF;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+    </style>
 </head>
 <body>
-<h1>商品登録フォーム</h1>
+	
+	<div class="top-bar">
+	    <h1 style="font-size: 24px;">商品登録 <span style="font-size: 14px; color: #888;">商品管理</span></h1>
+	</div>
+
 
 <form th:action="@{/admin/products/new}" th:object="${productForm}" method="post" enctype="multipart/form-data">
-	
-	<!-- 商品名 -->
-    <div>
-        <label for="name">商品名:</label>
-        <input type="text" id="name" th:field="*{name}" />
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">名前のエラー</span>
+
+    <div class="container">
+        <!-- 商品情報 -->
+        <div class="form-section">
+            <h2>商品情報</h2>
+
+            <div class="form-group">
+                <label for="name" class="required">商品名</label>
+                <input type="text" id="name" th:field="*{name}" />
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="required">商品画像</label>
+                <div class="image-upload">
+                    <div>画像をドラッグ＆ドロップまたは</div>
+                    <label for="imageFile">ファイルを選択</label>
+                    <input type="file" id="imageFile" th:field="*{imageFile}" accept=".jpg,.jpeg,.png" />
+                </div>
+                <span th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="description">商品説明</label>
+                <textarea id="description" th:field="*{description}"></textarea>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="price" class="required">価格（税込み）</label>
+                <input type="number" id="price" th:field="*{price}" step="0.01" />
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="stock">在庫数</label>
+                <input type="number" id="stock" th:field="*{stock}" step="1" />
+                <span th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="error"></span>
+            </div>
+        </div>
+
+        <!-- カテゴリ -->
+        <div class="category-section">
+            <h2>カテゴリ</h2>
+            <div th:each="category : ${categories}" class="category-option">
+                <label>
+                    <input type="radio" th:field="*{categoryId}" th:value="${category.id}" />
+                    <span th:text="${category.name}"></span>
+                </label>
+            </div>
+            <span th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" class="error"></span>
+        </div>
     </div>
 
-    <!-- 商品説明 -->
-    <div>
-        <label for="description">商品説明:</label>
-        <textarea id="description" th:field="*{description}"></textarea>
-        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">説明のエラー</span>
-    </div>
-
-    <!-- 価格 -->
-    <div>
-        <label for="price">価格 (円):</label>
-        <input type="number" id="price" th:field="*{price}" step="0.01" />
-        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">価格のエラー</span>
-    </div>
-
-    <!-- 在庫数 -->
-    <div>
-        <label for="stock">在庫数:</label>
-        <input type="number" id="stock" th:field="*{stock}" step="1" />
-        <span th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">在庫エラー</span>
-    </div>
-
-    <!-- カテゴリ選択 -->
-    <div>
-        <label for="category">カテゴリ:</label>
-        <select id="categoryId" th:field="*{categoryId}">
-            <option value="" disabled selected>カテゴリを選択</option>
-            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
-        </select>
-        <span th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}">カテゴリエラー</span>
-    </div>
-
-    <!-- 画像アップロード -->
-    <div>
-        <label for="image">商品画像（jpg/jpeg/png）:</label>
-        <!--<input type="file" id="image" name="imageFile" accept=".jpg,.jpeg,.png" />-->
-		<input type="file" id="image" th:field="*{imageFile}" accept=".jpg,.jpeg,.png" />
-        <span th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}">画像エラー</span>
-    </div>
-
-    <!-- 登録ボタン -->
-    <div>
-        <button type="submit">登録</button>
+    <!-- フッター固定ボタン -->
+    <div class="footer-buttons">
+        <a th:href="@{/admin/products}" class="back-button">&#x25C0;&#x25C0; 商品一覧</a>
+        <button type="submit" class="submit-button">登録</button>
     </div>
 </form>
+
+<script>
+    const dropZone = document.querySelector('.image-upload');
+    const fileInput = document.querySelector('#imageFile');
+
+    // プレビュー表示用の要素を作成
+    const preview = document.createElement('div');
+    preview.style.marginTop = '10px';
+    dropZone.appendChild(preview);
+
+    function handleFile(file) {
+        if (!file.type.startsWith('image/')) {
+            alert('画像ファイル（.jpg, .jpeg, .png）を選択してください。');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="プレビュー" style="max-height:150px; margin-top:10px;">`;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ドラッグオーバー時のスタイル変更
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.backgroundColor = '#e6f7ff';
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.backgroundColor = '#fafafa';
+    });
+
+    // ファイルがドロップされた時の処理
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.backgroundColor = '#fafafa';
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files; // フォームのfile inputに設定
+            handleFile(files[0]);
+        }
+    });
+
+    // 通常のファイル選択でもプレビューを反映
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            handleFile(fileInput.files[0]);
+        }
+    });
+</script>
+
 </body>
 </html>
