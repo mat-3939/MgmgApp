@@ -92,13 +92,24 @@ public class AdminProductController {
 	@PostMapping("/new")
 	public String createProduct(@Valid @ModelAttribute ProductForm productForm,
 	                            BindingResult result,
+	                            /*
 	                            @RequestParam("imageFile") MultipartFile imageFile,
+	                            */
 	                            Model model) {
+		
+		MultipartFile imageFile = productForm.getImageFile();
 		
 		if (result.hasErrors()) {
 			model.addAttribute("categories", adminCategoryService.findAll());
 			return "admin/product_form";
 		}
+		
+		// 画像ファイルが存在し、拡張子が不正な場合
+	    if (!imageFile.isEmpty() && !isAllowedExtension(imageFile.getOriginalFilename())) {
+	        result.rejectValue("imageFile", "invalid.extension", "画像の拡張子は jpg、jpeg、png のいずれかにしてください。");
+	        model.addAttribute("categories", adminCategoryService.findAll());
+	        return "admin/product_form";
+	    }
 
 		// フォーム → エンティティ変換 & 画像保存
 		Products product = convertToEntity(productForm, imageFile);
@@ -204,5 +215,12 @@ public class AdminProductController {
 
 		return form;
 	}
+
+    // 拡張子チェックメソッド
+    private boolean isAllowedExtension(String filename) {
+        if (filename == null || filename.lastIndexOf(".") == -1) return false;
+        String extension = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+        return List.of("jpg", "jpeg", "png").contains(extension);
+    }
 
 }

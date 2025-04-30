@@ -41,6 +41,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'commons-io:commons-io:2.11.0' //画像アップロード時の拡張子バリデーション実装のため追記（葭田）
+	
 }
 
 tasks.named('test') {

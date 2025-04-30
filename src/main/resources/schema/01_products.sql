@@ -1,7 +1,7 @@
 -- 商品情報を管理するテーブル
 CREATE TABLE IF NOT EXISTS products (
     -- 商品ID（主キー）
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     
     -- 商品名（not null、最大30文字、一意）
     name VARCHAR(30) NOT NULL UNIQUE,

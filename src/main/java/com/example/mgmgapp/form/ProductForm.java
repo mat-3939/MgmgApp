@@ -19,8 +19,8 @@ import lombok.Data;
  */
 @Data
 public class ProductForm {
-
-    /**
+	
+	/**
      * 商品名（必須、最大200文字）
      * 一意である必要があるため、登録時に重複チェックを行う。
      */
@@ -56,7 +56,7 @@ public class ProductForm {
      * 新規登録時は必須、編集時は変更しない場合もあるため、状況に応じてnull許容可。
      */
 	@NotNull(message = "商品画像を選択してください")
-    private MultipartFile image;
+    private MultipartFile imageFile;
 
     /**
      * カテゴリID（必須）

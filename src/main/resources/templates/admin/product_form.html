@@ -8,8 +8,8 @@
 <h1>商品登録フォーム</h1>
 
 <form th:action="@{/admin/products/new}" th:object="${productForm}" method="post" enctype="multipart/form-data">
-    
-    <!-- 商品名 -->
+	
+	<!-- 商品名 -->
     <div>
         <label for="name">商品名:</label>
         <input type="text" id="name" th:field="*{name}" />
@@ -49,16 +49,16 @@
 
     <!-- 画像アップロード -->
     <div>
-        <label for="image">商品画像:</label>
-        <input type="file" id="image" name="image" />
-        <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}">画像エラー</span>
+        <label for="image">商品画像（jpg/jpeg/png）:</label>
+        <!--<input type="file" id="image" name="imageFile" accept=".jpg,.jpeg,.png" />-->
+		<input type="file" id="image" th:field="*{imageFile}" accept=".jpg,.jpeg,.png" />
+        <span th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}">画像エラー</span>
     </div>
 
     <!-- 登録ボタン -->
     <div>
         <button type="submit">登録</button>
     </div>
-
 </form>
 </body>
 </html>

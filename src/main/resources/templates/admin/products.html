@@ -18,7 +18,7 @@
 <body>
 <h1>商品一覧</h1>
 
-<a th:href="@{/admin/products}">＋ 新規登録</a>
+<a th:href="@{/admin/products/new}">＋ 新規登録</a>
 
 <table>
     <thead>
@@ -35,13 +35,7 @@
     <tbody>
         <tr th:each="product : ${products}">
             <td th:text="${product.id}"></td>
-			<td>
-				<img th:src="@{'/img/' + ${
-					product.category.name == '和食' ? 'washoku' :
-			        product.category.name == '洋食' ? 'yoshoku' :
-			        product.category.name == '中華' ? 'chuka' : 'other'
-				} + '/' + ${product.imagePath}}" alt="画像">
-			</td>
+			<td><img th:src="${product.imagePath}" alt="画像" /></td>
             <td th:text="${product.name}"></td>
 			<td th:text="${product.category.name}"></td>
 			<td th:text="${@priceFormatter.format(product.price)}"></td>

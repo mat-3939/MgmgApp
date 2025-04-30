@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 import lombok.Data;
@@ -77,4 +79,22 @@ public class Products {
      */
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    
+    /**
+     * 登録日を自動で設定
+     */
+    @PrePersist
+    public void onPrePersist() {
+    	LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
+        this.createdAt = now;
+        this.updatedAt = now; // 登録時に更新日も設定
+    }
+
+    /**
+     * 更新日を自動で設定
+     */
+    @PreUpdate
+    public void onPreUpdate() {
+        this.updatedAt = LocalDateTime.now().withSecond(0).withNano(0);
+    }
 }
