@@ -12,8 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import org.hibernate.annotations.UpdateTimestamp;
-
 import lombok.Data;
 
 /**
@@ -69,15 +67,14 @@ public class Products {
     private Categories category;
     
     /**
-     * 作成日時（not null）
+     * 作成日時
      */
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     
     /**
-     * 更新日時（not null）
+     * 更新日時
      */
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }
