@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カート</title>
+    <link rel="stylesheet" href="/css/styles.css">  <!-- 必要に応じてCSSファイルをリンク -->
+</head>
+<body>
+    <h1>カート</h1>
+
+    <!-- カート内の商品一覧 -->
+    <div>
+        <h2>カート内の商品</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- カート内の商品をループで表示 -->
+                <tr th:each="cartItem : ${cartItems}">
+                    <td th:text="${cartItem.product.name}">商品名</td> <!-- 商品名（仮）-->
+                    <td th:text="${cartItem.quantity}">数量</td>
+                    <td>
+                        <!-- 削除ボタン -->
+                        <form th:action="@{/cart/remove/{id}(id=${cartItem.id})}" method="post">
+                            <button type="submit">削除</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p th:if="${cartItems.isEmpty()}">カートは空です。</p>
+
+        <div>
+            <a href="/checkout">購入手続きに進む</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ECサイト</p>
+    </footer>
+</body>
+</html>
