@@ -72,4 +72,7 @@ public interface AdminOrderRepository extends JpaRepository<Orders, Integer> {
         @Param("startDate") LocalDateTime startDate,
         @Param("endDate") LocalDateTime endDate
     );
+
+    /* 注文ステータスで検索（リスト） */
+    List<Orders> findAllByStatus(Boolean status);
 }

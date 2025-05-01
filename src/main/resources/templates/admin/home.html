@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h1>管理者ホーム</h1>
+        <h1>ホーム</h1>
         
         <!-- 注文状況と売上状況のカード -->
         <div class="row mt-4">
@@ -46,18 +46,45 @@
                             <div class="col-4 text-end" th:text="${todaySalesAmount}">1</div>
                         </div>
                         <div class="btn-group w-100">
-                            <button class="btn btn-dark active">週間</button>
-                            <button class="btn btn-outline-dark">月間</button>
-                            <button class="btn btn-outline-dark">年間</button>
+                            <button class="btn btn-dark active" onclick="updateSalesData('weekly')">週間</button>
+                            <button class="btn btn-outline-dark" onclick="updateSalesData('monthly')">月間</button>
+                            <button class="btn btn-outline-dark" onclick="updateSalesData('yearly')">年間</button>
                         </div>
                         <div class="row mt-3">
                             <div class="col-8">売上金額</div>
-                            <div class="col-4 text-end">¥12,000</div>
+                            <div class="col-4 text-end" id="salesAmount" th:text="${weeklySalesAmount}">0</div>
                         </div>
                         <div class="row">
                             <div class="col-8">売上件数</div>
-                            <div class="col-4 text-end" th:text="${completedOrderCount}">1</div>
+                            <div class="col-4 text-end" id="salesCount" th:text="${weeklySalesCount}">0</div>
                         </div>
+                        <script>
+                            function updateSalesData(period) {
+                                // ボタンのスタイルを更新
+                                document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                                    btn.classList.remove('btn-dark', 'active');
+                                    btn.classList.add('btn-outline-dark');
+                                });
+                                event.target.classList.remove('btn-outline-dark');
+                                event.target.classList.add('btn-dark', 'active');
+
+                                // データを更新
+                                fetch(`/admin/sales-data?period=${period}`)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('データの取得に失敗しました');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                        document.getElementById('salesAmount').textContent = data.amount ?? '0';
+                                        document.getElementById('salesCount').textContent = data.count ?? '0';
+                                })
+                                .catch(error => {
+                                        console.error('データの取得に失敗しました:', error);
+                                });
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

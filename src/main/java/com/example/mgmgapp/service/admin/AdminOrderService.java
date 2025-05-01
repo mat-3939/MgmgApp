@@ -33,6 +33,12 @@ public class AdminOrderService {
         return adminOrderRepository.findById(id).orElse(null);
     }
 
+    /*注文ステータスの一覧を取得*/
+    public List<Orders> findAllOrdersByStatus(Boolean status) {
+        return adminOrderRepository.findByStatus(status);
+    }
+
+
     /*注文ステータス更新*/
     public void updateOrderStatus(Integer id, Boolean status) {
         Orders order = adminOrderRepository.findById(id).orElse(null);

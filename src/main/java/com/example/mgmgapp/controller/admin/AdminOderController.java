@@ -11,7 +11,8 @@ import com.example.mgmgapp.entity.Orders;
 import com.example.mgmgapp.service.admin.AdminOrderService;
 
 import lombok.RequiredArgsConstructor;
-
+/*ページURL(一覧):http://localhost:8080/admin/orders */
+/*ページURL(詳細):http://localhost:8080/admin/order/{id} */
 @Controller
 @RequiredArgsConstructor
 public class AdminOderController {
@@ -23,8 +24,11 @@ public class AdminOderController {
     public String showOrders(Model model) {
         List<Orders> orders = adminOrderService.findAllOrders();
         model.addAttribute("orders", orders);
+        
         return "admin/orders";
     }
+
+    
 
     /*注文詳細*/
     @GetMapping("/admin/order/{id}")
