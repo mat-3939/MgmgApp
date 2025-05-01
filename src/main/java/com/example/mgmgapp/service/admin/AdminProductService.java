@@ -13,6 +13,7 @@ import java.util.Optional;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -168,6 +169,38 @@ public class AdminProductService {
         } catch (IOException e) {
             throw new RuntimeException("画像の保存に失敗しました: " + e.getMessage(), e);
         }
+    }
+    
+    /**
+     * 商品名または商品IDで検索
+     *
+     * @param keyword キーワード
+     * @return 一致する商品一覧
+     */
+    public List<Products> searchByIdOrName(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return adminProductRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
+        }
+        
+        // 数値としてパースできるかチェック（ID検索）
+        try {
+            Integer id = Integer.parseInt(keyword.trim());
+            Optional<Products> productOpt = adminProductRepository.findById(id);
+            if (productOpt.isPresent()) {
+                return List.of(productOpt.get());
+            }
+        } catch (NumberFormatException ignored) {
+            // 無視して名前検索へ
+        }
+
+        // 名前の部分一致検索
+        List<Products> nameMatches = adminProductRepository.findByNameContaining(keyword);
+        if (nameMatches.isEmpty()) {
+            // 該当なし → 全件表示（登録日降順）
+            return adminProductRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
+        }
+
+        return nameMatches;
     }
 
 }

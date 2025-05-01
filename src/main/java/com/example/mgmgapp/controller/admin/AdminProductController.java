@@ -1,7 +1,9 @@
 package com.example.mgmgapp.controller.admin;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.validation.Valid;
 
@@ -65,6 +67,47 @@ public class AdminProductController {
 		model.addAttribute("products", products);
 		return "admin/products";
 	}
+	/**
+	 * 商品名または商品IDで検索
+	 */
+	@GetMapping("/search")
+    public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
+		// 結果リストを初期化
+	    List<Products> resultList = new ArrayList<>();
+	    
+	    // キーワードが空の場合、エラーメッセージを表示
+	    if (keyword == null || keyword.trim().isEmpty()) {
+	        model.addAttribute("errorMessage", "キーワードを入力して下さい");
+	        return "admin/products";  // 検索ページに戻す
+	    }
+	    
+	    keyword = keyword.trim();
+	    
+	    try {
+	        // 商品IDで検索（数字の場合）
+	        Integer id = Integer.valueOf(keyword);
+	        Optional<Products> byId = adminProductService.getProductById(id);
+	        byId.ifPresent(resultList::add);
+	    } catch (NumberFormatException e) {
+	        // 数字でなければ名前検索へ
+	    }
+	    
+	    // 商品名で部分一致検索
+	    List<Products> byName = adminProductService.searchByKeyword(keyword);
+	    for (Products p : byName) {
+	        if (!resultList.contains(p)) {
+	            resultList.add(p);
+	        }
+	    }
+	    
+	    // 検索結果が0件の場合のメッセージを表示
+	    if (resultList.isEmpty()) {
+	        model.addAttribute("message", "該当商品が見つかりませんでした");
+	    }
+	    
+	    model.addAttribute("products", resultList);
+	    return "admin/products"; // 結果表示ページ
+    }
 	
 	/**
 	 * 指定したカテゴリの商品一覧を表示

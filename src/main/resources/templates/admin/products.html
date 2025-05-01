@@ -14,11 +14,11 @@
 </div>
 
 <div class="search-container">
-    <div class="search-box">
-        <label>商品名・商品ID</label>
-        <input type="text" placeholder="商品名またはIDを入力">
+    <form th:action="@{/admin/products/search}" method="get" class="search-box">
+        <label for="keyword">商品名・商品ID</label>
+        <input type="text" id="keyword" name="keyword" th:value="${keyword}" placeholder="商品名またはIDを入力">
         <div class="search-actions">
-            <button class="button primary">検索</button>
+            <button class="search-button">検索</button>
             <select class="dropdown">
                 <option>絞り込み</option>
             </select>
@@ -26,7 +26,7 @@
                 <option>並び替え</option>
             </select>
         </div>
-    </div>
+    </form>
 </div>
 
 <table>
@@ -68,6 +68,6 @@
     </tbody>
 </table>
 
-<script src="/js/product_form.js"></script>
+<script src="/js/utils.js"></script>
 </body>
 </html>
