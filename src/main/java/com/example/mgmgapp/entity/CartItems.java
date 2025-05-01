@@ -1,5 +1,7 @@
 package com.example.mgmgapp.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,6 +46,11 @@ public class CartItems {
      */
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
+    
+    
+    //Decimalを使うための記述
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
     
     
 }
