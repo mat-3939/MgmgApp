@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+/*一覧*/
+.list_wrap {
+    display: flex;
+    flex-wrap: wrap;
+	justify-content:space-between;
+}
+.list_wrap .list_cell{
+	width:calc(95% / 5);
+	overflow: hidden;
+}
+.list_wrap .list_cell img {
+    width: 100%;
+}
+
+/*詳細*/
+.detail_wrap {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:center;
+}
+.detail_wrap .detail_left{
+	width:50%;
+}
+.detail_wrap .detail_left img {
+    width: 75%;
+    margin: 0 0 0 20%;
+}
+.detail_wrap .detail_right{
+	width:30%;
+	margin-left:20px;
+}
+
+.pickUp ul {
+    display: flex;
+	flex-wrap: wrap;
+	justify-content:space-between;
+}
+.pickUp ul li{
+	list-style: none;
+	width:calc(95% / 5);
+		overflow: hidden;
+}
+.pickUp ul li img {
+    width: 100%;
+}

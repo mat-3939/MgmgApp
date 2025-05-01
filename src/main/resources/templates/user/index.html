@@ -2,30 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>商品詳細</title>
+<title>トップページ</title>
 <link th:href="@{/products.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<section>
-	<!--パンくず-->
-	<p><a th:href="@{/}">トップ</a> > <a th:href="@{/products}">商品一覧</a> > <span th:text="${product.name}"></span></p>
-		
-		<!--商品詳細-->
-		<div class="detail_wrap">
-			<!--左サイド　商品画像-->
-			<div class="detail_left">
-				<img th:src="@{${imagePaths[product.id]}}" alt="商品画像">
-			</div>
-			<!--右サイド　テキスト-->
-			<div class="detail_right">
-				<!--商品名-->
-				<h2 th:text="${product.name}"></h2>
-				<!--価格-->
-				<p>￥<span th:text="${product.price}">価格</span><span>（税込）</span></p>
-				<!--説明文-->
-				<p th:text="${product.description}"></p>
-			</div>
-		</div>
 		
 		<!--人気５-->
 		<div class="pickUp">

@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>products</title>
+<title>商品一覧</title>
+<link th:href="@{/products.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<section>
@@ -14,20 +15,20 @@
 	<div>
 		<label for="sort">並べ替え:</label>
 		<select id="sort" name="sort" onchange="location = this.value;">
-			<option value="?sort=idDesc" th:selected="${param.sort == 'idDesc'}">新着順</option>
-			<option value="?sort=priceAsc" th:selected="${param.sort == 'priceAsc'}">価格が安い順</option>
-			<option value="?sort=priceDesc" th:selected="${param.sort == 'priceDesc'}">価格が高い順</option>
+			<option value="?sort=id&order=desc" th:selected="${param.sort == 'id' and param.order == 'desc'}">新着順</option>
+			<option value="?sort=price&order=asc" th:selected="${param.sort == 'price' and param.order == 'asc'}">価格が安い順</option>
+			<option value="?sort=price&order=desc" th:selected="${param.sort == 'price' and param.order == 'desc'}">価格が高い順</option>
 		</select>
 	</div>
 		
-	<div th:each="product : ${products}" class="list_wrapper">
-		<div class="list_cell">
-			<a th:href="@{/products_detail/{id}(id=${product.id})}">
-				<img th:src="@{'/img/washoku/' + ${product.imagePath}}" alt="商品画像">
-				<p th:text="${product.name}">商品名</p>
-				<p th:text="${product.description}">商品説明</p>
-				<p>￥<span th:text="${product.price}">価格</span><span>（税込）</span></p>
-			</a>   
+	<div class="list_wrap">
+		<div class="list_cell" th:each="product : ${products}">
+		    <a th:href="@{/products_detail/{id}(id=${product.id})}">
+		        <img th:src="@{${imagePaths[product.id]}}" alt="商品画像">
+		        <p th:text="${product.name}">商品名</p>
+		        <p th:text="${product.description}">商品説明</p>
+		        <p>￥<span th:text="${product.price}">価格</span><span>（税込）</span></p>
+		    </a>   
 		</div>
 	</div>
 		
