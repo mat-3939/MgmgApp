@@ -2,6 +2,9 @@ package com.example.mgmgapp.form;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
@@ -19,6 +22,13 @@ import lombok.Data;
  */
 @Data
 public class ProductForm {
+	
+	/**
+     * 商品ID（主キー）
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 	
 	/**
      * 商品名（必須、最大200文字）
@@ -57,6 +67,7 @@ public class ProductForm {
      */
 	@NotNull(message = "商品画像を選択してください")
     private MultipartFile imageFile;
+	private String existingImagePath; // 既存の画像ファイル名（編集時用）
 
     /**
      * カテゴリID（必須）

@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+/* 商品一覧CSS */
+		
+.search-container {
+    background-color: #fff;
+    padding: 24px 30px;
+    border-radius: 10px;
+    margin: 0 40px 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.search-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dropdown {
+    padding: 10px;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+table {
+    width: calc(100% - 80px);
+    margin: 0 auto 40px;
+    background-color: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+th, td {
+    padding: 18px;
+    text-align: center;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+tr:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+.product-img {
+    max-width: 60px;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.product-link {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.product-link:hover {
+    text-decoration: underline;
+}
+

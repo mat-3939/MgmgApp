@@ -112,7 +112,7 @@ public class AdminProductController {
 	    }
 
 		// フォーム → エンティティ変換 & 画像保存
-		Products product = convertToEntity(productForm, imageFile);
+		Products product = convertToEntity(productForm, imageFile, null);
 
 		adminProductService.createProduct(product);
 
@@ -122,13 +122,14 @@ public class AdminProductController {
 	/**
 	 * 商品編集画面を表示
 	 */
-	@GetMapping("/{id}/edit")
+	@GetMapping("/edit/{id}")
 	public String showEditForm(@PathVariable Integer id, Model model) {
 		Products product = adminProductService.getProductById(id).orElseThrow();
 		ProductForm form = convertToForm(product);
 
 		model.addAttribute("productForm", form);
 		model.addAttribute("categories", adminCategoryService.findAll());
+		model.addAttribute("formMode", "edit");
 
 		return "admin/product_form";
 	}
@@ -136,7 +137,7 @@ public class AdminProductController {
 	/**
 	 * 商品の更新を実行
 	 */
-	@PostMapping("/{id}/edit")
+	@PostMapping("/edit/{id}")
 	public String updateProduct(@PathVariable Integer id,
 	                            @Valid @ModelAttribute ProductForm productForm,
 	                            BindingResult result,
@@ -147,26 +148,14 @@ public class AdminProductController {
 			return "admin/product_form";
 		}
 
-		Products existingProduct = adminProductService.getProductById(id).orElseThrow();
+		// 既存の商品情報を取得
+	    Products existingProduct = adminProductService.getProductById(id).orElseThrow();
+	    
+	    // 既存の商品データを元に新しいエンティティを作成
+	    Products updatedProduct  = convertToEntity(productForm, imageFile, existingProduct);
 
-		// カテゴリ取得
-		Categories category = adminCategoryService.getCategoryById(productForm.getCategoryId())
-				.orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
-
-		// 画像がアップロードされている場合は保存処理
-		if (!imageFile.isEmpty()) {
-			String imagePath = adminProductService.saveImage(imageFile, category);
-			existingProduct.setImagePath(imagePath);
-		}
-
-		// 残りの項目を更新
-		existingProduct.setName(productForm.getName());
-		existingProduct.setDescription(productForm.getDescription());
-		existingProduct.setPrice(productForm.getPrice());
-		existingProduct.setStock(productForm.getStock());
-		existingProduct.setCategory(category);
-
-		adminProductService.updateProduct(existingProduct);
+	    // 商品情報の更新
+	    adminProductService.updateProduct(updatedProduct);
 
 		return "redirect:/admin/products";
 	}
@@ -174,7 +163,7 @@ public class AdminProductController {
 	/**
 	 * 商品の削除
 	 */
-	@PostMapping("/{id}/delete")
+	@PostMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable Integer id) {
 		adminProductService.deleteProduct(id);
 		return "redirect:/admin/products";
@@ -183,21 +172,28 @@ public class AdminProductController {
 	/**
 	 * ProductForm → Product への変換
 	 */
-	public Products convertToEntity(ProductForm form, MultipartFile imageFile) {
-		Products product = new Products();
-		product.setName(form.getName());
-		product.setDescription(form.getDescription());
-		product.setPrice(form.getPrice());
-		product.setStock(form.getStock());
-
-		Categories category = adminCategoryService.getCategoryById(form.getCategoryId())
+	public Products convertToEntity(ProductForm form, MultipartFile imageFile, Products existingProduct) {
+		// 既存の Products が null であれば新しく作成、そうでなければ既存の商品を更新
+	    Products product = existingProduct != null ? existingProduct : new Products();
+	    
+	    // Products product = new Products();
+	    product.setId(form.getId()); // IDの設定（編集時に使う）
+	    product.setName(form.getName());
+	    product.setDescription(form.getDescription());
+	    product.setPrice(form.getPrice());
+	    product.setStock(form.getStock());
+	 
+	    Categories category = adminCategoryService.getCategoryById(form.getCategoryId())
 				.orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
 		product.setCategory(category);
 
 		if (imageFile != null && !imageFile.isEmpty()) {
 			String imagePath = adminProductService.saveImage(imageFile, category);
 			product.setImagePath(imagePath);
-		}
+		} else if (existingProduct != null) {
+	        // 画像が変更されていない場合、既存の画像パスを保持
+	        product.setImagePath(existingProduct.getImagePath());
+	    }
 
 		return product;
 	}
@@ -207,7 +203,9 @@ public class AdminProductController {
 	 */
 	public ProductForm convertToForm(Products product) {
 		ProductForm form = new ProductForm();
+		form.setId(product.getId());
 		form.setName(product.getName());
+		form.setExistingImagePath(product.getImagePath());
 		form.setDescription(product.getDescription());
 		form.setPrice(product.getPrice());
 		form.setStock(product.getStock());
