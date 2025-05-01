@@ -1,6 +1,12 @@
 package com.example.mgmgapp.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import lombok.Data;
 
 /**
@@ -19,8 +25,8 @@ public class Categories {
     private Integer id;
 
     /**
-     * カテゴリ名（not null、最大200文字、一意）
+     * カテゴリ名（not null、最大30文字、一意）
      */
-    @Column(name = "name", nullable = false, length = 200, unique = true)
+    @Column(name = "name", nullable = false, length = 30, unique = true)
     private String name;
 }
