@@ -19,16 +19,16 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-8">注文商品件数</div>
-                            <div class="col-4 text-end" th:text="${orderCount}">1</div>
+                            <div class="col-8">注文件数</div>
+                            <div class="col-4 text-end" th:text="${OrderCount()}">0</div>
                         </div>
                         <div class="row">
                             <div class="col-8">対応済み</div>
-                            <div class="col-4 text-end" th:text="${completedOrderCount}">1</div>
+                            <div class="col-4 text-end" th:text="${completedOrderCount}">0</div>
                         </div>
                         <div class="row">
                             <div class="col-8">未対応</div>
-                            <div class="col-4 text-end" th:text="${pendingOrderCount}">1</div>
+                            <div class="col-4 text-end" th:text="${pendingOrderCount}">0</div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-8">本日の売上金額</div>
-                            <div class="col-4 text-end" th:text="${todaySalesAmount}">1</div>
+                            <div class="col-4 text-end" th:text="${todaySalesAmount}">0</div>
                         </div>
                         <div class="btn-group w-100">
                             <button class="btn btn-dark active" onclick="updateSalesData('weekly')">週間</button>

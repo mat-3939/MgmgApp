@@ -30,14 +30,14 @@ public class AdminSalesController {
         /*注文数の未対応の合計*/
         model.addAttribute("pendingOrderCount", adminSalesService.getPendingOrderCount());
         
-        /*本日の売上金額*/
-        model.addAttribute("todaySalesAmount", adminSalesService.getTodaySalesAmount());
-        /*週間の売上金額*/
-        model.addAttribute("weeklySalesAmount", adminSalesService.getWeeklySalesAmount());
-        /*月間の売上金額*/
-        model.addAttribute("monthlySalesAmount", adminSalesService.getMonthlySalesAmount());
-        /*年間の売上金額*/
-        model.addAttribute("yearlySalesAmount", adminSalesService.getYearlySalesAmount());
+        /*本日の売上金額 - 整数に変換*/
+        model.addAttribute("todaySalesAmount", adminSalesService.getTodaySalesAmount().intValue());
+        /*週間の売上金額 - 整数に変換*/
+        model.addAttribute("weeklySalesAmount", adminSalesService.getWeeklySalesAmount().intValue());
+        /*月間の売上金額 - 整数に変換*/
+        model.addAttribute("monthlySalesAmount", adminSalesService.getMonthlySalesAmount().intValue());
+        /*年間の売上金額 - 整数に変換*/
+        model.addAttribute("yearlySalesAmount", adminSalesService.getYearlySalesAmount().intValue());
 
         /*週間の売上件数*/
         model.addAttribute("weeklySalesCount", adminSalesService.getWeeklySalesCount());
@@ -56,15 +56,15 @@ public class AdminSalesController {
         
         switch (period) {
             case "weekly":
-                response.put("amount", adminSalesService.getWeeklySalesAmount());
+                response.put("amount", adminSalesService.getWeeklySalesAmount().intValue());
                 response.put("count", adminSalesService.getWeeklySalesCount());
                 break;
             case "monthly":
-                response.put("amount", adminSalesService.getMonthlySalesAmount());
+                response.put("amount", adminSalesService.getMonthlySalesAmount().intValue());
                 response.put("count", adminSalesService.getMonthlySalesCount());
                 break;
             case "yearly":
-                response.put("amount", adminSalesService.getYearlySalesAmount());
+                response.put("amount", adminSalesService.getYearlySalesAmount().intValue());
                 response.put("count", adminSalesService.getYearlySalesCount());
                 break;
         }

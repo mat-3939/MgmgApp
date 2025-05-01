@@ -20,9 +20,26 @@ public class AdminSalesService {
     private final AdminOrderRepository adminOrderRepository;
     private final AdminOrderItemRepository adminOrderItemRepository;
     
-    /*注文数の合計を取得*/
+    //次回ここから
+    /*注文件数の合計を取得*/
     public int getOrderCount() {
+        return adminOrderItemRepository.countDistinctOrderCount()
+        + adminOrderItemRepository.findAllDistinctOrderIds();
+    }
+
+    /*注文商品の合計数を取得（各注文の商品数を合計）*/
+    public int getTotalItemCount() {
         return adminOrderItemRepository.findAll().size();
+    }
+
+    /*注文ごとの平均商品数を取得*/
+    public double getAverageItemsPerOrder() {
+        int orderCount = getOrderCount();
+        if (orderCount == 0) {
+            return 0;
+        }
+        int totalItems = getTotalItemCount();
+        return (double) totalItems / orderCount;
     }
 
     /*注文数の対応済みの合計を取得*/
@@ -86,11 +103,10 @@ public class AdminSalesService {
     }
 
     /*年間の売上金額を取得*/
-    public BigDecimal getYearlySalesCount() {
-        return adminOrderItemRepository.findAll().stream()
+    public int getYearlySalesCount() {
+        return (int) adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusYears(1)))
-            .map(orderItem -> orderItem.getProduct().getPrice())
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .count();
     }    
     
 }
