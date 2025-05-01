@@ -1,11 +1,18 @@
 package com.example.mgmgapp.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+import lombok.Data;
 
 /**
  * 商品情報を管理するエンティティクラス
@@ -13,7 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Data
 @Entity
 @Table(name = "products")
-public class Product {
+public class Products {
     
     /**
      * 商品ID（主キー）
@@ -23,9 +30,9 @@ public class Product {
     private Integer id;
     
     /**
-     * 商品名（not null、最大200文字、一意）
+     * 商品名（not null、最大30文字、一意）
      */
-    @Column(name = "name", nullable = false, length = 200, unique = true)
+    @Column(name = "name", nullable = false, length = 30, unique = true)
     private String name;
     
     /**
@@ -57,18 +64,17 @@ public class Product {
      */
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Categories category_id;
+    private Categories category;
     
     /**
-     * 作成日時（not null）
+     * 作成日時
      */
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     
     /**
-     * 更新日時（not null）
+     * 更新日時
      */
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }
