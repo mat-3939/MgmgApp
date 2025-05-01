@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>products</title>
+<title>商品詳細</title>
 </head>
 <body>
-	<h2>products 詳細</h2>
+	<section>
+	<!--パンくず-->
+	<p><a th:href="@{/}">トップ</a> > <a th:href="@{/products}">商品一覧</a> > <span th:text="${product.name}"></span></p>
 		
+		<!--商品詳細-->
 		<div th:if="${product != null}">
 			<!--左サイド　商品画像-->
 			<div>
@@ -15,17 +18,27 @@
 			<!--右サイド　テキスト-->
 			<div>
 				<!--商品名-->
-				<p th:text="${product.name}"></p>
+				<h2 th:text="${product.name}"></h2>
 				<!--価格-->
-				<p th:text="${product.price}"></p>
+				<p>￥<span th:text="${product.price}">価格</span><span>（税込）</span></p>
 				<!--説明文-->
 				<p th:text="${product.description}"></p>
 			</div>
 		</div>
 		
-		<!--<a th:href="@{/products/form}">新規登録</a>-->
-		<br>
-		<!-- top画面へ -->
-		<!--<a th:href="@{/}">topへ戻る</a>-->
+		<!--人気５-->
+		<div>
+			<h3>オンラインショップで人気の商品</h3>
+			<ul>
+				<li><a th:href="@{/products_detail/1}"><img th:src="@{/img/washoku/w_01.jpg}" alt="和食1"></a></li>
+				<li><a th:href="@{/products_detail/7}"><img th:src="@{/img/yoshoku/y_01.jpg}" alt="洋食1"></a></li>
+				<li><a th:href="@{/products_detail/13}"><img th:src="@{/img/chuka/c_01.jpg}" alt="中華1"></a></li>
+				<li><a th:href="@{/products_detail/19}"><img th:src="@{/img/other/s_01.jpg}" alt="その他1"></a></li>
+				<li><a th:href="@{/products_detail/3}"><img th:src="@{/img/washoku/w_03.jpg}" alt="和食3"></a></li>
+			</ul>
+		</div>
+		
+	</section>
+		
 </body>
 </html>
