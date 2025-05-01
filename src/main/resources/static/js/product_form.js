@@ -3,6 +3,18 @@
  */
 
 document.addEventListener("DOMContentLoaded", function () {
+	const deleteForms = document.querySelectorAll(".delete-form");
+
+	deleteForms.forEach(function (form) {
+		form.addEventListener("submit", function (e) {
+			const productName = form.dataset.name || "この商品";
+	        const confirmed = confirm(`「${productName}」 を本当に削除しますか？`);
+			if (!confirmed) {
+				e.preventDefault(); // キャンセルされた場合は送信させない
+			}
+		});
+	});
+		
     const dropZone = document.querySelector('.image-upload');
     const fileInput = document.querySelector('#imageFile');
 

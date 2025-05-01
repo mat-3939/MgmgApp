@@ -40,6 +40,7 @@
             <th>在庫数</th>
             <th>登録日</th>
             <th>更新日</th>
+			<th></th>
         </tr>
     </thead>
     <tbody>
@@ -56,9 +57,17 @@
             <td th:text="${product.stock}">100</td>
             <td th:text="${#temporals.format(product.createdAt, 'yyyy/MM/dd')}">2025/04/22</td>
             <td th:text="${#temporals.format(product.updatedAt, 'yyyy/MM/dd')}">2025/04/01</td>
+			<form th:action="@{/admin/products/delete/{id}(id=${product.id})}" 
+			      class="delete-form" 
+				  method="post" 
+				  th:attr="data-name=${product.name}">
+				<input type="hidden" name="_method" value="delete">
+				<td><button type="submit" class="delete-button" th:text="削除">削除</button></td>
+			</form>
         </tr>
     </tbody>
 </table>
 
+<script src="/js/product_form.js"></script>
 </body>
 </html>
