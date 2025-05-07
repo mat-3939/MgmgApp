@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>トップページ</title>
+<link href="/index.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<section>
+		<!--カルーセル-->
+		<div class="carousel">
+			<ul>
+				<li><a href="/"><img src="/img/banner/dummy01.png" alt="ダミーバナー01"></a></li>
+				<li><a href="/"><img src="/img/banner/dummy02.png" alt="ダミーバナー02"></a></li>
+				<li><a href="/"><img src="/img/banner/dummy03.png" alt="ダミーバナー03"></a></li>
+				<li><a href="/"><img src="/img/banner/dummy04.png" alt="ダミーバナー04"></a></li>
+			</ul>
+			<!--ドットナビ-->
+			<div class="dots">
+			    <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+			  </div>
+		</div>		
+		
+		<!--人気５-->
+		<div class="pickUp">
+			<h3>オンラインショップで人気の商品</h3>
+			<ul>
+				<li><a href="/products_detail/101"><img src="/img/washoku/w_01.jpg" alt="和食1"></a></li>
+				<li><a href="/products_detail/201"><img src="/img/yoshoku/y_01.jpg" alt="洋食1"></a></li>
+				<li><a href="/products_detail/301"><img src="/img/chuka/c_01.jpg" alt="中華1"></a></li>
+				<li><a href="/products_detail/401"><img src="/img/other/s_01.jpg" alt="その他1"></a></li>
+				<li><a href="/products_detail/103"><img src="/img/washoku/w_03.jpg" alt="和食3"></a></li>
+			</ul>
+			
+			<p class="moreBtn"><a href="/products">もっと見る</a></p>
+		</p>
+		
+	</section>
+	
+	<!--カルーセルのjs-->
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+		  const carousel = document.querySelector(".carousel ul");
+		  const dots = document.querySelectorAll(".dot");
+		  const slides = document.querySelectorAll(".carousel li");
+		  const totalSlides = slides.length;
+		  let currentIndex = 0;
+		  let autoSlide;
+
+		  function updateCarousel() {
+		    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+		    dots.forEach((dot, i) => {
+		      dot.classList.toggle("active", i === currentIndex);
+		    });
+		  }
+
+		  function startAutoSlide() {
+		    autoSlide = setInterval(() => {
+		      currentIndex = (currentIndex + 1) % totalSlides;
+		      updateCarousel();
+		    }, 5000); // 5秒ごと
+		  }
+
+		  // ドットクリックでスライド切り替え
+		  dots.forEach((dot, i) => {
+		    dot.addEventListener("click", () => {
+		      currentIndex = i;
+		      updateCarousel();
+
+		      // 自動スライドをリセット
+		      clearInterval(autoSlide);
+		      startAutoSlide();
+		    });
+		  });
+
+		  updateCarousel();   // 初期表示の更新
+		  startAutoSlide();   // 自動スライド開始
+		});
+	</script>
+</body>
+</html>

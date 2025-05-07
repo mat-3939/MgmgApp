@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+/*カルーセル*/
+
+.carousel {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  transition: transform 1.2s ease;
+  width: 400%; /* 画像の枚数 × 100% */
+}
+
+.carousel li {
+  flex: 0 0 100%;
+}
+
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  background-color: #ccc;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #f7931e;
+}
+
+/*人気５*/
+.pickUp ul {
+    display: flex;
+	flex-wrap: wrap;
+	justify-content:space-between;
+}
+.pickUp ul li{
+	list-style: none;
+	width:calc(95% / 5);
+		overflow: hidden;
+}
+.pickUp ul li img {
+    width: 100%;
+}
