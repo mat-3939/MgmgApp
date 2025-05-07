@@ -6,12 +6,18 @@
     <title>注文完了</title>
 </head>
 <body>
-<h1>ご注文ありがとうございます。</h1>
+<h1>ご注文ありがとうございました</h1>
 
-<p>ご注文が正常に完了しました。</p>
-<p>確認メールを <span th:text="${order.email}"></span> 宛に送信しました。</p>
-<p>またのご利用をお待ちしております。</p>
+<p>ご注文内容を受け付けました。確認のメールを送信しています。</p>
 
-<a th:href="@{/}" style="text-decoration: underline;">トップページへ戻る</a>
+<h2>注文番号: <span th:text="${order.id}"></span></h2>
+<p>注文日時: <span th:text="${order.orderDate}"></span></p>
+<p>合計金額: ¥<span th:text="${order.totalPrice}"></span></p>
+
+<p>商品は以下の住所へ配送されます：</p>
+<p th:text="${order.prefecture} + ' ' + ${order.city} + ' ' + ${order.addressLine} + ' ' + ${order.building}"></p>
+
+<p>今後ともMGMG公式通信をご利用いただけますようお願い申し上げます。</p>
+<a th:href="@{/products}">商品一覧へ戻る</a>
 </body>
 </html>

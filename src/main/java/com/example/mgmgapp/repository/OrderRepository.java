@@ -3,7 +3,7 @@ package com.example.mgmgapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.mgmgapp.entity.Order;
+import com.example.mgmgapp.entity.Orders;
 
-public interface OrderRepository extends JpaRepository<Order, Integer> {
+public interface OrderRepository extends JpaRepository<Orders, Integer> {
 }

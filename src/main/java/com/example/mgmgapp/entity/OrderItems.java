@@ -1,31 +1,56 @@
 package com.example.mgmgapp.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.math.BigDecimal;
 
-@Data // Lombokが自動でgetter/setter、toString、equals、hashCodeを生成
-@Entity // JPAのエンティティ（データベースのテーブルに対応）
-@Table(name = "order_items") // 対応するテーブル名を明示
-public class OrderItem {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-    @Id // 主キー
+import lombok.Data;
+
+/**
+ * 注文商品情報を管理するエンティティクラス
+ */
+@Data
+@Entity
+@Table(name = "order_items")
+public class OrderItems {
+
+    /**
+     * 注文商品ID（主キー）
+     */
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 注文商品ID（自動採番）
-
-    @ManyToOne // 多対一のリレーション：複数のOrderItemが1つのOrderに属する
+    private Integer id;
+    
+    /**
+     * 注文ID（not null、多対一の関連）
+     */
+    @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order; // 紐づく親注文（order_items.order_id → orders.id）
+    private Orders order;
 
-    @Column(name = "product_name", nullable = false)
-    private String productName; // 商品名（商品IDと分けて保存。履歴保持のため）
+    /**
+     * 商品ID（not null、多対一の関連）
+     */
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Products product;
 
+    /**
+     * 注文数量（not null）
+     */
     @Column(name = "quantity", nullable = false)
-    private Integer quantity; // 注文数量（1以上）
+    private Integer quantity;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price; // 単価（注文時点の金額で保存）
-
-    // 合計金額は単価×数量で算出可能なため、あえて保存していない（冗長性回避）
+    /**
+     * 注文時の商品単価（not null、小数点以下2桁まで）
+     */
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 }

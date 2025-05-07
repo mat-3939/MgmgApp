@@ -2,6 +2,7 @@ package com.example.mgmgapp.form;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import lombok.Data;
 
@@ -19,19 +20,35 @@ public class OrderForm {
     private String email;
 
     @NotBlank(message = "郵便番号を入力してください")
+    @Pattern(regexp = "^[0-9]{3}-?[0-9]{4}$", message = "郵便番号の形式が正しくありません")
     private String postcode;
 
+
+    
+    @NotBlank(message = "都道府県を入力してください")
+    private String prefecture;
+
+    @NotBlank(message = "市区町村を入力してください")
+    private String city;
+
     @NotBlank(message = "住所を入力してください")
-    private String address;
+    private String addressLine;
+
+    private String building; // 建物名は任意なので @NotBlank なし
+
 
     @NotBlank(message = "電話番号を入力してください")
+    @Pattern(regexp = "^[0-9]{10,11}$", message = "電話番号は10～11桁の数字で入力してください")
     private String tel;
+
 
     @NotBlank(message = "カード番号を入力してください")
     private String cardNumber;
 
     @NotBlank(message = "カード有効期限を入力してください")
+    @Pattern(regexp = "^(0[1-9]|1[0-2])/\\d{2}$", message = "有効期限はMM/YY形式で入力してください")
     private String cardExpiry;
+
 
     @NotBlank(message = "セキュリティコードを入力してください")
     private String cardCvv;
