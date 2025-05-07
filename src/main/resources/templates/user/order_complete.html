@@ -1,0 +1,17 @@
+<!-- order_complete.html - 注文完了画面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注文完了</title>
+</head>
+<body>
+<h1>ご注文ありがとうございます。</h1>
+
+<p>ご注文が正常に完了しました。</p>
+<p>確認メールを <span th:text="${order.email}"></span> 宛に送信しました。</p>
+<p>またのご利用をお待ちしております。</p>
+
+<a th:href="@{/}" style="text-decoration: underline;">トップページへ戻る</a>
+</body>
+</html>
