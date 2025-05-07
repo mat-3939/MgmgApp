@@ -109,7 +109,7 @@ public class AdminProductService {
      * 指定したカテゴリの商品一覧を取得する
      */
     public List<Products> findByCategoryId(Integer categoryId) {
-        return adminProductRepository.findByCategoryId(categoryId);
+        return adminProductRepository.findByCategoryIdOrderByCreatedAtDesc(categoryId);
     }
 
     /**

@@ -4,9 +4,11 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f5f5f5;
+    background-color: rgba(225, 225, 225)
+;
     margin: 0;
-    color: #333;
+    color: rgba(51, 51, 51)
+;
 }
 
 h1 {
@@ -29,80 +31,112 @@ h1 {
 
 .new-button,
 .search-button {
-	background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    font-weight: bold;
-    border-radius: 6px;
+	align-items: stretch;
+    display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.list-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px;
+}
+
+.list-button {
     display: inline-block;
+}
+
+.search-button,
+.new-button,
+.list-button {
+	color: rgba(255,255,255);
+	font-size: 16px;
+	font-weight: bold;
+	background-color: rgba(0,110,188);
+	border-radius: 6px;
+	padding: 10px 30px;
+	text-decoration: none;
+	transition: background-color 0.2s ease;
+}
+
+.search-button {
+	margin-top: 16px;
+}
+
+#fot-button {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .delete-button {
-	background-color: #f44336;
-    color: white;
-	font-size: 14px;
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    display: inline-block;
+	text-align: center;
+	background-color: rgba(255,255,255);
 }
 
-.new-button:hover {
-	background-color: #0056b3;
+.delete-icon {
+	height: 28px;
+}
+
+.search-button:hover,
+.new-button:hover,
+.list-button:hover {
+	background-color: rgba(0, 86, 179);
+}
+
+.no-result-message {
+	font-size: 20px;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
 }
 
 button,
 a.button {
-    padding: 10px 24px;
+    padding: 10px 20px;
     border: none;
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     text-decoration: none;
-    color: white;
+    color: rgba(255,255,255);
     font-weight: 500;
     transition: background-color 0.2s ease;
-}
-
-.button-blue {
-    background-color: #007BFF;
-}
-
-.button-blue:hover {
-    background-color: #0056b3;
 }
 
 input[type="text"],
 input[type="number"],
 textarea,
 select {
-    width: 100%;
+    width: 96%;
     padding: 10px 14px;
     font-size: 14px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,0.2);
     border-radius: 6px;
-    background-color: #fff;
+    background-color: rgba(255,255,255);
     transition: border-color 0.2s;
+	position: relative;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #007BFF;
+    border-color: rgba(0,110,188);
     outline: none;
 }
 
 label {
     font-weight: bold;
     display: block;
-    margin-bottom: 6px;
+	align-items: center;
+    margin-bottom: 10px;
 }
 
 .error {
-    color: red;
+    color: rgba(244, 67, 54);
     font-size: 12px;
     margin-top: 4px;
     display: block;
 }
-

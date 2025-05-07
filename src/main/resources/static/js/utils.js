@@ -1,8 +1,15 @@
-/**
- * 画像プレビュー
- */
-
 document.addEventListener("DOMContentLoaded", function () {
+	const searchButton = document.querySelector('.search-button');
+	if (searchButton) {
+		searchButton.addEventListener('click', function (event) {
+			const keywordInput = document.querySelector('.keyword');
+	        if (keywordInput && keywordInput.value.trim() === "") {
+				event.preventDefault();
+				alert("商品名を入力してください");
+			}
+		});
+	}
+	
 	const deleteForms = document.querySelectorAll(".delete-form");
 
 	deleteForms.forEach(function (form) {

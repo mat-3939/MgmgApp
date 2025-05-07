@@ -32,7 +32,7 @@ public interface AdminProductRepository extends JpaRepository<Products, Integer>
     /**
      * 指定したカテゴリの商品一覧を取得
      */
-    List<Products> findByCategoryId(Integer categoryId);
+    List<Products> findByCategoryIdOrderByCreatedAtDesc(Integer categoryId);
 
     // --- 価格範囲検索 ---
 

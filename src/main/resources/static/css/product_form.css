@@ -8,11 +8,12 @@
     display: flex;
     gap: 20px;
     padding: 0 20px;
+	margin-bottom: 120px;
 }
 
 .form-section,
 .category-section {
-    background-color: white;
+    background-color: rgba(255,255,255);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -26,24 +27,34 @@
     flex: 1;
 }
 
+.category-items {
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 6px;
+	padding: 20px;
+	margin-top: 20px;
+}
+
 h2 {
     margin-top: 0;
     font-size: 20px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+	padding-bottom: 20px;
+/*	border-bottom: 1px solid rgba(0,0,0,0.2);*/
 }
 
 .form-group {
-    margin-bottom: 16px;
+	width: 100%;
+    margin-bottom: 24px;
 }
 
 .required::after {
     content: "必須";
-    color: #fff;
-    background-color: #007BFF;
-    padding: 2px 6px;
+    color: rgba(255,255,255);
+    background-color: rgba(244, 67, 54);
+    padding: 2px 4px;
+	margin-left: 10px;
     border-radius: 4px;
     font-size: 12px;
-    margin-left: 6px;
 }
 
 textarea {
@@ -83,19 +94,10 @@ textarea {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #444;
-    padding: 10px 20px;
+    background-color: rgba(0,0,0,0.7);
+    padding: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     z-index: 100;
-}
-
-.back-button {
-    display: flex;
-    align-items: center;
-}
-
-.submit-button {
-    background-color: #007BFF;
+	justify-content: space-between;
 }

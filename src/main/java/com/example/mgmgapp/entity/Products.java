@@ -81,20 +81,32 @@ public class Products {
     private LocalDateTime updatedAt;
     
     /**
-     * 登録日を自動で設定
+     * 新規登録時の追加設定
      */
     @PrePersist
     public void onPrePersist() {
+    	//在庫数がnull時に100を代入
+    	if (stock == null) {
+            stock = 100;
+        }
+    	
+    	//新規登録時に登録日時を自動で設定
     	LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
         this.createdAt = now;
         this.updatedAt = now; // 登録時に更新日も設定
     }
 
     /**
-     * 更新日を自動で設定
+     * 更新時の追加設定
      */
     @PreUpdate
     public void onPreUpdate() {
+    	//在庫数がnull時に100を代入
+    	if (stock == null) {
+            stock = 100;
+        }
+    	
+    	//更新時に更新日時を自動で設定
         this.updatedAt = LocalDateTime.now().withSecond(0).withNano(0);
     }
 }

@@ -52,7 +52,7 @@
 
 			<!-- 価格 -->
             <div class="form-group">
-                <label for="price" class="required">価格（税込み）</label>
+                <label for="price" class="required">価格 (税込)</label>
                 <input type="number" id="price" th:field="*{price}" step="0.01" />
                 <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></span>
             </div>
@@ -67,7 +67,8 @@
 
         <!-- カテゴリ -->
         <div class="category-section">
-            <h2>カテゴリ</h2>
+            <h2 class="required">カテゴリ</h2>
+			<div class="category-items">
             <div th:each="category : ${categories}" class="category-option">
                 <label>
                     <input type="radio" th:field="*{categoryId}" th:value="${category.id}" />
@@ -75,13 +76,14 @@
                 </label>
             </div>
             <span th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" class="error"></span>
+			</div>
         </div>
     </div>
 
     <!-- フッター固定ボタン -->
     <div class="footer-buttons">
-        <a th:href="@{/admin/products}" class="button back-button">&#x25C0;&#x25C0; 商品一覧</a>
-        <button type="submit" class="new-button" th:text="${productForm.id != null ? '更新' : '登録'}">登録</button>
+        <a th:href="@{/admin/products}" class="button back-button">&#x25C0;&#x25C0;　商品一覧</a>
+        <button type="submit" id="fot-button" class="new-button" th:text="${productForm.id != null ? '更新' : '登録'}">登録</button>
     </div>
 </form>
 

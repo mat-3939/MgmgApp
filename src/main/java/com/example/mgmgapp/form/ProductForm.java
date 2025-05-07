@@ -31,7 +31,7 @@ public class ProductForm {
     private Integer id;
 	
 	/**
-     * 商品名（必須、最大200文字）
+     * 商品名（必須、最大30文字）
      * 一意である必要があるため、登録時に重複チェックを行う。
      */
 	@NotBlank(message = "商品名を入力してください")
@@ -54,9 +54,8 @@ public class ProductForm {
 
     /**
      * 在庫数（必須）
-     * デフォルトで100以上の整数を想定。
+     * デフォルトで100を設定。
      */
-	@NotNull(message = "在庫数を入力してください")
     @Min(value = 100, message = "在庫数は100以上を入力してください")
     private Integer stock;
 

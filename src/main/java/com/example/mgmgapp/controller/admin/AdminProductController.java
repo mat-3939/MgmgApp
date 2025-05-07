@@ -3,7 +3,6 @@ package com.example.mgmgapp.controller.admin;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import jakarta.validation.Valid;
 
@@ -64,32 +63,34 @@ public class AdminProductController {
 			products = adminProductService.getSortedProducts(sort);
 		}
 
+//		System.out.println("カテゴリ数: " + adminCategoryService.findAll().size());
 		model.addAttribute("products", products);
+		model.addAttribute("categories", adminCategoryService.findAll());
 		return "admin/products";
 	}
+
 	/**
 	 * 商品名または商品IDで検索
 	 */
 	@GetMapping("/search")
     public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
-		// 結果リストを初期化
-	    List<Products> resultList = new ArrayList<>();
-	    
-	    // キーワードが空の場合、エラーメッセージを表示
+		// キーワード未入力時：画面遷移なし → JavaScriptで制御
 	    if (keyword == null || keyword.trim().isEmpty()) {
-	        model.addAttribute("errorMessage", "キーワードを入力して下さい");
-	        return "admin/products";  // 検索ページに戻す
+	        model.addAttribute("errorMessage", "商品名を入力して下さい");
+	        return "admin/products";  // ページ遷移なし
 	    }
 	    
 	    keyword = keyword.trim();
 	    
+	    // 結果リストを初期化
+	    List<Products> resultList = new ArrayList<>();
+	    
 	    try {
 	        // 商品IDで検索（数字の場合）
 	        Integer id = Integer.valueOf(keyword);
-	        Optional<Products> byId = adminProductService.getProductById(id);
-	        byId.ifPresent(resultList::add);
+	        adminProductService.getProductById(id).ifPresent(resultList::add);
 	    } catch (NumberFormatException e) {
-	        // 数字でなければ名前検索へ
+	        // 数字でなければ商品名検索へ
 	    }
 	    
 	    // 商品名で部分一致検索
@@ -100,13 +101,19 @@ public class AdminProductController {
 	        }
 	    }
 	    
+	    // 登録日降順でソート
+	    resultList.sort((p1, p2) -> p2.getCreatedAt().compareTo(p1.getCreatedAt()));
+	    
 	    // 検索結果が0件の場合のメッセージを表示
 	    if (resultList.isEmpty()) {
-	        model.addAttribute("message", "該当商品が見つかりませんでした");
+	        model.addAttribute("message", "検索結果0件：該当する商品が見つかりませんでした");
+	        model.addAttribute("showBackButton", true);
 	    }
 	    
 	    model.addAttribute("products", resultList);
-	    return "admin/products"; // 結果表示ページ
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("categories", adminCategoryService.findAll());
+	    return "admin/products";
     }
 	
 	/**
@@ -116,6 +123,8 @@ public class AdminProductController {
 	public String listByCategory(@PathVariable Integer categoryId, Model model) {
 		List<Products> products = adminProductService.findByCategoryId(categoryId);
 		model.addAttribute("products", products);
+		model.addAttribute("categories", adminCategoryService.findAll());
+		model.addAttribute("selectedCategoryId", categoryId);
 		return "admin/products";
 	}
 
