@@ -37,8 +37,34 @@ public class Order {
     @Column(name = "postcode", nullable = false)
     private String postcode; // 郵便番号（配送先の特定に使用）
 
-    @Column(name = "address", nullable = false)
-    private String address; // 住所（配送先）
+
+    /**
+     * 都道府県（not null）
+     */
+    @Column(name = "prefecture", nullable = false)
+    private String prefecture;
+
+    /**
+     * 市区町村（not null）
+     */
+    @Column(name = "city", nullable = false)
+    private String city;
+
+    /**
+     * 住所（not null）
+     */
+    @Column(name = "address_line", nullable = false)
+    private String addressLine;
+
+    /**
+     * 建物名（null）
+     */
+    @Column(name = "building", nullable = true)
+    private String building;
+    
+    /**
+     * 電話番号（not null）
+     */
 
     @Column(name = "tel", nullable = false)
     private String tel; // 電話番号（緊急連絡や配送時の連絡に使用）
