@@ -47,6 +47,7 @@ public class AdminProductController {
 	 */
 	@GetMapping
 	public String listProducts(
+			@RequestParam(required = false) Integer categoryId,
 			@RequestParam(required = false) String keyword,
 			@RequestParam(required = false) BigDecimal minPrice,
 			@RequestParam(required = false) BigDecimal maxPrice,
@@ -55,17 +56,21 @@ public class AdminProductController {
 
 		List<Products> products;
 
+		// フィルタリング条件の分岐
 		if (keyword != null && !keyword.isEmpty()) {
 			products = adminProductService.searchByKeyword(keyword);
 		} else if (minPrice != null && maxPrice != null) {
 			products = adminProductService.searchByPriceRange(minPrice, maxPrice);
-		} else {
-			products = adminProductService.getSortedProducts(sort);
-		}
+		} else if (categoryId != null) {
+	        products = adminProductService.findByCategoryIdSorted(categoryId, sort);
+	    } else {
+	        products = adminProductService.getSortedProducts(sort);
+	    }
 
-//		System.out.println("カテゴリ数: " + adminCategoryService.findAll().size());
 		model.addAttribute("products", products);
-		model.addAttribute("categories", adminCategoryService.findAll());
+	    model.addAttribute("categories", adminCategoryService.findAll());
+	    model.addAttribute("selectedCategoryId", categoryId);
+	    model.addAttribute("sort", sort);
 		return "admin/products";
 	}
 

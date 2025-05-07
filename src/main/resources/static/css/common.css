@@ -4,11 +4,9 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: rgba(225, 225, 225)
-;
+    background-color: rgba(242, 242, 242);
     margin: 0;
-    color: rgba(51, 51, 51)
-;
+    color: rgba(51, 51, 51);
 }
 
 h1 {
@@ -26,7 +24,9 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 30px 40px 20px;
+	background-color: rgba(255, 255, 255);
+    margin: 0 0 50px 0;
+	padding: 0 40px 0 40px;
 }
 
 .new-button,
@@ -52,8 +52,8 @@ h1 {
 .new-button,
 .list-button {
 	color: rgba(255,255,255);
-	font-size: 16px;
-	font-weight: bold;
+	font-size: 14px;
+	font-weight: 400;
 	background-color: rgba(0,110,188);
 	border-radius: 6px;
 	padding: 10px 30px;
@@ -72,12 +72,15 @@ h1 {
 }
 
 .delete-button {
+	padding: 0;
 	text-align: center;
 	background-color: rgba(255,255,255);
 }
 
 .delete-icon {
-	height: 28px;
+	max-width: 24px;
+	    height: auto;
+	    object-fit: cover;
 }
 
 .search-button:hover,
@@ -97,12 +100,12 @@ button,
 a.button {
     padding: 10px 20px;
     border: none;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 8px;
     cursor: pointer;
     text-decoration: none;
     color: rgba(255,255,255);
-    font-weight: 500;
+    font-weight: 400;
     transition: background-color 0.2s ease;
 }
 
@@ -128,7 +131,6 @@ select:focus {
 }
 
 label {
-    font-weight: bold;
     display: block;
 	align-items: center;
     margin-bottom: 10px;

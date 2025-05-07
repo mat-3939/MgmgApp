@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -55,6 +56,11 @@ public interface AdminProductRepository extends JpaRepository<Products, Integer>
      * 登録日が古い順（昇順）
      */
     List<Products> findAllByOrderByCreatedAtAsc();
+    
+    /**
+     * 更新日が新しい順（降順）
+     */
+    List<Products> findAllByOrderByUpdatedAtDesc();
 
     /**
      * 価格が高い順（降順）
@@ -75,4 +81,9 @@ public interface AdminProductRepository extends JpaRepository<Products, Integer>
      * 名前順：逆順（降順）
      */
     List<Products> findAllByOrderByNameDesc();
+    
+    /**
+     * カテゴリ指定＆ソート条件
+     */
+    List<Products> findByCategoryId(Integer categoryId, Sort sort);
 }

@@ -22,7 +22,7 @@
 
 			<!-- 商品名 -->
             <div class="form-group">
-                <label for="name" class="required">商品名</label>
+                <label for="name" class="required">商品</label>
                 <input type="text" id="name" th:field="*{name}" />
                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
             </div>

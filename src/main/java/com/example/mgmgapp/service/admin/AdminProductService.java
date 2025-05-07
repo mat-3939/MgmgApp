@@ -124,14 +124,39 @@ public class AdminProductService {
      */
     public List<Products> getSortedProducts(String sortKey) {
         return switch (sortKey) {
-            case "price_asc" -> adminProductRepository.findAllByOrderByPriceAsc();
-            case "price_desc" -> adminProductRepository.findAllByOrderByPriceDesc();
-            case "name_asc" -> adminProductRepository.findAllByOrderByNameAsc();
-            case "name_desc" -> adminProductRepository.findAllByOrderByNameDesc();
-            case "old" -> adminProductRepository.findAllByOrderByCreatedAtAsc();
+            case "priceAsc" -> adminProductRepository.findAllByOrderByPriceAsc();
+            case "priceDesc" -> adminProductRepository.findAllByOrderByPriceDesc();
+            case "name" -> adminProductRepository.findAllByOrderByNameAsc();
+            case "update" -> adminProductRepository.findAllByOrderByUpdatedAtDesc();
             default -> adminProductRepository.findAllByOrderByCreatedAtDesc(); // "new" またはデフォルト
         };
     }
+    
+    /**
+     * カテゴリ指定＆ソート条件
+     */
+    public List<Products> findByCategoryIdSorted(Integer categoryId, String sort) {
+        Sort sorting;
+        switch (sort) {
+            case "update":
+                sorting = Sort.by(Sort.Direction.DESC, "updatedAt");
+                break;
+            case "name":
+                sorting = Sort.by(Sort.Direction.ASC, "name");
+                break;
+            case "priceAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "price");
+                break;
+            case "priceDesc":
+                sorting = Sort.by(Sort.Direction.DESC, "price");
+                break;
+            default:
+                sorting = Sort.by(Sort.Direction.DESC, "createdAt");
+                break;
+        }
+        return adminProductRepository.findByCategoryId(categoryId, sorting);
+    }
+
     
     /**
      * 画像保存処理
