@@ -75,4 +75,6 @@ public interface AdminOrderRepository extends JpaRepository<Orders, Integer> {
 
     /* 注文ステータスで検索（リスト） */
     List<Orders> findAllByStatus(Boolean status);
+
+    long countByOrderDateBetween(LocalDateTime start, LocalDateTime end);
 }

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.math.BigDecimal;
 
 /*ページURL(ホーム):http://localhost:8080/admin*/
 @Controller
@@ -23,6 +24,14 @@ public class AdminSalesController {
     /*ホーム*/
     @GetMapping("/admin")
     public String showAdminHome(Model model) {
+        // デバッグ情報を追加
+        BigDecimal todaySales = adminSalesService.getTodaySalesAmount();
+        System.out.println("本日の売上金額: " + todaySales);
+        
+        // 本日の注文数も確認
+        long todayOrderCount = adminSalesService.getTodayOrderCount(); // このメソッドは追加する必要があります
+        System.out.println("本日の注文数: " + todayOrderCount);
+        
         /*注文数の合計*/
         model.addAttribute("orderCount", adminSalesService.getOrderCount());
         /*注文数の対応済みの合計*/
@@ -31,7 +40,7 @@ public class AdminSalesController {
         model.addAttribute("pendingOrderCount", adminSalesService.getPendingOrderCount());
         
         /*本日の売上金額 - 整数に変換*/
-        model.addAttribute("todaySalesAmount", adminSalesService.getTodaySalesAmount().intValue());
+        model.addAttribute("todaySalesAmount", todaySales.intValue());
         /*週間の売上金額 - 整数に変換*/
         model.addAttribute("weeklySalesAmount", adminSalesService.getWeeklySalesAmount().intValue());
         /*月間の売上金額 - 整数に変換*/

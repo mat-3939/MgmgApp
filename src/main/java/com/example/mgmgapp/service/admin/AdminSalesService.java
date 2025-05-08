@@ -2,6 +2,7 @@ package com.example.mgmgapp.service.admin;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class AdminSalesService {
     //次回ここから
     /*注文件数の合計を取得*/
     public int getOrderCount() {
-        return adminOrderItemRepository.countDistinctOrderCount();
+        return (int) adminOrderRepository.count();
     }
 
     /*注文商品の合計数を取得（各注文の商品数を合計）*/
@@ -43,26 +44,29 @@ public class AdminSalesService {
 
     /*注文数の対応済みの合計を取得*/
     public int getCompletedOrderCount() {
-        return (int) adminOrderRepository.findAll().stream()
-            .filter(order -> order.getStatus() == true)
-            .count();
+        return adminOrderRepository.findAllByStatus(true).size();
     }
 
     /*注文数の未対応の合計を取得*/
     public int getPendingOrderCount() {
-        return (int) adminOrderRepository.findAll().stream()
-            .filter(order -> order.getStatus() == false)
-            .count();
+        return adminOrderRepository.findAllByStatus(false).size();
     }
 
     /*本日の売上金額を取得*/
     public BigDecimal getTodaySalesAmount() {
-        return adminOrderItemRepository.findAll().stream()
-            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().equals(LocalDate.now()))
-            .map(orderItem -> orderItem.getPrice() != null ? 
-                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
-                BigDecimal.ZERO)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal amount = adminOrderItemRepository.findTodaySalesAmount();
+        return amount != null ? amount : BigDecimal.ZERO;
+    }
+
+    /**
+     * 本日の注文数を取得するメソッド
+     * @return 本日の注文数
+     */
+    public long getTodayOrderCount() {
+        LocalDateTime startOfDay = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime endOfDay = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+        
+        return adminOrderRepository.countByOrderDateBetween(startOfDay, endOfDay);
     }
 
     /*週間の売上金額を取得*/
