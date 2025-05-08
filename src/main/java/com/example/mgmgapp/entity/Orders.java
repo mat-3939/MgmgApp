@@ -52,28 +52,10 @@ public class Orders {
     private String postcode;
 
     /**
-     * 都道府県（not null）
-     */
-    @Column(name = "prefecture", nullable = false)
-    private String prefecture;
-
-    /**
-     * 市区町村（not null）
-     */
-    @Column(name = "city", nullable = false)
-    private String city;
-
-    /**
      * 住所（not null）
      */
-    @Column(name = "address_line", nullable = false)
-    private String addressLine;
-
-    /**
-     * 建物名（null）
-     */
-    @Column(name = "building", nullable = true)
-    private String building;
+    @Column(name = "address", nullable = false)
+    private String address;
     
     /**
      * 電話番号（not null）
@@ -94,9 +76,9 @@ public class Orders {
     private BigDecimal totalPrice;
     
     /**
-     * 注文作成日時
+     * 注文作成日時（not null）
      */
-    @Column(name = "order_date")
+    @Column(name = "order_date", nullable = false)
     private LocalDateTime orderDate;
 
     /**

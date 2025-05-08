@@ -1,0 +1,55 @@
+<!-- order_confirm.html - 注文確認画面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注文内容の確認</title>
+</head>
+<body>
+<h1>注文内容の確認</h1>
+<form th:action="@{/orders/complete}" th:object="${orderForm}" method="post">
+    <h2>連絡先</h2>
+    <p>メールアドレス: <span th:text="*{email}"></span></p>
+
+    <h2>お届け先</h2>
+    <p>名前: <span th:text="*{lastName}"></span> <span th:text="*{firstName}"></span></p>
+    <p>郵便番号: <span th:text="*{postcode}"></span></p>
+    <p>住所: <span th:text="*{address}"></span></p>
+    <p>電話番号: <span th:text="*{tel}"></span></p>
+
+    <h2>お支払い</h2>
+    <p>カード番号: ****-****-****-<span th:text="*{cardNumber.substring(cardNumber.length() - 4)}"></span></p>
+    <p>有効期限: <span th:text="*{cardExpiry}"></span></p>
+    <p>セキュリティコード: ●●●</p>
+    <p>カード名義人: <span th:text="*{cardHolderName}"></span></p>
+
+    <h2>ご注文商品</h2>
+    <div th:each="item : ${cartItems}">
+        <p>商品名: <span th:text="${item.product.name}"></span></p>
+        <p>数量: <span th:text="${item.quantity}"></span></p>
+        <p>小計: ¥<span th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 1, 'COMMA', 2, 'POINT')}"></span></p>
+        <hr>
+    </div>
+    <p><strong>合計（税込）: ¥<span th:text="${totalPrice}"></span></strong></p>
+
+    <!-- hiddenフィールドでフォーム情報を保持 -->
+    <input type="hidden" th:field="*{email}" />
+    <input type="hidden" th:field="*{lastName}" />
+    <input type="hidden" th:field="*{firstName}" />
+    <input type="hidden" th:field="*{postcode}" />
+    <input type="hidden" th:field="*{address}" />
+    <input type="hidden" th:field="*{tel}" />
+    <input type="hidden" th:field="*{cardNumber}" />
+    <input type="hidden" th:field="*{cardExpiry}" />
+    <input type="hidden" th:field="*{cardCvv}" />
+    <input type="hidden" th:field="*{cardHolderName}" />
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button type="submit" class="btn btn-success">注文を確定する</button>
+        <div style="margin-top: 10px;">
+            <a th:href="@{/orders/form}" style="text-decoration: underline; color: #007bff;">← 戻って修正する</a>
+        </div>
+    </div>
+</form>
+</body>
+</html>

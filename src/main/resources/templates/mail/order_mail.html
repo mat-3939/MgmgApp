@@ -1,0 +1,39 @@
+<!-- mail/order_mail.html - 注文完了メールテンプレート -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ご注文ありがとうございます</title>
+</head>
+<body>
+<p><span th:text="${name}"></span> 様</p>
+
+<p>この度はMGMGをご利用いただき、誠にありがとうございます。</p>
+
+<h3>ご注文内容</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>商品名</th>
+        <th>数量</th>
+        <th>金額</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cartItems}">
+        <td th:text="${item.product.name}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td>¥<span th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 1, 'COMMA', 2, 'POINT')}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+<p><strong>合計金額（税込）: ¥<span th:text="${totalPrice}"></span></strong></p>
+
+<p>商品は順次発送いたしますので、今しばらくお待ちくださいませ。</p>
+
+<p>---<br>
+MGMG公式通信カスタマーサービス<br>
+このメールは送信専用です。</p>
+</body>
+</html>
