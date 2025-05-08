@@ -2,11 +2,17 @@ package com.example.mgmgapp.repository.user;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.mgmgapp.entity.Products;
 
 public interface ProductRepository extends JpaRepository<Products, Integer>{
+	
+	/**
+     * 指定したカテゴリの商品一覧を取得
+     */
+    List<Products> findByCategoryIdOrderByCreatedAtDesc(Integer categoryId);
 	
 	/**
      * 登録日が新しい順（降順）
@@ -23,5 +29,14 @@ public interface ProductRepository extends JpaRepository<Products, Integer>{
      */
     List<Products> findAllByOrderByPriceAsc();
     
+    /**
+     * カテゴリ指定＆ソート条件
+     */
+    List<Products> findByCategoryId(Integer categoryId, Sort sort);
+    
+    /**
+     * 指定した商品IDのリストで複数の商品を取得
+     */
+    List<Products> findByIdIn(List<Integer> ids);
     
 }

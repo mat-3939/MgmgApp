@@ -1,9 +1,7 @@
 package com.example.mgmgapp.controller.user;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,22 +11,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.mgmgapp.entity.Products;
+import com.example.mgmgapp.service.user.CategoryService;
 import com.example.mgmgapp.service.user.ProductService;
 
 @Controller
 public class ProductController {
 	
 	private final ProductService productService;
+	private final CategoryService categoryService;
 	
 	@Autowired
-	public ProductController(ProductService productService) {
+	public ProductController(ProductService productService, CategoryService categoryService) {
 		this.productService = productService;
+		this.categoryService = categoryService;
 	} 
 
     @GetMapping("/products")
     public String showProducts(
 //        @RequestParam(defaultValue = "id") String sortBy,
 //        @RequestParam(defaultValue = "asc") String order,
+    	  @RequestParam(required = false) Integer categoryId,
     	  @RequestParam(required = false, defaultValue = "new") String sort,
         Model model
     ) {
@@ -42,23 +44,46 @@ public class ProductController {
 //            sortBy = "price";
 //            order = "desc";
 //        }
+    	
+    	List<Products> products;
+    	
+    	// フィルタリング条件の分岐
+    	if (categoryId != null) {
+    		products = productService.findByCategoryIdSorted(categoryId, sort);
+    	} else {
+    		products = productService.getSortedProducts(sort);
+    	}
 
         // ソートされた順で取得
-        List<Products> products = productService.getSortedProducts(sort);
+//        List<Products> products = productService.getSortedProducts(sort);
 
         // 商品ごとの画像パスをMapで構築
-        Map<Integer, String> imagePaths = products.stream()
-            .collect(Collectors.toMap(
-                Products::getId,
-                productService::buildImagePath
-            ));
+//        Map<Integer, String> imagePaths = products.stream()
+//            .collect(Collectors.toMap(
+//                Products::getId,
+//                productService::buildImagePath
+//            ));
 
         model.addAttribute("products", products);
-        model.addAttribute("imagePaths", imagePaths);
+//        model.addAttribute("imagePaths", imagePaths);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("sort", sort);
 
         return "user/products";
     }
+    
+    /**
+	 * 指定したカテゴリの商品一覧を表示
+	 */
+	@GetMapping("/products/category/{categoryId}")
+	public String listByCategory(@PathVariable Integer categoryId, Model model) {
+		List<Products> products = productService.findByCategoryId(categoryId);
+		model.addAttribute("products", products);
+		model.addAttribute("categories", categoryService.findAll());
+		model.addAttribute("selectedCategoryId", categoryId);
+		return "user/products";
+	}
     
     //詳細ページへ
     @GetMapping("/products_detail/{id}")
@@ -66,11 +91,16 @@ public class ProductController {
         Products product = productService.getProductById(id);
 
         // 画像パスのMapを1件分作成
-        Map<Integer, String> imagePaths = new HashMap<>();
-        imagePaths.put(product.getId(), productService.buildImagePath(product));
+//        Map<Integer, String> imagePaths = new HashMap<>();
+//        imagePaths.put(product.getId(), productService.buildImagePath(product));
+        
+        //PICK UP商品を表示
+        List<Integer> ids = Arrays.asList(1, 6, 8, 11, 3); //任意の商品IDをセット
+        List<Products> pickUp = productService.getProductsByIds(ids);
 
         model.addAttribute("product", product);
-        model.addAttribute("imagePaths", imagePaths);
+        model.addAttribute("pickUp", pickUp);
+//        model.addAttribute("imagePaths", imagePaths);
 
         return "user/products_detail";
     }
