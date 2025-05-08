@@ -35,22 +35,6 @@
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label">対応状況</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="statusAll" value="" checked>
-                        <label class="form-check-label" for="statusAll">すべて</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="statusCompleted" value="true">
-                        <label class="form-check-label" for="statusCompleted">対応済み</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="statusPending" value="false">
-                        <label class="form-check-label" for="statusPending">未対応</label>
-                    </div>
-                </div>
-                
-                <div class="mb-3">
                     <button type="button" class="btn btn-secondary btn-sm" id="toggleDetailSearch">
                         <span class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -89,20 +73,31 @@
                 <!-- ページネーション情報などを表示する場所 -->
             </div>
             <div class="d-flex">
-                <select class="form-select me-2" id="sortOrder">
-                    <option value="desc">絞り込み</option>
-                    <option value="asc">対応済み</option>
-                    <option value="asc">未対応</option>
-                </select>
-                <select class="form-select" id="pageSize">
-                    <option value="10">並び替え</option>
-                    <option value="20">注文日（新しい順）</option>
-                    <option value="50">注文日（古い順）</option>
-                    <option value="100">金額（高い順）</option>
-                    <option value="100">金額（安い順）</option>
-                    <option value="100">ID（新しい順）</option>
-                    <option value="100">ID（古い順）</option>
-                </select>
+                <form th:action="@{/admin/orders}" method="get" class="me-2">
+                    <select class="form-select" id="statusFilter" name="status" onchange="this.form.submit()">
+                        <option value="" th:selected="${status == null}">絞り込み</option>
+                        <option value="all" th:selected="${status == 'all'}">すべて</option>
+                        <option value="true" th:selected="${status == 'true'}">対応済み</option>
+                        <option value="false" th:selected="${status == 'false'}">未対応</option>
+                    </select>
+                    <!-- 現在の検索条件とソート条件を維持 -->
+                    <input type="hidden" name="keyword" th:value="${keyword}" th:if="${keyword != null}">
+                    <input type="hidden" name="sort" th:value="${sort}" th:if="${sort != null}">
+                </form>
+                <form th:action="@{/admin/orders}" method="get">
+                    <select class="form-select" id="sortOrder" name="sort" onchange="this.form.submit()">
+                        <option value="" th:selected="${sort == null}">並び替え</option>
+                        <option value="new" th:selected="${sort == 'new'}">注文日（新しい順）</option>
+                        <option value="old" th:selected="${sort == 'old'}">注文日（古い順）</option>
+                        <option value="price_high" th:selected="${sort == 'price_high'}">金額（高い順）</option>
+                        <option value="price_low" th:selected="${sort == 'price_low'}">金額（安い順）</option>
+                        <option value="id_new" th:selected="${sort == 'id_new'}">ID（新しい順）</option>
+                        <option value="id_old" th:selected="${sort == 'id_old'}">ID（古い順）</option>
+                    </select>
+                    <!-- 現在の検索条件と絞り込み条件を維持 -->
+                    <input type="hidden" name="keyword" th:value="${keyword}" th:if="${keyword != null}">
+                    <input type="hidden" name="status" th:value="${status}" th:if="${status != null}">
+                </form>
             </div>
         </div>
 
@@ -122,36 +117,23 @@
                     <tr th:each="order : ${orders}">
                         <td th:text="${order.id}">10</td>
                         <td>
-                            <a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.lastName + ' ' + order.firstName}">山田太郎</a>
+                            <a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.firstName + ' ' + order.lastName}">太郎 山田</a>
                         </td>
                         <td th:text="${order.paymentMethod}">クレジットカード</td>
                         <td th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}">¥6,000</td>
                         <td>
-                            <select class="form-select status-select" th:data-order-id="${order.id}">
-                                <option value="false" th:selected="${!order.status}">未対応</option>
-                                <option value="true" th:selected="${order.status}">対応済み</option>
-                            </select>
+                            <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post">
+                                <select class="form-select status-select" name="status" onchange="this.form.submit()">
+                                    <option value="false" th:selected="${!order.status}">未対応</option>
+                                    <option value="true" th:selected="${order.status}">対応済み</option>
+                                </select>
+                            </form>
                         </td>
                         <td th:text="${#temporals.format(order.orderDate, 'yyyy/MM/dd')}">2025/04/22</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-        <!-- ページネーション -->
-        <nav aria-label="Page navigation" th:if="${orders != null && !orders.isEmpty()}">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">前へ</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">次へ</a>
-                </li>
-            </ul>
-        </nav>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -160,40 +142,6 @@
         document.getElementById('toggleDetailSearch').addEventListener('click', function() {
             const detailSection = document.getElementById('detailSearchSection');
             detailSection.classList.toggle('show');
-        });
-        
-        // ステータス変更の処理
-        document.querySelectorAll('.status-select').forEach(select => {
-            select.addEventListener('change', function() {
-                const orderId = this.getAttribute('data-order-id');
-                const status = this.value === 'true';
-                
-                // ステータス更新のAjaxリクエスト
-                fetch(`/admin/orders/${orderId}/status`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ status: status })
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // 成功時の処理
-                        console.log('ステータスが更新されました');
-                    } else {
-                        // エラー時の処理
-                        console.error('ステータスの更新に失敗しました');
-                        // 選択を元に戻す
-                        this.value = this.value === 'true' ? 'false' : 'true';
-                    }
-                })
-                .catch(error => {
-                    console.error('エラー:', error);
-                    // 選択を元に戻す
-                    this.value = this.value === 'true' ? 'false' : 'true';
-                });
-            });
         });
     </script>
 </body>

@@ -29,6 +29,9 @@ CREATE TABLE IF NOT EXISTS orders (
     -- 電話番号（not null）
     tel VARCHAR(50) ,
 
+    -- 支払い方法（not null）
+    payment_method VARCHAR(10) NOT NULL DEFAULT 'クレジットカード',
+
     -- 合計金額（not null）
     total_price NUMERIC(10, 2) ,
     

@@ -23,8 +23,7 @@ public class AdminSalesService {
     //次回ここから
     /*注文件数の合計を取得*/
     public int getOrderCount() {
-        return adminOrderItemRepository.countDistinctOrderCount()
-        + adminOrderItemRepository.findAllDistinctOrderIds();
+        return adminOrderItemRepository.countDistinctOrderCount();
     }
 
     /*注文商品の合計数を取得（各注文の商品数を合計）*/
@@ -60,7 +59,9 @@ public class AdminSalesService {
     public BigDecimal getTodaySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().equals(LocalDate.now()))
-            .map(orderItem -> orderItem.getProduct().getPrice())
+            .map(orderItem -> orderItem.getPrice() != null ? 
+                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
+                BigDecimal.ZERO)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
@@ -68,7 +69,9 @@ public class AdminSalesService {
     public BigDecimal getWeeklySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
-            .map(orderItem -> orderItem.getProduct().getPrice())
+            .map(orderItem -> orderItem.getPrice() != null ? 
+                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
+                BigDecimal.ZERO)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
@@ -76,7 +79,9 @@ public class AdminSalesService {
     public BigDecimal getMonthlySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusMonths(1)))
-            .map(orderItem -> orderItem.getProduct().getPrice())
+            .map(orderItem -> orderItem.getPrice() != null ? 
+                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
+                BigDecimal.ZERO)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
@@ -84,7 +89,9 @@ public class AdminSalesService {
     public BigDecimal getYearlySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusYears(1)))
-            .map(orderItem -> orderItem.getProduct().getPrice())
+            .map(orderItem -> orderItem.getPrice() != null ? 
+                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
+                BigDecimal.ZERO)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

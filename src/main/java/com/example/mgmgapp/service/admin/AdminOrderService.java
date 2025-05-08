@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,17 +66,17 @@ public class AdminOrderService {
         uniqueOrders.addAll(byEmail);
         uniqueOrders.addAll(byTel);
         
-        // リストに変換して日付順にソート
+        // リストに変換して日付順(新しい順)にソート
         List<Orders> result = new ArrayList<>(uniqueOrders);
         result.sort(Comparator.comparing(Orders::getOrderDate).reversed());
         
         return result;
     }
-    
+
     /*詳細検索*/
     public List<Orders> advancedSearch(String lastName, String firstName, 
-                                      LocalDateTime startDate, LocalDateTime endDate,
-                                      BigDecimal minAmount, Boolean status) {
+    LocalDateTime startDate, LocalDateTime endDate,
+    BigDecimal minAmount, Boolean status) {
         // 複雑な検索条件の場合は、カスタムリポジトリメソッドを作成するか
         // 複数の条件を組み合わせて検索する
         
@@ -83,10 +84,126 @@ public class AdminOrderService {
         if (startDate != null && endDate != null && minAmount != null) {
             return adminOrderRepository.findByOrderDateBetweenAndTotalPriceGreaterThanOrderByOrderDateDesc(
                 startDate, endDate, minAmount);
+            }
+            
+            // 他の条件の組み合わせ...
+            
+            return findAllOrders();
+        }
+
+        /*注文リストをソート（新しい順）*/
+        public List<Orders> sortOrdersByNewest(List<Orders> orders) {
+            List<Orders> sortedOrders = new ArrayList<>(orders);
+            sortedOrders.sort(Comparator.comparing(Orders::getOrderDate).reversed());
+            return sortedOrders;
         }
         
-        // 他の条件の組み合わせ...
+        /*注文リストをソート（古い順）*/
+        public List<Orders> sortOrdersByOldest(List<Orders> orders) {
+            List<Orders> sortedOrders = new ArrayList<>(orders);
+            sortedOrders.sort(Comparator.comparing(Orders::getOrderDate));
+            return sortedOrders;
+        }
         
-        return findAllOrders();
+    /*注文リストを金額でソート（高い順）*/
+    public List<Orders> sortOrdersByPriceDesc(List<Orders> orders) {
+        List<Orders> sortedOrders = new ArrayList<>(orders);
+        sortedOrders.sort(Comparator.comparing(Orders::getTotalPrice).reversed());
+        return sortedOrders;
     }
+
+    /*注文リストを金額でソート（安い順）*/
+    public List<Orders> sortOrdersByPriceAsc(List<Orders> orders) {
+        List<Orders> sortedOrders = new ArrayList<>(orders);
+        sortedOrders.sort(Comparator.comparing(Orders::getTotalPrice));
+        return sortedOrders;
+    }
+
+    /*注文リストをIDでソート（新しい順）*/
+    public List<Orders> sortOrdersByIdDesc(List<Orders> orders) {
+        List<Orders> sortedOrders = new ArrayList<>(orders);
+        sortedOrders.sort(Comparator.comparing(Orders::getId).reversed());
+        return sortedOrders;
+    }
+
+    /*注文リストをIDでソート（古い順）*/
+    public List<Orders> sortOrdersByIdAsc(List<Orders> orders) {
+        List<Orders> sortedOrders = new ArrayList<>(orders);
+        sortedOrders.sort(Comparator.comparing(Orders::getId));
+        return sortedOrders;
+    }
+
+    /*注文リストをステータスでフィルタリング*/
+    public List<Orders> filterOrdersByStatus(List<Orders> orders, Boolean status) {
+        List<Orders> filteredOrders = new ArrayList<>();
+        for (Orders order : orders) {
+            if (order.getStatus().equals(status)) {
+                filteredOrders.add(order);
+            }
+        }
+        return filteredOrders;
+    }
+
+    /*注文リストを日付範囲でフィルタリング*/
+    public List<Orders> filterOrdersByDateRange(List<Orders> orders, String startDate, String endDate) {
+        List<Orders> filteredOrders = new ArrayList<>();
+        
+        // 開始日と終了日を設定
+        LocalDateTime startDateTime = null;
+        LocalDateTime endDateTime = null;
+        
+        // デバッグ出力
+        System.out.println("フィルタリング開始: startDate=" + startDate);
+        System.out.println("フィルタリング終了: endDate=" + endDate);
+        
+        try {
+            if (startDate != null && !startDate.isEmpty()) {
+                startDateTime = LocalDateTime.parse(startDate + "T00:00:00");
+                System.out.println("開始日設定: " + startDateTime);
+            }
+            
+            if (endDate != null && !endDate.isEmpty()) {
+                endDateTime = LocalDateTime.parse(endDate + "T23:59:59");
+                System.out.println("終了日設定: " + endDateTime);
+            }
+        } catch (Exception e) {
+            System.err.println("日付パラメータの変換エラー: " + e.getMessage());
+            return orders; // エラーの場合は元のリストを返す
+        }
+        
+        // 日付範囲でフィルタリング
+        for (Orders order : orders) {
+            LocalDateTime orderDate = order.getOrderDate();
+            
+            boolean includeOrder = true;
+            
+            if (startDateTime != null && orderDate.isBefore(startDateTime)) {
+                includeOrder = false;
+            }
+            
+            if (endDateTime != null && orderDate.isAfter(endDateTime)) {
+                includeOrder = false;
+            }
+            
+            if (includeOrder) {
+                filteredOrders.add(order);
+            }
+        }
+        
+        System.out.println("フィルタリング結果: " + filteredOrders.size() + "件");
+        return filteredOrders;
+    }
+
+    /**
+     * 注文を最低金額でフィルタリングするメソッド
+     * @param orders フィルタリングする注文リスト
+     * @param minAmount 最低金額
+     * @return フィルタリングされた注文リスト
+     */
+    public List<Orders> filterOrdersByMinAmount(List<Orders> orders, BigDecimal minAmount) {
+        return orders.stream()
+            .filter(order -> order.getTotalPrice().compareTo(minAmount) >= 0)
+            .collect(Collectors.toList());
+    }
+
 }

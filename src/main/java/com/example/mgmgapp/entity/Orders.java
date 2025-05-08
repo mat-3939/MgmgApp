@@ -82,6 +82,12 @@ public class Orders {
     private String tel;
 
     /**
+     * 支払い方法（not null）
+     */
+    @Column(name = "payment_method", nullable = false, length = 10)
+    private String paymentMethod;
+
+    /**
      * 合計金額（not null、小数点以下2桁まで）
      */
     @Column(name = "total_price", nullable = false, precision = 10, scale = 2)

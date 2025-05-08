@@ -2,9 +2,136 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注文詳細</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>注文詳細</h1>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>注文詳細 注文管理</h1>
+        </div>
+
+        <!-- 注文情報 -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">注文情報</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-bordered m-0">
+                    <tbody>
+                        <tr>
+                            <th class="bg-light" style="width: 20%;">注文ID</th>
+                            <td th:text="${order.id}">10</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">ステータス</th>
+                            <td>
+                                <form th:action="@{/admin/orders/{id}/status/detail(id=${order.id})}" method="post">
+                                    <select class="form-select" id="orderStatus" name="status" onchange="this.form.submit()">
+                                        <option value="false" th:selected="${!order.status}">未対応</option>
+                                        <option value="true" th:selected="${order.status}">対応済み</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">支払い方法</th>
+                            <td th:text="${order.paymentMethod}">クレジットカード</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">注文日</th>
+                            <td th:text="${order.orderDate != null ? #temporals.format(order.orderDate, 'yyyy/MM/dd') : '-'}">2025/04/22</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 注文者情報 -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">注文者情報</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-bordered m-0">
+                    <tbody>
+                        <tr>
+                            <th class="bg-light" style="width: 20%;">氏名</th>
+                            <td th:text="${order.firstName + ' ' + order.lastName}">太郎 山田</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">メールアドレス</th>
+                            <td th:text="${order.email}">example@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light" rowspan="4">住所</th>
+                            <td>〒 <span th:text="${order.postcode}">123456</span></td>
+                        </tr>
+                        <tr>
+                            <td th:text="${order.prefecture}">大阪府</td>
+                        </tr>
+                        <tr>
+                            <td th:text="${order.city}">大阪市北区</td>
+                        </tr>
+                        <tr>
+                            <td th:text="${order.addressLine + (order.building != null ? ' ' + order.building : '')}">西梅田1丁目6-8</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">電話番号</th>
+                            <td th:text="${order.tel}">08012345678</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 注文商品情報 -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">注文商品</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-bordered m-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>商品名</th>
+                            <th>単価</th>
+                            <th>数量</th>
+                            <th>小計</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${orderItems}">
+                            <td th:text="${item.product.name}">おかず12マス弁当～瑞～</td>
+                            <td th:text="${'¥' + #numbers.formatInteger(item.price, 1, 'COMMA')}">¥1,180</td>
+                            <td th:text="${item.quantity}">1</td>
+                            <td th:text="${'¥' + #numbers.formatInteger(item.price * item.quantity, 1, 'COMMA')}">¥1,180</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3" class="text-end">合計</th>
+                            <td th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}">¥2,360</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- 戻るボタン -->
+        <div class="d-flex justify-content-center mb-4">
+            <a th:href="@{/admin/orders}" class="btn btn-secondary">
+                <span class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    注文一覧に戻る
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
