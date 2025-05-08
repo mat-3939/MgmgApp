@@ -99,5 +99,3 @@ public class Orders {
     @Column(name = "status", nullable = false)
     private Boolean status;
 }
-
-
