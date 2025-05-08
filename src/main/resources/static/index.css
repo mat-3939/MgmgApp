@@ -18,7 +18,7 @@
   margin: 0;
   list-style: none;
   transition: transform 1.2s ease;
-  width: 400%; /* 画像の枚数 × 100% */
+  width: 400%; /* 画像の枚数×100% */
 }
 
 .carousel li {
