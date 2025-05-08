@@ -78,3 +78,4 @@ public class Products {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }
+
