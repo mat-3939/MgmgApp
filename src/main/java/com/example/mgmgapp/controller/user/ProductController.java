@@ -18,28 +18,33 @@ import com.example.mgmgapp.service.user.ProductService;
 @Controller
 public class ProductController {
 	
-    @Autowired
-    private ProductService productService; 
+	private final ProductService productService;
+	
+	@Autowired
+	public ProductController(ProductService productService) {
+		this.productService = productService;
+	} 
 
     @GetMapping("/products")
     public String showProducts(
-        @RequestParam(defaultValue = "id") String sortBy,
-        @RequestParam(defaultValue = "asc") String order,
+//        @RequestParam(defaultValue = "id") String sortBy,
+//        @RequestParam(defaultValue = "asc") String order,
+    	  @RequestParam(required = false, defaultValue = "new") String sort,
         Model model
     ) {
-        if (sortBy.equals("idDesc")) {
-            sortBy = "id";
-            order = "desc";
-        } else if (sortBy.equals("priceAsc")) {
-            sortBy = "price";
-            order = "asc";
-        } else if (sortBy.equals("priceDesc")) {
-            sortBy = "price";
-            order = "desc";
-        }
+//        if (sortBy.equals("idDesc")) {
+//            sortBy = "id";
+//            order = "desc";
+//        } else if (sortBy.equals("priceAsc")) {
+//            sortBy = "price";
+//            order = "asc";
+//        } else if (sortBy.equals("priceDesc")) {
+//            sortBy = "price";
+//            order = "desc";
+//        }
 
         // ソートされた順で取得
-        List<Products> products = productService.getAllProductsSorted(sortBy, order);
+        List<Products> products = productService.getSortedProducts(sort);
 
         // 商品ごとの画像パスをMapで構築
         Map<Integer, String> imagePaths = products.stream()
@@ -50,6 +55,7 @@ public class ProductController {
 
         model.addAttribute("products", products);
         model.addAttribute("imagePaths", imagePaths);
+        model.addAttribute("sort", sort);
 
         return "user/products";
     }

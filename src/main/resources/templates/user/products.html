@@ -12,12 +12,21 @@
 	<h2>商品一覧</h2>
 	
 	<!--検索タブ-->
-	<div>
+<!--	<div>-->
+<!--		<label for="sort">並べ替え:</label>-->
+<!--		<select id="sort" name="sortBy" onchange="location = this.value;">-->
+<!--			<option value="?sortBy=idDesc" th:selected="${sortBy == 'idDesc'}">新着順</option>-->
+<!--			<option value="?sortBy=priceAsc" th:selected="${sortBy == 'priceAsc'}">価格が安い順</option>-->
+<!--			<option value="?sortBy=priceDesc" th:selected="${sortBy == 'priceDesc'}">価格が高い順</option>-->
+<!--		</select>-->
+<!--	</div>-->
+
+     <div>
 		<label for="sort">並べ替え:</label>
-		<select id="sort" name="sort" onchange="location = this.value;">
-			<option value="?sort=id&order=desc" th:selected="${param.sort == 'id' and param.order == 'desc'}">新着順</option>
-			<option value="?sort=price&order=asc" th:selected="${param.sort == 'price' and param.order == 'asc'}">価格が安い順</option>
-			<option value="?sort=price&order=desc" th:selected="${param.sort == 'price' and param.order == 'desc'}">価格が高い順</option>
+		<select class="dropdown" onchange="location.href=this.value">
+			<option th:value="'?sort=new'" th:selected="${sort == 'new'}">新着順</option>
+			<option th:value="'?sort=priceAsc'" th:selected="${sort == 'priceAsc'}">価格が安い順</option>
+			<option th:value="'?sort=priceDesc'" th:selected="${sort == 'priceDesc'}">価格が高い順</option>
 		</select>
 	</div>
 		
