@@ -8,11 +8,11 @@
 }
 		
 .search-container {
-    background-color: rgba(255,255,255);
-    padding: 24px 30px;
+/*    background-color: rgba(255,255,255);*/
+/*    padding: 24px 30px;*/
     border-radius: 10px;
     margin: 0 40px 40px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+/*    box-shadow: 0 2px 6px rgba(0,0,0,0.05);*/
 }
 
 .search-box {
@@ -119,12 +119,12 @@ tr:not(:last-child) {
 
 .img {
 	overflow: visible;
-	  text-overflow: clip;
-	  white-space: normal;
+	text-overflow: clip;
+	white-space: normal;
 }
 
 .name {
-	width: 200px;
+	width: 140px;
 }
 
 .product-img {

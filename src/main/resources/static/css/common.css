@@ -142,3 +142,73 @@ label {
     margin-top: 4px;
     display: block;
 }
+
+/* メインコンテンツ */
+.main {
+  margin-left: 200px;
+/*  padding: 20px;*/
+  flex: 1;
+}
+
+/* レイアウト全体 */
+.side-wrapper {
+  margin: 0;
+  display: flex;
+  font-family: sans-serif;
+}
+
+/* サイドバー */
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: rgba(242, 242, 242);
+  border-right: 1px solid rgba(206,206,206);
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+/* サイドバーアイテム */
+.sidebar-item {
+  padding: 12px 20px;
+  font-weight: 600;
+  color: rgba(51, 51, 51);
+/*  cursor: pointer;*/
+}
+
+/*.sidebar-item:hover,*/
+/*.submenu-item:hover {*/
+/*  background-color: #eee;*/
+/*}*/
+
+.sidebar-item.active,
+.submenu-item.active {
+  background-color: #333;
+  color: white;
+}
+
+/* サブメニュー */
+.submenu {
+  padding-left: 20px;
+}
+
+.submenu-item {
+  padding: 8px 20px;
+  font-weight: 400;
+/*  color: #555;*/
+  cursor: pointer;
+}
+
+.sidebar-item a,
+.submenu-item a {
+	text-decoration: none;
+	color: rgba(51, 51, 51);
+}
+
+/* メインコンテンツ */
+.main-content {
+  margin-left: 200px;
+  padding: 20px;
+  flex: 1;
+}
