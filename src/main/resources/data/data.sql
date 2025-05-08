@@ -35,5 +35,5 @@ INSERT INTO cart_items(id, product_id, quantity, session_id)
 VALUES
 (1, 101, 3, 'sessionId1'),
 (2, 102, 4, 'sessionId2'),
-(3, 103, 2, 'sessionId3');
+(3, 103, 2, 'sessionId1');
 
