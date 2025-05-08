@@ -4,10 +4,12 @@
 
 .carousel {
   width: 100%;
-  max-width: 800px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
+  top: 0;
+  left: 50%;
+  transform: translate(-43.5%, 0);
 }
 
 .carousel ul {
@@ -22,10 +24,14 @@
 .carousel li {
   flex: 0 0 100%;
 }
+.carousel ul li img{
+	width:22%;
+}
 
 .dots {
   text-align: center;
   margin-top: 10px;
+  margin-left: -10%;
 }
 
 .dot {
