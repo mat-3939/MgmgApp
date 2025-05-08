@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>トップページ</title>
+<link th:href="@{/products.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<section>
+		
+		<!--人気５-->
+		<div class="pickUp">
+			<h3>オンラインショップで人気の商品</h3>
+			<ul>
+				<li><a th:href="@{/products_detail/1}"><img th:src="@{/img/washoku/w_01.jpg}" alt="和食1"></a></li>
+				<li><a th:href="@{/products_detail/7}"><img th:src="@{/img/yoshoku/y_01.jpg}" alt="洋食1"></a></li>
+				<li><a th:href="@{/products_detail/13}"><img th:src="@{/img/chuka/c_01.jpg}" alt="中華1"></a></li>
+				<li><a th:href="@{/products_detail/19}"><img th:src="@{/img/other/s_01.jpg}" alt="その他1"></a></li>
+				<li><a th:href="@{/products_detail/3}"><img th:src="@{/img/washoku/w_03.jpg}" alt="和食3"></a></li>
+			</ul>
+		</div>
+		
+	</section>
+		
+</body>
+</html>
