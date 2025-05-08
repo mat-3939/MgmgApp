@@ -5,28 +5,29 @@
 <title>ログイン</title>
 </head>
 <body>
-	<h2>ロゴ</h2>
+	<h2>ログイン</h2>
 	<!-- エラー表示 -->
 	<div th:if="${param.error}">
-	<p style="color: red;">ログインIDまたはpasswordが違います</p>
+		<p style="color: red;">ログインIDまたはパスワードが違います</p>
 	</div>
-	<!--ログアウト表示 -->
+	<!-- ログアウト表示 -->
 	<div th:if="${param.logout}">
-	<p style="color: blue">ログアウトしました</p>
+		<p style="color: blue">ログアウトしました</p>
 	</div>
-	<form th:action="@{/authentication}" method="post" th:object="${loginForm}">
-	<div><!-- ユーザーネーム -->
-	<label for="user_NameInput">ログインID</label>
-	<input type="text" th:field="*{user_nameInput}">
-	</div>
-	<div><!-- パスワード -->
-	<label for="passwordInput">パスワード</label>
-	<input type="password" th:field="*{passwordInput}">
-	</div>
-	<div>
-	<input type="submit" value="login" >
-	</div>
+
+	<!-- ログインフォーム -->
+	<form th:action="@{/admin/login}" method="post" th:object="${loginForm}">
+		<div><!-- ユーザーネーム -->
+			<label for="user_nameInput">ログインID</label>
+			<input type="text" th:field="*{user_nameInput}" id="user_nameInput">
+		</div>
+		<div><!-- パスワード -->
+			<label for="passwordInput">パスワード</label>
+			<input type="password" th:field="*{passwordInput}" id="passwordInput">
+		</div>
+		<div>
+			<input type="submit" value="login">
+		</div>
 	</form>
-	
 </body>
 </html>

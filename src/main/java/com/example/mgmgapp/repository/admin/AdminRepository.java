@@ -8,4 +8,5 @@ import com.example.mgmgapp.entity.Admins;
 
 public interface AdminRepository extends JpaRepository<Admins, Integer> {
     Optional<Admins> findByUserName(String user_name);
+    
 }

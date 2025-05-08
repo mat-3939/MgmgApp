@@ -29,7 +29,7 @@ public class Product {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     
     /**
      * 商品名（not null、最大200文字、一意）
