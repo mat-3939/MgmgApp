@@ -38,10 +38,10 @@ public class CartService {
     @Autowired
     private ProductsRepository productsRepository;
 
-    public int getProductPrice(int productId) {
-    	Integer price = productsRepository.findPriceById(productId);
-    	return (price != null) ? price : 0;
-    }
+//    public int getProductPrice(int productId) {
+//    	Integer price = productsRepository.findPriceById(productId);
+//    	return (price != null) ? price : 0;
+//    }
 
 		
 	//カート内の商品数を変更（+、-ボタンの使用）
