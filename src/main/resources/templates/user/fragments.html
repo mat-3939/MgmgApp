@@ -14,7 +14,7 @@
           <a href="/products" th:href="@{/products}">ロゴ</a>
         </div>
         <div class="search-bar">
-<!--			以下で検索クエリを商品一覧ページで処理するようにしてる。→屋吹さんページのproduct.htmlに確認-->
+<!--			以下で検索クエリを商品一覧ページで処理するようにしてる。→user/product側のコントローラとかが必要だけど未作成-->
           <form action="/products" method="get">
             <input type="text" name="q" placeholder="検索" th:value="${searchQuery}" />
             <button type="submit">🔍</button>
