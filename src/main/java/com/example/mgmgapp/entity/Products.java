@@ -1,6 +1,5 @@
 package com.example.mgmgapp.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -45,7 +44,7 @@ public class Products {
      * 価格（not null、小数点以下2桁まで）
      */
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
+    private int price;
     
     /**
      * 在庫数（not null）

@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"> <!-- ★重要：xmlns追加 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>カート</title>
-    <link rel="stylesheet" href="/css/styles.css">  <!-- 必要に応じてCSSファイルをリンク -->
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <h1>カート</h1>
 
-    <!-- カート内の商品一覧 -->
     <div>
         <h2>カート内の商品</h2>
         <table>
             <thead>
                 <tr>
                     <th>商品名</th>
+                    <th>価格</th>
                     <th>数量</th>
+                    <th>小計</th> <!-- ★小計列を追加 -->
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- カート内の商品をループで表示 -->
                 <tr th:each="cartItem : ${cartItems}">
-                    <td th:text="${cartItem.product.name}">商品名</td> <!-- 商品名（仮）-->
+                    <td th:text="${cartItem.product.name}">商品名</td>
+                    <td th:text="${cartItem.product.price}">価格</td>
                     <td>
-                        <!-- 数量変更フォーム（+ / - ボタン） -->
                         <form th:action="@{/cart/update/{id}(id=${cartItem.id})}" method="post">
                             <button type="submit" name="delta" value="-1">-</button>
                             <span th:text="${cartItem.quantity}">数量</span>
                             <button type="submit" name="delta" value="1">+</button>
                         </form>
                     </td>
+                    <td th:text="${cartItem.product.price * cartItem.quantity}">小計</td> <!-- ★ここで小計を計算 -->
                     <td>
-                        <!-- 削除ボタン -->
                         <form th:action="@{/cart/remove/{id}(id=${cartItem.id})}" method="post">
                             <button type="submit">削除</button>
                         </form>
@@ -42,10 +42,8 @@
             </tbody>
         </table>
 
-        <!-- カートが空である場合 -->
         <p th:if="${cartItems.isEmpty()}">カートは空です。</p>
 
-        <!-- 合計金額表示 -->
         <p>合計金額：<span th:text="${total}">0</span>円</p>
 
         <div>

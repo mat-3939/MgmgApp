@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS cart_items (
     
     -- セッションID（not null、一意）
     session_id VARCHAR(255) NOT NULL UNIQUE,
+    --↑NOT NULL UNIQUEを削除
     
     -- 商品ID（not null、一意、多対一の関連）
     product_id INTEGER NOT NULL UNIQUE REFERENCES products(id),

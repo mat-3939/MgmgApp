@@ -1,6 +1,5 @@
 package com.example.mgmgapp.service.user;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.example.mgmgapp.entity.CartItems;
 import com.example.mgmgapp.repository.CartItemRepository;
+import com.example.mgmgapp.repository.ProductsRepository;
 
 @Service
 public class CartService {
 	
 	@Autowired
 	private CartItemRepository cartItemRepository;
+	
 
 	//カート内の商品を削除
 	public void removeItem(int id) {
@@ -22,18 +23,26 @@ public class CartService {
 		cartItemRepository.deleteById(id);
 	}
 	
-	//カート内商品を一覧取得（セッション単位）
-	public List<CartItems> getCartItems(String sessionId){
-		return cartItemRepository.findBySessionId(sessionId);
-	}
+//	//カート内商品を一覧取得（セッション単位）
+//	public List<CartItems> getCartItems(String sessionId){
+//		return cartItemRepository.findBySessionId(sessionId);
+//	}  ↓修正後
 	
-	//合計金額の計算（小計）
-	public BigDecimal calculateTotal(String sessionId) {
-		return cartItemRepository.findBySessionId(sessionId)
-				.stream()
-				.map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-	}
+	 // カートアイテムと商品情報を取得する
+    public List<CartItems> getCartItems(String sessionId) {
+        return cartItemRepository.findBySessionIdWithProducts(sessionId); // 修正したメソッドを呼び出す
+    }
+	
+    
+    //商品IDから単価を取得する 
+    @Autowired
+    private ProductsRepository productsRepository;
+
+    public int getProductPrice(int productId) {
+    	Integer price = productsRepository.findPriceById(productId);
+    	return (price != null) ? price : 0;
+    }
+
 		
 	//カート内の商品数を変更（+、-ボタンの使用）
 		public void updateQuantity(int id, int delta) {
