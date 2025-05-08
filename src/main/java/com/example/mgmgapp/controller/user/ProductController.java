@@ -25,6 +25,17 @@ public class ProductController {
 		this.productService = productService;
 		this.categoryService = categoryService;
 	} 
+	
+	@GetMapping("/")
+	public String goHome(Model model) {
+		//PICK UP商品を表示
+        List<Integer> ids = Arrays.asList(1, 6, 8, 11, 3); //任意の商品IDをセット
+        List<Products> pickUp = productService.getProductsByIds(ids);
+        
+        model.addAttribute("pickUp", pickUp);
+        
+		return "user/index";
+	}
 
     @GetMapping("/products")
     public String showProducts(
