@@ -1,5 +1,4 @@
-
-//OrderController.java - 注文処理コントローラ
+// OrderController.java - 注文処理コントローラ
 package com.example.mgmgapp.controller.user;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,36 +22,49 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderController {
 
- private final OrderService orderService;
+    private final OrderService orderService;
 
- @GetMapping("/form")
- public String showOrderForm(Model model, HttpSession session) {
-     model.addAttribute("orderForm", new OrderForm());
-     model.addAttribute("cartItems", orderService.getCartItems());
-     model.addAttribute("totalPrice", orderService.calculateTotal());
-     return "user/order_form";
- }
+    // 注文入力フォームの表示
+    @GetMapping("/form")
+    public String showOrderForm(Model model, HttpSession session) {
+        String sessionId = session.getId();
+        model.addAttribute("orderForm", new OrderForm());
+        model.addAttribute("cartItems", orderService.getCartItems(sessionId));
+        model.addAttribute("totalPrice", orderService.calculateTotal(sessionId));
+        return "user/order_form";
+    }
 
- @PostMapping("/confirm")
- public String confirmOrder(@Valid @ModelAttribute("orderForm") OrderForm form,
-                             BindingResult bindingResult,
-                             Model model) {
-     if (bindingResult.hasErrors()) {
-         model.addAttribute("cartItems", orderService.getCartItems());
-         model.addAttribute("totalPrice", orderService.calculateTotal());
-         return "user/order_form";
-     }
-     model.addAttribute("orderForm", form);
-     model.addAttribute("cartItems", orderService.getCartItems());
-     model.addAttribute("totalPrice", orderService.calculateTotal());
-     return "user/order_confirm";
- }
+    // 注文内容確認画面への遷移
+    @PostMapping("/confirm")
+    public String confirmOrder(
+            @Valid @ModelAttribute("orderForm") OrderForm form,
+            BindingResult bindingResult,
+            HttpSession session,
+            Model model) {
 
- @PostMapping("/complete")
- public String completeOrder(@ModelAttribute("orderForm") OrderForm form,
-                              Model model) {
-     var order = orderService.processOrder(form);
-     model.addAttribute("order", order);
-     return "user/order_complete";
- }
+        String sessionId = session.getId();
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("cartItems", orderService.getCartItems(sessionId));
+            model.addAttribute("totalPrice", orderService.calculateTotal(sessionId));
+            return "user/order_form";
+        }
+
+        model.addAttribute("orderForm", form);
+        model.addAttribute("cartItems", orderService.getCartItems(sessionId));
+        model.addAttribute("totalPrice", orderService.calculateTotal(sessionId));
+        return "user/order_confirm";
+    }
+
+    // 注文完了処理
+    @PostMapping("/complete")
+    public String completeOrder(@ModelAttribute("orderForm") OrderForm form,
+                                 HttpSession session,
+                                 Model model) {
+        String sessionId = session.getId();
+        var order = orderService.processOrder(form, sessionId);
+        model.addAttribute("order", order);
+        return "user/order_complete";
+    }
 }
+

@@ -1,4 +1,4 @@
-// OrderService.java - 注文処理ロジックとメール送信
+// OrderService.java - 製品対応：セッションIDベースの注文処理ロジックとメール送信
 package com.example.mgmgapp.service.user;
 
 import java.math.BigDecimal;
@@ -23,25 +23,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private static final String FIXED_SESSION_ID = "demo-user";
-
     private final CartItemRepository cartItemRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final MailService mailService;
 
-    public List<CartItem> getCartItems() {
-        return cartItemRepository.findBySessionId(FIXED_SESSION_ID);
+    public List<CartItem> getCartItems(String sessionId) {
+        return cartItemRepository.findBySessionId(sessionId);
     }
 
-    public BigDecimal calculateTotal() {
-        return getCartItems().stream()
+    public BigDecimal calculateTotal(String sessionId) {
+        return getCartItems(sessionId).stream()
                 .map(item -> item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Transactional
-    public Orders processOrder(OrderForm form) {
+    public Orders processOrder(OrderForm form, String sessionId) {
         Orders order = new Orders();
         order.setEmail(form.getEmail());
         order.setFirstName(form.getFirstName());
@@ -55,8 +53,8 @@ public class OrderService {
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(true);
 
-        List<CartItem> cartItems = getCartItems();
-        BigDecimal total = calculateTotal();
+        List<CartItem> cartItems = getCartItems(sessionId);
+        BigDecimal total = calculateTotal(sessionId);
         order.setTotalPrice(total);
 
         Orders savedOrder = orderRepository.save(order);
@@ -70,10 +68,9 @@ public class OrderService {
             orderItemRepository.save(orderItem);
         }
 
-        cartItemRepository.deleteBySessionId(FIXED_SESSION_ID);
+        cartItemRepository.deleteBySessionId(sessionId);
         mailService.sendOrderMail(form, cartItems, total);
 
         return savedOrder;
     }
 }
-
