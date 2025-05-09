@@ -29,7 +29,7 @@ public class CartItems {
     /**
      * セッションID（not null、一意）
      */
-    @Column(name = "session_id", nullable = false, unique = true)
+    @Column(name = "session_id", nullable = false)
     private String sessionId;
 
     /**
@@ -45,5 +45,10 @@ public class CartItems {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
     
+    
+//    //Decimalを使うための記述
+//    @Column(name = "price", nullable = false)
+//    private BigDecimal price;
+//    
     
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"> <!-- ★重要：xmlns追加 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カート</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>カート</h1>
+
+    <div>
+        <h2>カート内の商品</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>価格</th>
+                    <th>数量</th>
+                    <th>小計</th> <!-- ★小計列を追加 -->
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cartItem : ${cartItems}">
+                    <td th:text="${cartItem.product.name}">商品名</td>
+                    <td th:text="${cartItem.product.price}">価格</td>
+                    <td>
+                        <form th:action="@{/cart/update/{id}(id=${cartItem.id})}" method="post">
+                            <button type="submit" name="delta" value="-1">-</button>
+                            <span th:text="${cartItem.quantity}">数量</span>
+                            <button type="submit" name="delta" value="1">+</button>
+                        </form>
+                    </td>
+                    <td th:text="${cartItem.product.price * cartItem.quantity}">小計</td> <!-- ★ここで小計を計算 -->
+                    <td>
+                        <form th:action="@{/cart/remove/{id}(id=${cartItem.id})}" method="post">
+                            <button type="submit">削除</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p th:if="${cartItems.isEmpty()}">カートは空です。</p>
+
+        <p>合計金額：<span th:text="${total}">0</span>円</p>
+
+        <div>
+            <a href="/checkout">購入手続きに進む</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ECサイト</p>
+    </footer>
+</body>
+</html>

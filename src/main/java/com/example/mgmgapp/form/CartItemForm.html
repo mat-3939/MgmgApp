@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>カート</title>
+</head>
+<body>
+
+<h1>カート</h1>
+
+<!-- カートに入っている商品をループ表示 -->
+<div th:each="item : ${cartItems}">
+    <div>
+        <p>商品名：<span th:text="${item.product.name}"></span></p>
+
+        <!-- ★ 数量変更フォーム（−） -->
+        <form method="post" th:action="@{/cart/update/{id}(id=${item.id})}">
+            <input type="hidden" name="delta" value="-1" />
+            <button type="submit">−</button>
+        </form>
+
+        <!-- 現在の数量表示 -->
+        <span th:text="${item.quantity}"></span>
+
+        <!-- ★ 数量変更フォーム（＋） -->
+        <form method="post" th:action="@{/cart/update/{id}(id=${item.id})}">
+            <input type="hidden" name="delta" value="1" />
+            <button type="submit">＋</button>
+        </form>
+
+        <!-- ★ 削除用フォーム -->
+        <form method="post" th:action="@{/cart/remove/{id}(id=${item.id})}">
+            <button type="submit">削除</button>
+        </form>
+    </div>
+</div>
+
+<!-- 合計金額の表示 -->
+<p>合計金額: <span th:text="${total}"></span>円</p>
+
+</body>
+</html>
