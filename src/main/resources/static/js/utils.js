@@ -1,4 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
+	
+	const dialog = document.getElementById('customDialog');
+	const openBtn = document.querySelector('.open-dialog-btn');
+	const closeBtn = dialog?.querySelector('.close-btn');
+
+	if (dialog && openBtn && closeBtn) {
+		function openDialog() {
+			dialog.classList.add('active');
+		}
+		
+		function closeDialog() {
+			dialog.classList.remove('active');
+		}
+		
+		openBtn.addEventListener('click', openDialog);
+		closeBtn.addEventListener('click', closeDialog);
+		
+		dialog.addEventListener('click', function (e) {
+			if (e.target === dialog) {
+				closeDialog();
+			}
+		});
+	} else {
+		console.warn('ダイアログの要素が取得できませんでした。');
+	}
+		  
 	const searchButton = document.querySelector('.search-button');
 	if (searchButton) {
 		searchButton.addEventListener('click', function (event) {
@@ -77,4 +103,5 @@ document.addEventListener("DOMContentLoaded", function () {
             handleFile(fileInput.files[0]);
         }
     });
+	  
 });

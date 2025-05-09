@@ -34,6 +34,11 @@
 	margin-top: 20px;
 }
 
+.category-option label,
+.category-option input {
+	cursor: pointer;
+}
+
 h2 {
     margin-top: 0;
     font-size: 18px;
@@ -90,6 +95,8 @@ textarea {
 }
 
 .footer-buttons {
+	margin-left: 200px;
+	flex: 1;
     position: fixed;
     bottom: 0;
     left: 0;
