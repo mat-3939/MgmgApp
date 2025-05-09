@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注文詳細</title>
+    <link rel="stylesheet" href="/css/common.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <!-- 共通ヘッダー読み込み -->
+    <th:block th:replace="~{admin/fragments :: header}"/>
+
+	<!-- 共通サイドメニュー読み込み -->
+    <th:block th:replace="~{admin/fragments :: sidemenu}"/>
+
+    <!-- メインコンテンツ -->
+    <div class="main">
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>注文詳細 注文管理</h1>
@@ -130,6 +139,7 @@
                 </span>
             </a>
         </div>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

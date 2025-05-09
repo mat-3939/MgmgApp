@@ -20,8 +20,8 @@ public class LoginController {
     }
 
     // ログイン成功後の遷移先（商品一覧ページ）
-    @PostMapping("/login")
-    public String doLogin(@ModelAttribute LoginForm form, Model model) {
-        return "redirect:/admin/products";
-    }
+    // @PostMapping("/login")
+    // public String doLogin(@ModelAttribute LoginForm form, Model model) {
+    //     return "redirect:/admin/products";
+    // }
 }

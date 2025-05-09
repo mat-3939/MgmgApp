@@ -3,88 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>管理者ホーム</title>
+    <link rel="stylesheet" href="/css/common.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-4">
-        <h1>ホーム</h1>
-        
-        <!-- 注文状況と売上状況のカード -->
-        <div class="row mt-4">
-            <!-- 注文状況カード -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">注文状況</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-8">注文件数</div>
-                            <div class="col-4 text-end" th:text="${orderCount}">0</div>
+    <!-- 共通ヘッダー読み込み -->
+    <th:block th:replace="~{admin/fragments :: header}"/>
+
+	<!-- 共通サイドメニュー読み込み -->
+    <th:block th:replace="~{admin/fragments :: sidemenu}"/>
+
+    <!-- ホーム画面 -->
+    <div class="main">
+        <div class="container mt-4">
+            <h1>ホーム</h1>
+            
+            <!-- 注文状況と売上状況のカード -->
+            <div class="row mt-4">
+                <!-- 注文状況カード -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">注文状況</h5>
                         </div>
-                        <div class="row">
-                            <div class="col-8">対応済み</div>
-                            <div class="col-4 text-end" th:text="${completedOrderCount}">0</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8">未対応</div>
-                            <div class="col-4 text-end" th:text="${pendingOrderCount}">0</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">注文件数</div>
+                                <div class="col-4 text-end" th:text="${orderCount}">0</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">対応済み</div>
+                                <div class="col-4 text-end" th:text="${completedOrderCount}">0</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">未対応</div>
+                                <div class="col-4 text-end" th:text="${pendingOrderCount}">0</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 売上状況カード -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">売上状況</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-8">本日の売上金額</div>
-                            <div class="col-4 text-end" th:text="${todaySalesAmount}">0</div>
+                <!-- 売上状況カード -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">売上状況</h5>
                         </div>
-                        <div class="btn-group w-100">
-                            <button class="btn btn-dark active" onclick="updateSalesData('weekly')">週間</button>
-                            <button class="btn btn-outline-dark" onclick="updateSalesData('monthly')">月間</button>
-                            <button class="btn btn-outline-dark" onclick="updateSalesData('yearly')">年間</button>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-8">売上金額</div>
-                            <div class="col-4 text-end" id="salesAmount" th:text="${weeklySalesAmount}">0</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8">売上件数</div>
-                            <div class="col-4 text-end" id="salesCount" th:text="${weeklySalesCount}">0</div>
-                        </div>
-                        <script>
-                            function updateSalesData(period) {
-                                // ボタンのスタイルを更新
-                                document.querySelectorAll('.btn-group .btn').forEach(btn => {
-                                    btn.classList.remove('btn-dark', 'active');
-                                    btn.classList.add('btn-outline-dark');
-                                });
-                                event.target.classList.remove('btn-outline-dark');
-                                event.target.classList.add('btn-dark', 'active');
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-8">本日の売上金額</div>
+                                <div class="col-4 text-end" th:text="${todaySalesAmount}">0</div>
+                            </div>
+                            <div class="btn-group w-100">
+                                <button class="btn btn-dark active" onclick="updateSalesData('weekly')">週間</button>
+                                <button class="btn btn-outline-dark" onclick="updateSalesData('monthly')">月間</button>
+                                <button class="btn btn-outline-dark" onclick="updateSalesData('yearly')">年間</button>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-8">売上金額</div>
+                                <div class="col-4 text-end" id="salesAmount" th:text="${weeklySalesAmount}">0</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">売上件数</div>
+                                <div class="col-4 text-end" id="salesCount" th:text="${weeklySalesCount}">0</div>
+                            </div>
+                            <script>
+                                function updateSalesData(period) {
+                                    // ボタンのスタイルを更新
+                                    document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                                        btn.classList.remove('btn-dark', 'active');
+                                        btn.classList.add('btn-outline-dark');
+                                    });
+                                    event.target.classList.remove('btn-outline-dark');
+                                    event.target.classList.add('btn-dark', 'active');
 
-                                // データを更新
-                                fetch(`/admin/sales-data?period=${period}`)
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('データの取得に失敗しました');
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                        document.getElementById('salesAmount').textContent = data.amount ?? '0';
-                                        document.getElementById('salesCount').textContent = data.count ?? '0';
-                                })
-                                .catch(error => {
-                                        console.error('データの取得に失敗しました:', error);
-                                });
-                            }
-                        </script>
+                                    // データを更新
+                                    fetch(`/admin/sales-data?period=${period}`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('データの取得に失敗しました');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                            document.getElementById('salesAmount').textContent = data.amount ?? '0';
+                                            document.getElementById('salesCount').textContent = data.count ?? '0';
+                                    })
+                                    .catch(error => {
+                                            console.error('データの取得に失敗しました:', error);
+                                    });
+                                }
+                            </script>
+                        </div>
                     </div>
                 </div>
             </div>

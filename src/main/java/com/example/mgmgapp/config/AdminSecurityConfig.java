@@ -23,7 +23,7 @@ public class AdminSecurityConfig {
         	.securityMatcher("/admin/**")
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/admin/login", "/css/**", "/js/**").permitAll() //管理者ログインと静的リソースは許可
-                .requestMatchers("/admin/products").authenticated() // 管理者ログイン後、/admin/products は認証されたユーザーだけにアクセス許可
+                // .requestMatchers("/admin/products").authenticated() // 管理者ログイン後、/admin/products は認証されたユーザーだけにアクセス許可
                 .requestMatchers("/admin/**").authenticated() // 管理者ログイン済の場合のみアクセス可
                 .anyRequest().denyAll() // 他のURLはすべて拒否
             )
@@ -32,7 +32,7 @@ public class AdminSecurityConfig {
                 .loginProcessingUrl("/admin/login")         //form の action と一致させる　　
                 .usernameParameter("user_nameInput")            //フォーム側の name 属性
                 .passwordParameter("passwordInput")            //フォーム側の name 属性
-                .defaultSuccessUrl("/admin/products", true)    //成功時 
+                .defaultSuccessUrl("/admin", true)    //成功時 
                 .failureUrl("/admin/login?error")              //失敗時
                 .permitAll()
             )
