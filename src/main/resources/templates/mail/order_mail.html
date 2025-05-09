@@ -1,0 +1,104 @@
+<!-- order_form.html - 入力→確認画面への処理準備 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MGMG公式通信</title>
+</head>
+<body>
+<h1>ご注文フォーム</h1>
+<form th:action="@{/orders/confirm}" th:object="${orderForm}" method="post">
+    <!-- 左側：入力フォーム -->
+    <section style="width: 50%; float: left;">
+        <h2><strong>連絡先</strong></h2>
+        <div>
+            <label>メールアドレス：</label>
+            <input type="email" th:field="*{email}" />
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+
+        <h2><strong>お届け先</strong></h2>
+        <div>
+            <label>姓：</label>
+            <input type="text" th:field="*{lastName}" />
+            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+        </div>
+        <div>
+            <label>名：</label>
+            <input type="text" th:field="*{firstName}" />
+            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+        </div>
+        <div>
+            <label>郵便番号：</label>
+            <input type="text" th:field="*{postcode}" />
+            <div th:if="${#fields.hasErrors('postcode')}" th:errors="*{postcode}"></div>
+        </div>
+        <div>
+            <label>都道府県：</label>
+            <input type="text" th:field="*{prefecture}" />
+            <div th:if="${#fields.hasErrors('prefecture')}" th:errors="*{prefecture}"></div>
+        </div>
+        <div>
+            <label>市区町村：</label>
+            <input type="text" th:field="*{city}" />
+            <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+        </div>
+        <div>
+            <label>住所：</label>
+            <input type="text" th:field="*{addressLine}" />
+            <div th:if="${#fields.hasErrors('addressLine')}" th:errors="*{addressLine}"></div>
+        </div>
+        <div>
+            <label>建物名（任意）：</label>
+            <input type="text" th:field="*{building}" />
+        </div>
+        <div>
+            <label>電話番号：</label>
+            <input type="tel" th:field="*{tel}" />
+            <div th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"></div>
+        </div>
+
+        <h2><strong>お支払い</strong></h2>
+        <div>
+            <label>カード番号：</label>
+            <input type="text" th:field="*{cardNumber}" />
+            <div th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"></div>
+        </div>
+        <div>
+            <label>有効期限：</label>
+            <input type="text" th:field="*{cardExpiry}" placeholder="MM/YY" />
+            <div th:if="${#fields.hasErrors('cardExpiry')}" th:errors="*{cardExpiry}"></div>
+        </div>
+        <div>
+            <label>セキュリティコード：</label>
+            <input type="text" th:field="*{cardCvv}" />
+            <div th:if="${#fields.hasErrors('cardCvv')}" th:errors="*{cardCvv}"></div>
+        </div>
+        <div>
+            <label>カード名義人：</label>
+            <input type="text" th:field="*{cardHolderName}" />
+            <div th:if="${#fields.hasErrors('cardHolderName')}" th:errors="*{cardHolderName}"></div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button type="submit">注文を確定する</button>
+            <div><a th:href="@{/cart}">← カートに戻る</a></div>
+        </div>
+    </section>
+
+    <!-- 右側：カート商品情報 -->
+    <section style="width: 40%; float: right;">
+        <h2>ご注文内容</h2>
+        <div th:each="item : ${cartItems}">
+            <img th:src="@{${item.product.imagePath}}" alt="商品画像" width="50">
+            <p th:text="${item.product.name}">商品名</p>
+            <p>価格: ¥<span th:text="${item.product.price}"></span></p>
+            <p>数量: <span th:text="${item.quantity}"></span></p>
+            <hr>
+        </div>
+        <h3>合計（税込）: ¥<span th:text="${totalPrice}"></span></h3>
+    </section>
+</form>
+</body>
+</html>
+
