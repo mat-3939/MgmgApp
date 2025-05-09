@@ -224,7 +224,7 @@ header {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: rgba(138, 101, 82);
+  background-color: #ffa85b;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -239,8 +239,8 @@ header {
 
 header div.logout-button form button {
   background-color: #fff;
-  border: double 3px #9E7966;
-  color: #9E7966;
+  border: double 3px #ffa85b;
+  color: #ffa85b;
   border-radius: 6px;
   padding: 4px 18px;
   text-decoration: none;
