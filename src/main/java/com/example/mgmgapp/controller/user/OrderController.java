@@ -1,4 +1,4 @@
-// OrderController.java - 注文処理コントローラ
+// OrderController.java - 注文処理コントローラ　sessionId追加ver
 package com.example.mgmgapp.controller.user;
 
 import jakarta.servlet.http.HttpSession;
