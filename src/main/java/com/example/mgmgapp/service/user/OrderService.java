@@ -1,4 +1,4 @@
-// OrderService.java - 製品対応：セッションIDベースの注文処理ロジックとメール送信
+// OrderService.java - sessionIDで管理Ver：セッションIDベースの注文処理ロジックとメール送信
 package com.example.mgmgapp.service.user;
 
 import java.math.BigDecimal;
