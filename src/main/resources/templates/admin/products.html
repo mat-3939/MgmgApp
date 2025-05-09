@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="/css/products.css">
 </head>
 <body>
+	<!-- 共通ヘッダー読み込み -->
+	<th:block th:replace="~{admin/fragments :: header}"/>
+		
 	<!-- 共通サイドメニュー読み込み -->
-	<th:block th:replace="~{admin/fragments/side_menu :: sidemenu}"/>
+	<th:block th:replace="~{admin/fragments :: sidemenu}"/>
 
 	<div class="main">
 		<div class="top-bar">
-		    <h1><a class="ttl" th:href="@{/admin/products}">商品一覧</a> <span class="sub-title">商品管理</span></h1>
+		    <h1><a th:href="@{/admin/products}" class="ttl">商品一覧</a> <span class="sub-title">商品管理</span></h1>
 		    <a class="new-button" th:href="@{/admin/products/new}">新規登録</a>
 		</div>
 		
@@ -36,43 +39,60 @@
 		    <a th:href="@{/admin/products}" class="list-button">商品一覧に戻る</a>
 		</div>
 		
+		
 		<!-- 商品リストに商品がある場合のみ表示（検索結果0件の場合は表示なし） -->
 		<div th:if="${#lists.size(products) > 0}">
 			<div class="search-select">
-				<!-- カテゴリ絞り込みセレクトボックス -->
-				<form method="get" th:action="@{/admin/products/category/{categoryId}}">
+				<!-- カテゴリ一覧を表示するボタン -->
+				<div class="search-left">
+					<button class="open-dialog-btn">カテゴリ一覧</button>
+				</div>
+				<div class="dialog-overlay" id="customDialog">
+				  <div class="dialog-box">
+				    <h3>カテゴリ一覧</h3>
+				    <ol>
+				      <li th:each="category : ${categories}" th:text="${category.name}"></li>
+				    </ol>
+				    <button class="close-btn">閉じる</button>
+				  </div>
+				</div>
+				
+				<div class="search-right">
+					<!-- カテゴリ絞り込みセレクトボックス -->
+					<form method="get" th:action="@{/admin/products/category/{categoryId}}">
+						<div class="select-wrapper">
+							<span class="select-label">カテゴリ：</span>
+							<select class="dropdown" onchange="location.href=this.value">
+								<!--<option disabled selected>カテゴリを選択</option>-->
+								<option th:value="@{/admin/products}"
+								        th:selected="${selectedCategoryId == null}">
+										すべて
+								</option>
+								<option th:each="category : ${categories}" 
+								        th:value="@{/admin/products/category/{id}(id=${category.id})}" 
+								        th:text="${category.name}" 
+								        th:selected="${category.id == selectedCategoryId}">
+								</option>
+							</select>
+						</div>
+					</form>
+			
 					<div class="select-wrapper">
-						<span class="select-label">カテゴリ：</span>
+						<span class="select-label">並び順：</span>
 						<select class="dropdown" onchange="location.href=this.value">
-							<!--<option disabled selected>カテゴリを選択</option>-->
-							<option th:value="@{/admin/products}"
-							        th:selected="${selectedCategoryId == null}">
-									すべて
-							</option>
-							<option th:each="category : ${categories}" 
-							        th:value="@{/admin/products/category/{id}(id=${category.id})}" 
-							        th:text="${category.name}" 
-							        th:selected="${category.id == selectedCategoryId}">
-							</option>
+							<!--<option disabled selected>並び替え</option>-->
+							<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='new')}" 
+									th:selected="${sort == 'new'}">登録順</option>
+							<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='update')}" 
+									th:selected="${sort == 'update'}">更新順</option>
+							<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='name')}" 
+									th:selected="${sort == 'name'}">商品名</option>
+							<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='priceAsc')}" 
+									th:selected="${sort == 'priceAsc'}">価格（安い順）</option>
+							<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='priceDesc')}" 
+									th:selected="${sort == 'priceDesc'}">価格（高い順）</option>
 						</select>
 					</div>
-				</form>
-		
-				<div class="select-wrapper">
-					<span class="select-label">並び順：</span>
-					<select class="dropdown" onchange="location.href=this.value">
-						<!--<option disabled selected>並び替え</option>-->
-						<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='new')}" 
-								th:selected="${sort == 'new'}">登録順</option>
-						<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='update')}" 
-								th:selected="${sort == 'update'}">更新順</option>
-						<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='name')}" 
-								th:selected="${sort == 'name'}">商品名</option>
-						<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='priceAsc')}" 
-								th:selected="${sort == 'priceAsc'}">価格（昇順）</option>
-						<option th:value="@{/admin/products(categoryId=${selectedCategoryId}, sort='priceDesc')}" 
-								th:selected="${sort == 'priceDesc'}">価格（降順）</option>
-					</select>
 				</div>
 			</div>
 			
@@ -99,7 +119,8 @@
 							     alt="${product.name}"/>
 							</td>
 				            <td class="name">
-				                <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" th:text="${product.name}" class="product-name">テスト</a>
+				                <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" 
+								   th:text="${product.name}" class="product-name">テスト</a>
 				            </td>
 				            <td class="category" th:text="${product.category.name}">その他</td>
 				            <td class="price" th:text="${@priceFormatter.format(product.price)}">¥2,000</td>
@@ -111,7 +132,11 @@
 								  method="post" 
 								  th:attr="data-name=${product.name}">
 								<input type="hidden" name="_method" value="delete">
-								<td class="delete"><button type="submit" class="delete-button"><img class="delete-icon" th:src="@{/img/icon/gomibako.png}" /></button></td>
+								<td class="delete">
+									<button type="submit" class="delete-button">
+										<img class="delete-icon" th:src="@{/img/icon/gomibako.png}"/>
+									</button>
+								</td>
 							</form>
 				        </tr>
 				    </tbody>
@@ -124,6 +149,7 @@
 		    <a th:href="@{/admin/products}" class="list-button">検索条件をクリア</a>
 		</div>
 	</div>
-<script src="/js/utils.js"></script>
+	
+	<script src="/js/utils.js"></script>
 </body>
 </html>

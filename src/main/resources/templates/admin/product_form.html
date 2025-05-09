@@ -7,12 +7,18 @@
     <link rel="stylesheet" href="/css/product_form.css">
 </head>
 <body>
+	<!-- 共通ヘッダー読み込み -->
+	<th:block th:replace="~{admin/fragments :: header}"/>
+		
 	<!-- 共通サイドメニュー読み込み -->
-	<th:block th:replace="~{admin/fragments/side_menu :: sidemenu}"/>
+	<th:block th:replace="~{admin/fragments :: sidemenu}"/>
 	
 	<div class="main">
 		<div class="top-bar">
-		    <h1>商品登録 <span class="sub-title">商品管理</span></h1>
+			<h1>
+			  <span class="main-title" th:text="${productForm.id != null ? '商品編集' : '商品登録'}">商品登録</span>
+			  <span class="sub-title">商品管理</span>
+			</h1>
 		</div>
 		
 		<form th:action="@{${formMode == 'edit'} ? '/admin/products/edit/' + ${productForm.id} : '/admin/products/new'}"

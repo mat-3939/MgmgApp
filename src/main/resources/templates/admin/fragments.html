@@ -2,15 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>サイドメニュー</title>
+<title>共有パーツ</title>
 <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
+	<!-- ヘッダー -->
+	<header>
+	  <div class="logo">
+		<a th:href="@{/admin/products}"><img class="logo-img" th:src="@{/img/logo/image_2025_4_23.png}"/></a></div>
+	</header>
+	
 	<!-- サイドメニュー -->
 	<sidemenu>
 		<div class="side-wrapper">
 		<div class="sidebar">
-		    <div class="sidebar-item">
+		    <div class="sidebar-item" id="sidebar-home">
 			  <a th:href="@{/admin/products}">🏠 ホーム</a>
 		    </div>
 		    <div class="sidebar-item">
