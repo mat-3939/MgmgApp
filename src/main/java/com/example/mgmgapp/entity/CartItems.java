@@ -33,14 +33,14 @@ public class CartItems {
     private String sessionId;
 
     /**
-     * 商品ID（not null、一意、多対一の関連）
+     * 商品ID（not null、多対一の関連）
      */
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false, unique = true)
+    @JoinColumn(name = "product_id", nullable = false)
     private Products product;
 
     /**
-     * 商品数量（not null）
+     * 商品数量
      */
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

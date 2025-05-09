@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>商品詳細</title>
-<link th:href="@{/products.css}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" th:href="@{/css/products.css}" type="text/css">
 </head>
 <body>
 	<section>
@@ -14,7 +14,6 @@
 		<div class="detail_wrap">
 			<!--左サイド　商品画像-->
 			<div class="detail_left">
-<!--				<img th:src="@{${imagePaths[product.id]}}" alt="商品画像">-->
 				<img th:src="@{${product.imagePath}}" 
 					 th:attr="data-img=${product.imagePath}, alt=${product.name}"/>
 			</div>
@@ -26,6 +25,22 @@
 				<p th:text="${@priceFormatter.format(product.price)} + （税込）">価格</p>
 				<!--説明文-->
 				<p th:text="${product.description}"></p>
+				<!-- 数量選択 -->
+				<div class="quantity-selector">
+				    <button type="button" class="quantity-btn" id="decrease">-</button>
+				    <span id="quantity-display">1</span> <!-- 現在の数量がここに表示される -->
+				    <button type="button" class="quantity-btn" id="increase">+</button>
+				</div>
+				<!-- カート追加フォーム -->
+				<form th:action="@{/cart/add}" method="post">
+				    <input type="hidden" name="productId" th:value="${product.id}"/>
+					<input type="hidden" name="quantity" id="quantity" value="1"/>
+				    <button type="submit" class="btn-cart">カートに追加</button>
+				</form>
+				<!-- カートに遷移する仮ボタン -->
+				<div class="to-cart-button" style="margin-top: 2em;">
+				    <a th:href="@{/cart}" class="btn-cart">カートを見る</a>
+				</div>
 			</div>
 		</div>
 		
@@ -44,5 +59,36 @@
 		
 	</section>
 		
+	<script>
+	    // 初期数量
+	    let quantity = 1;
+
+	    // DOM要素の取得
+	    const quantityDisplay = document.getElementById('quantity-display');
+	    const quantityInput = document.getElementById('quantity');
+	    const increaseButton = document.getElementById('increase');
+	    const decreaseButton = document.getElementById('decrease');
+
+	    // 数量増加処理
+	    increaseButton.addEventListener('click', function() {
+	        quantity++;
+	        updateQuantity();
+	    });
+
+	    // 数量減少処理（1以上に制限）
+	    decreaseButton.addEventListener('click', function() {
+	        if (quantity > 1) {
+	            quantity--;
+	            updateQuantity();
+	        }
+	    });
+
+	    // 数量の更新処理
+	    function updateQuantity() {
+	        quantityDisplay.textContent = quantity;
+	        quantityInput.value = quantity;
+	    }
+	</script>
+
 </body>
 </html>

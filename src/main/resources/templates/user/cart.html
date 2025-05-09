@@ -24,7 +24,8 @@
             <tbody>
                 <tr th:each="cartItem : ${cartItems}">
                     <td th:text="${cartItem.product.name}">商品名</td>
-                    <td th:text="${cartItem.product.price}">価格</td>
+<!--                    <td th:text="${cartItem.product.price}">価格</td>-->
+					<td th:text="${@priceFormatter.format(cartItem.product.price)}">価格</td>
                     <td>
                         <form th:action="@{/cart/update/{id}(id=${cartItem.id})}" method="post">
                             <button type="submit" name="delta" value="-1">-</button>
@@ -32,7 +33,9 @@
                             <button type="submit" name="delta" value="1">+</button>
                         </form>
                     </td>
-                    <td th:text="${cartItem.product.price * cartItem.quantity}">小計</td> <!-- ★ここで小計を計算 -->
+                    <!-- ★ここで小計を計算 -->
+                    <td th:text="${@priceFormatter.format(cartItem.product.price * cartItem.quantity)}">小計</td> 
+<!--					<td th:text="${cartItem.product.price * cartItem.quantity}">小計</td>-->
                     <td>
                         <form th:action="@{/cart/remove/{id}(id=${cartItem.id})}" method="post">
                             <button type="submit">削除</button>
@@ -44,11 +47,22 @@
 
         <p th:if="${cartItems.isEmpty()}">カートは空です。</p>
 
-        <p>合計金額：<span th:text="${total}">0</span>円</p>
+<!--        <p>合計金額：<span th:text="${total}">0</span>円</p>-->
+		<p>合計金額：<span th:text="${@priceFormatter.format(total)}">0</span></p>
 
-        <div>
-            <a href="/checkout">購入手続きに進む</a>
-        </div>
+<!--        <div>-->
+<!--            <a href="/checkout">購入手続きに進む</a>-->
+<!--        </div>-->
+<!-- カートが空でない場合：購入手続き ＋ ショッピングを続ける -->
+		<div th:if="${cartItems != null and !cartItems.isEmpty()}">
+		    <a th:href="@{/checkout}" class="btn">購入手続きに進む</a>
+		    <a th:href="@{/products}" class="btn">ショッピングを続ける</a>
+		</div>
+		
+		<!-- カートが空の場合：ショッピングを続ける のみ -->
+		<div th:if="${cartItems == null or cartItems.isEmpty()}">
+		    <a th:href="@{/products}" class="btn">ショッピングを続ける</a>
+		</div>
     </div>
 
     <footer>

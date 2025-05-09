@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.mgmgapp.entity.CartItems;
+import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.repository.CartItemRepository;
 import com.example.mgmgapp.repository.ProductsRepository;
 
@@ -57,5 +58,28 @@ public class CartService {
 		        }
 		    }
 		}
+		
+		// カートに商品を追加
+		public void addToCart(String sessionId, int productId, int quantity) {
+		    List<CartItems> existingItems = cartItemRepository.findBySessionId(sessionId).stream()
+		        .filter(item -> item.getProduct().getId() == productId)
+		        .toList();
+
+		    if (!existingItems.isEmpty()) {
+		        CartItems item = existingItems.get(0);
+		        item.setQuantity(item.getQuantity() + quantity);
+		        cartItemRepository.save(item);
+		    } else {
+		        Products product = productsRepository.findById(productId).orElse(null);
+		        if (product != null) {
+		            CartItems newItem = new CartItems();
+		            newItem.setSessionId(sessionId);
+		            newItem.setProduct(product);
+		            newItem.setQuantity(quantity);
+		            cartItemRepository.save(newItem);
+		        }
+		    }
+		}
+
 	
 }

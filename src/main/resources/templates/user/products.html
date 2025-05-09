@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>商品一覧</title>
-<link th:href="@{/products.css}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" th:href="@{/css/products.css}" type="text/css">
 </head>
 <body>
 	<section>
@@ -11,17 +11,7 @@
 	<p><a th:href="@{/}">トップ</a> > <span>商品一覧</span></p>
 	<h2>商品一覧</h2>
 	
-	<!--検索タブ-->
-<!--	<div>-->
-<!--		<label for="sort">並べ替え:</label>-->
-<!--		<select id="sort" name="sortBy" onchange="location = this.value;">-->
-<!--			<option value="?sortBy=idDesc" th:selected="${sortBy == 'idDesc'}">新着順</option>-->
-<!--			<option value="?sortBy=priceAsc" th:selected="${sortBy == 'priceAsc'}">価格が安い順</option>-->
-<!--			<option value="?sortBy=priceDesc" th:selected="${sortBy == 'priceDesc'}">価格が高い順</option>-->
-<!--		</select>-->
-<!--	</div>-->
-
-     <form method="get" th:action="@{/products/category/{categoryId}}">
+	<form method="get" th:action="@{/products/category/{categoryId}}">
 	     <div>
 			<label for="sort">カテゴリ:</label>
 			<select class="dropdown" onchange="location.href=this.value">
@@ -41,9 +31,6 @@
      <div>
 		<label for="sort">並べ替え:</label>
 		<select class="dropdown" onchange="location.href=this.value">
-<!--			<option th:value="'?sort=new'" th:selected="${sort == 'new'}">新着順</option>-->
-<!--			<option th:value="'?sort=priceAsc'" th:selected="${sort == 'priceAsc'}">価格が安い順</option>-->
-<!--			<option th:value="'?sort=priceDesc'" th:selected="${sort == 'priceDesc'}">価格が高い順</option>-->
 			<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='new')}" 
 					th:selected="${sort == 'new'}">新着順</option>
 			<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='priceAsc')}" 
@@ -56,13 +43,11 @@
 	<div class="list_wrap">
 		<div class="list_cell" th:each="product : ${products}">
 		    <a th:href="@{/products_detail/{id}(id=${product.id})}">
-<!--		        <img th:src="@{${imagePaths[product.id]}}" alt="商品画像">-->
 				<img th:src="@{${product.imagePath}}" 
 					 th:attr="data-img=${product.imagePath}, alt=${product.name}"/>
 		        <p th:text="${product.name}">商品名</p>
 		        <p th:text="${product.description}">商品説明</p>
 				<p th:text="${@priceFormatter.format(product.price)} + （税込）">価格</p>
-<!--		        <p>￥<span th:text="${product.price}">価格</span><span>（税込）</span></p>-->
 		    </a>   
 		</div>
 	</div>

@@ -10,18 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.mgmgapp.entity.CartItems;
 import com.example.mgmgapp.service.user.CartService;
 
 @Controller
+@RequestMapping("/cart")
 public class CartController {
 	
 	@Autowired
 	private CartService cartService;
 	
 	
-	@GetMapping("cart")
+	@GetMapping
 public String cart(Model model, HttpSession session) {
 
 		 // テスト用に仮のセッションIDをセット
@@ -33,13 +36,13 @@ public String cart(Model model, HttpSession session) {
 	    List<CartItems> cartItems = cartService.getCartItems(sessionId);
 	    model.addAttribute("cartItems", cartItems);
 
-	    //★★★★★
-	    // 合計金額を計算
-	    
-	    int total = 0;
 	    System.out.println("cartItems is null? " + (cartItems == null));
 	    System.out.println("cartItems size: " + (cartItems != null ? cartItems.size() : "null"));
 
+	    //★★★★★
+	    // 合計金額を計算
+	    
+//	    int total = 0;
 //	    for (CartItems item : cartItems) {
 //	        int productId = item.getProduct().getId(); // product_id を取得
 //	        int price = cartService.getProductPrice(productId); // 単価を取得
@@ -50,19 +53,20 @@ public String cart(Model model, HttpSession session) {
 //	        System.out.println("〇〇〇");
 //	    }
 
+	    int total = cartItems.stream()
+	    		.mapToInt(item -> item.getProduct().getPrice() * item.getQuantity())
+	    		.sum();
+	    model.addAttribute("total", total);
 	    
 	    System.out.println("★★★");
 	    System.out.println(total);
 	    System.out.println("★★★");
-//
-//
-	    model.addAttribute("total", total);
-
+	    
 	    return "user/cart";
 	}
 	
 	//削除用コントローラ
-	@PostMapping("cart/remove/{id}")
+	@PostMapping("/remove/{id}")
 	public String removeItemFromCart(@PathVariable("id") int id){
 		//カートから指定された商品を削除（サービスを動かす）
 		cartService.removeItem(id);
@@ -70,7 +74,7 @@ public String cart(Model model, HttpSession session) {
 	}
 	
 	//数量変更用コントローラ(おそらく+、-ボタンで数量を変更して、確定ボタンを押したとき）
-	@PostMapping("cart/update/{id}")
+	@PostMapping("/update/{id}")
 	public String updateItemQuantity(
 		@PathVariable("id") int id, int delta //フォームから「+1」or「-1」が来る想定
 		) {
@@ -78,10 +82,20 @@ public String cart(Model model, HttpSession session) {
 		return "redirect:/cart"; //画面を更新
 	}
 	
+	// カートに商品を追加
+	@PostMapping("/add")
+	public String addToCart(
+	        @RequestParam("productId") int productId,
+	        @RequestParam("quantity") int quantity,
+	        HttpSession session) {
+
+	    // 本番ではセッションから取得
+	    String sessionId = "sessionId1"; // session.getId();
+
+	    cartService.addToCart(sessionId, productId, quantity);
+
+	    return "redirect:/cart";
+	}
+
+	
 }
-
-
-
-
-
-
