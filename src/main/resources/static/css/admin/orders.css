@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+/* 注文一覧ページのスタイル */
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-header {
+    margin-bottom: 20px;
+}
+
+/* 検索セクション */
+.search-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.form-group.half {
+    flex: 0 0 calc(50% - 20px);
+    margin: 0 10px 15px;
+}
+
+/* 詳細検索トグル */
+.detail-search {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail-search.show {
+    display: block;
+}
+
+.toggle-button {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.button-content {
+    display: flex;
+    align-items: center;
+}
+
+.button-content svg {
+    margin-right: 5px;
+}
+
+/* テーブルコントロール */
+.table-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-form, .sort-form {
+    margin: 0;
+}
+
+/* テーブルスタイル */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.data-table th, 
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.data-table th {
+    background-color: rgba(138, 101, 82, 0.1);
+    font-weight: 600;
+}
+
+.data-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.data-table a {
+    color: rgba(0, 110, 188);
+    text-decoration: none;
+}
+
+.data-table a:hover {
+    text-decoration: underline;
+}
+
+/* ステータス選択 */
+.status-select {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+/* ボタンスタイル */
+.primary-button {
+    background-color: rgba(0, 110, 188);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.primary-button:hover {
+    background-color: rgba(0, 86, 179);
+}
+
+.secondary-button {
+    background-color: rgba(108, 117, 125);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.secondary-button:hover {
+    background-color: rgba(90, 98, 104);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .form-group.half {
+        flex: 0 0 100%;
+        margin: 0 0 15px;
+    }
+    
+    .table-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .filter-controls {
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .filter-form, .sort-form {
+        flex: 1;
+    }
+} 
