@@ -237,6 +237,22 @@ header {
 	height: 40px;
 }
 
+header div.logout-button form button {
+  background-color: #fff;
+  border: double 3px #9E7966;
+  color: #9E7966;
+  border-radius: 6px;
+  padding: 4px 18px;
+  text-decoration: none;
+  font-size: 0.85em;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px 0;
+  line-height: 1.2;
+  position: relative;
+  top: -1px;
+}
+
 .user-menu span {
   cursor: pointer;
   font-weight: bold;
