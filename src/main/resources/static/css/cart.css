@@ -1,0 +1,163 @@
+@charset "UTF-8";
+
+/*カート内*/
+
+html,
+body {
+    font-family: 'Segoe UI', sans-serif;
+/*    background-color: rgba(242, 242, 242);*/
+	height: 100%;
+    margin: 0;
+    color: rgba(51, 51, 51);
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.p-list {
+	font-size: 12px;
+	margin: 20px 0 20px 40px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 20px 40px;
+    font-weight: bold;
+}
+
+img {
+	width: 60px;
+	border-radius: 4px;
+}
+
+.table-wrapper {
+	display: flex;
+	width: 100%;
+	padding: 0 40px 20px 40px;
+	box-sizing: border-box;
+	overflow-x: auto;
+	justify-content: center;
+	
+}
+
+table {
+    width: 60%;
+    background-color: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
+/*    border-radius: 10px;*/
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+/*    box-shadow: 0 2px 8px rgba(0,0,0,0.06);*/
+	white-space: nowrap;
+	table-layout: fixed;
+}
+
+th,
+td {
+	text-align: left;
+    font-size: 14px;
+	font-weight: 400;
+	padding: 24px;
+    vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+table td:nth-child(4),
+table th:nth-child(3) {
+	text-align: right;
+}
+
+.quantity_del {
+	display: flex;
+	justify-content: space-between;
+}
+
+.sum-price {
+    max-width: 55%;
+    margin: 10px auto 0 auto;
+    text-align: right;
+}
+
+.sum-price span {
+	font-size: 24px;
+	font-weight: 700;
+}
+	
+.null-wrapper {
+	width: 40%;
+	background-color: gray;
+	border-radius: 10px;
+	margin: auto;
+}
+
+.null-container {
+	color: white;
+	font-size: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 10vh;
+}
+
+.continue,
+.confirm {
+	display: flex;
+	justify-content: center;
+	margin: 60px;
+	gap: 60px;
+}
+
+.continue-btn,
+.confirm-btn {
+	width: 200px;
+	font-size: 14px;
+	font-weight: 400;
+	border: none;
+	border-radius: 50px;
+	padding: 20px;
+	text-decoration: none;
+	text-align: center;
+	transition: background-color 0.2s ease;
+}
+
+.continue-btn {
+	color: rgba(255, 168, 95);
+	background-color: rgba(255, 255, 255);
+	border: 1px solid rgba(255, 168, 95);
+}
+
+.confirm-btn {
+	color: rgba(255, 255, 255);
+	background-color: rgba(255, 168, 95);
+	border: 1px solid rgba(255, 168, 95);
+}
+
+.continue-btn:hover {
+	color: rgba(255, 255, 255);
+	background-color: rgba(255, 168, 95);
+}
+
+.confirm-btn:hover {
+	color: rgba(255, 168, 95);
+	background-color: rgba(255, 255, 255);
+	border: 1px solid rgba(255, 168, 95);
+}
+
+.delete-icon {
+	width: 20px;
+}
+
+.copyright {
+	font-size: 12px;
+	text-align: center;
+	padding: 10px 0;
+}
