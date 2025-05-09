@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--meta head-->
+<head>
+	<div th:fragment="meta(title)">
+		<meta charset="UTF-8">
+		<title th:text="${title}">Default Title</title>
+		<!--共通css-->
+		<link th:href="@{/fragments.css}" rel="stylesheet" type="text/css">
+	
+	
+		<!--　　以下は必要なのがあれば使う！　　-->
+	
+		<!--＊レスポンシブ用のviewport-->
+		<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+		<!--＊ファビコン-->
+		<!--<link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">-->
+		<!--＊共通js-->
+		<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script th:src="@{/js/script.js}" defer></script>-->
+		<!--＊google font-->
+		<!--<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		※実際のURLに差し替えて使う→<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap" rel="stylesheet">-->
+	</div>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header th:fragment="siteHeader" class="header">
+      <div class="header-container">
+        <div class="logo">
+			<a th:href="@{/}"><img th:src="@{/img/logo.svg}" alt="ロゴ"></a>
+        </div>
+		
+        <div class="search-bar">
+<!--			以下で検索クエリを商品一覧ページで処理するようにしてる。→user/product側のコントローラとかが必要だけど未作成-->
+          <form action="/products" method="get">
+            <input type="text" name="q" placeholder="検索" th:value="${searchQuery}" />
+            <button type="submit"><img th:src="@{/img/search.svg}" alt="検索マーク"></button>
+          </form>
+        </div>
+		
+        <div class="nav-buttons">
+          <!--<a>カテゴリー一覧</a>-->
+          <a href="/products" class="nav-button products" th:href="@{/products}">商品一覧</a>
+          <a href="/cart" class="nav-button cart" th:href="@{/cart}"><span>カートの中を見る</span></a>
+        </div>
+      </div>
+  </header>
+
+  <!-- フッター -->
+  <footer th:fragment="siteFooter" class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+			<a th:href="@{/}" class="footer-logo"><img th:src="@{/img/logo.svg}" alt="ロゴ"></a>
+			<a>店舗情報</a>
+        </div>
+		
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>カテゴリ</h4>
+            <a>商品一覧</a>
+            <a>カート</a>
+          </div>
+          <div class="footer-column">
+            <h4>ガイド</h4>
+            <a>利用規約</a>
+            <a>特定商取引に基づく表記</a>
+            <a>プライバシーポリシー</a>
+          </div>
+          <div class="footer-column">
+            <h4>サイトマップ</h4>
+            <a>ホーム</a>
+            <a>お問い合わせ</a>
+            <a>店舗情報</a>
+          </div>
+        </div>
+        <div class="footer-sns">
+          <a>X</a>
+          <a>Instagram</a>
+          <a>Tiktok</a>
+        </div>
+      </div>
+  </footer>
+</body>
+</html>

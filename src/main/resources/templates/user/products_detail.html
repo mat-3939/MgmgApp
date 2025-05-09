@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>商品詳細</title>
-<link th:href="@{/products.css}" rel="stylesheet" type="text/css">
+	<!--meta(カッコ)の中にページタイトル記述-->
+	<div th:replace="user/fragments :: meta('商品詳細')"></div>
+	<!--↓各ページのcss-->
+	<link th:href="@{/products.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<header th:replace="user/fragments :: siteHeader"></header>
 	<section>
 	<!--パンくず-->
 	<p><a th:href="@{/}">トップ</a> > <a th:href="@{/products}">商品一覧</a> > <span th:text="${product.name}"></span></p>
@@ -14,7 +16,6 @@
 		<div class="detail_wrap">
 			<!--左サイド　商品画像-->
 			<div class="detail_left">
-<!--				<img th:src="@{${imagePaths[product.id]}}" alt="商品画像">-->
 				<img th:src="@{${product.imagePath}}" 
 					 th:attr="data-img=${product.imagePath}, alt=${product.name}"/>
 			</div>
@@ -43,6 +44,6 @@
 		</div>
 		
 	</section>
-		
+	<footer th:replace="user/fragments :: siteFooter"></footer>
 </body>
 </html>

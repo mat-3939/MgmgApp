@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>トップページ</title>
-<!--<link href="/index.css" rel="stylesheet" type="text/css">-->
-<link th:href="@{/index.css}" rel="stylesheet" type="text/css">
+	<!--meta(カッコ)の中にページタイトル記述-->
+	<div th:replace="user/fragments :: meta('トップページ')"></div>
+	<!--↓各ページのcss-->
+	<link th:href="@{/index.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<header th:replace="user/fragments :: siteHeader"></header>
 	<section>
 		<!--カルーセル-->
 		<div class="carousel">
@@ -25,27 +26,20 @@
 		<!--人気５-->
 		<div class="pickUp">
 			<h3>オンラインショップで人気の商品</h3>
-<!--			<ul>-->
-<!--				！！！aタグのルート修正が必要です！！！-->
-<!--				<li><a href="/products_detail/101"><img src="/img/washoku/w_01.jpg" alt="和食1"></a></li>-->
-<!--				<li><a href="/products_detail/201"><img src="/img/yoshoku/y_01.jpg" alt="洋食1"></a></li>-->
-<!--				<li><a href="/products_detail/301"><img src="/img/chuka/c_01.jpg" alt="中華1"></a></li>-->
-<!--				<li><a href="/products_detail/401"><img src="/img/other/s_01.jpg" alt="その他1"></a></li>-->
-<!--				<li><a href="/products_detail/103"><img src="/img/washoku/w_03.jpg" alt="和食3"></a></li>-->
-<!--			</ul>-->
-　　　　　　　　<ul>
+				<ul>
 					<li th:each="pickUp : ${pickUp}">
 						<a th:href="@{/products_detail/{id}(id=${pickUp.id})}">
 							<img th:src="@{${pickUp.imagePath}}" 
 							     th:attr="data-img=${pickUp.imagePath}, alt=${pickUp.name}"/>
 					    </a>
 					</li>
-			　　</ul>
+				</ul>
 			
 			<p class="moreBtn"><a href="/products">もっと見る</a></p>
 		</div>
 		
 	</section>
+	<footer th:replace="user/fragments :: siteFooter"></footer>
 	
 	<!--カルーセルのjs-->
 	<script>

@@ -31,18 +31,3 @@
 	width:30%;
 	margin-left:20px;
 }
-
-/*人気５*/
-.pickUp ul {
-    display: flex;
-	flex-wrap: wrap;
-	justify-content:space-between;
-}
-.pickUp ul li{
-	list-style: none;
-	width:calc(95% / 5);
-		overflow: hidden;
-}
-.pickUp ul li img {
-    width: 100%;
-}
