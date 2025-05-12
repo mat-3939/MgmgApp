@@ -56,8 +56,10 @@
 	<div class="list_wrap">
 		<div class="list_cell" th:each="product : ${products}">
 		    <a th:href="@{/products_detail/{id}(id=${product.id})}" class="product-card">
-				<img th:src="@{${product.imagePath}}" 
-					 th:attr="data-img=${product.imagePath}, alt=${product.name}"/>
+				<div class="img-wrapper">
+					<img th:src="@{${product.imagePath}}" 
+						 th:attr="data-img=${product.imagePath}, alt=${product.name}"/>
+				</div>
 			    <div class="product-info">
 			        <p class="product-name" th:text="${product.name}">商品名</p>
 			        <p class="product-description" th:text="${product.description}">商品説明</p>
