@@ -2,56 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>商品一覧</title>
-<link rel="stylesheet" th:href="@{/css/products.css}" type="text/css">
+<title>MGMG | 商品一覧</title>
+<link rel="stylesheet" th:href="@{/css/user/fragments.css}" type="text/css">
+<link rel="stylesheet" th:href="@{/css/user/products.css}" type="text/css">
 </head>
 <body>
-	<section>
-	<!--パンくず-->
-	<p><a th:href="@{/}">トップ</a> > <span>商品一覧</span></p>
-	<h2>商品一覧</h2>
 	
-	<form method="get" th:action="@{/products/category/{categoryId}}">
-	     <div>
-			<label for="sort">カテゴリ:</label>
-			<select class="dropdown" onchange="location.href=this.value">
-				<option th:value="@{/products}"
-						th:selected="${selectedCategoryId == null}">
-						すべて
-				</option>
-				<option th:each="category : ${categories}" 
-						th:value="@{/products/category/{id}(id=${category.id})}" 
-						th:text="${category.name}" 
-						th:selected="${category.id == selectedCategoryId}">
-				</option>
-			</select>
-		</div>
-	 </form>
-
-     <div>
-		<label for="sort">並べ替え:</label>
-		<select class="dropdown" onchange="location.href=this.value">
-			<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='new')}" 
-					th:selected="${sort == 'new'}">新着順</option>
-			<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='priceAsc')}" 
-					th:selected="${sort == 'priceAsc'}">価格が安い順</option>
-			<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='priceDesc')}" 
-					th:selected="${sort == 'priceDesc'}">価格が高い順</option>
-		</select>
+	<div class="wrapper">
+	<header th:replace="user/fragments :: siteHeader"></header>
+	<!--パンくず-->
+	<div class="p-list">
+		<p>
+			<a th:href="@{/}">トップ</a>　&gt;　
+			<span>商品一覧</span>
+		</p>
 	</div>
-		
+	<h1>商品一覧</h1>
+	
+	<div class="search-select">
+		<div class="search-left">
+			<form method="get" th:action="@{/products/category/{categoryId}}">
+			     <div class="select-wrapper">
+					<span class="select-label">カテゴリ：</span>
+					<select class="dropdown" onchange="location.href=this.value">
+						<option th:value="@{/products}"
+								th:selected="${selectedCategoryId == null}">
+								すべて
+						</option>
+						<option th:each="category : ${categories}" 
+								th:value="@{/products/category/{id}(id=${category.id})}" 
+								th:text="${category.name}" 
+								th:selected="${category.id == selectedCategoryId}">
+						</option>
+					</select>
+				</div>
+			 </form>
+		</div>
+		<div class="search-right">
+		     <div class="select-wrapper">
+				<span class="select-label">並び順：</span>
+				<select class="dropdown" onchange="location.href=this.value">
+					<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='new')}" 
+							th:selected="${sort == 'new'}">新着順</option>
+					<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='priceAsc')}" 
+							th:selected="${sort == 'priceAsc'}">価格が安い順</option>
+					<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='priceDesc')}" 
+							th:selected="${sort == 'priceDesc'}">価格が高い順</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
 	<div class="list_wrap">
 		<div class="list_cell" th:each="product : ${products}">
-		    <a th:href="@{/products_detail/{id}(id=${product.id})}">
+		    <a th:href="@{/products_detail/{id}(id=${product.id})}" class="product-card">
 				<img th:src="@{${product.imagePath}}" 
 					 th:attr="data-img=${product.imagePath}, alt=${product.name}"/>
-		        <p th:text="${product.name}">商品名</p>
-		        <p th:text="${product.description}">商品説明</p>
-				<p th:text="${@priceFormatter.format(product.price)} + （税込）">価格</p>
+			    <div class="product-info">
+			        <p class="product-name" th:text="${product.name}">商品名</p>
+			        <p class="product-description" th:text="${product.description}">商品説明</p>
+					<p class="product-price">
+						<span th:text="${@priceFormatter.format(product.price)}">価格</span>
+						<span class="tax-label">（税込）</span>
+					</p>
+				</div>
 		    </a>   
 		</div>
 	</div>
+	
+	<footer th:replace="user/fragments :: siteFooter"></footer>
 		
-	</section>
+		<!-- コピーライト -->
+		<copyright>
+			<span>©2025 MgmgApp ALL Rights Reserved.</span>
+		</copyright>
+		
+	</div>
 </body>
 </html>

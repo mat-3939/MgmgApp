@@ -9,6 +9,9 @@ import com.example.mgmgapp.entity.Products;
 
 public interface ProductRepository extends JpaRepository<Products, Integer>{
 	
+	// 商品名に部分一致するものを検索（大文字小文字を無視）
+    List<Products> findByNameContainingIgnoreCase(String name);
+	
 	/**
      * 指定したカテゴリの商品一覧を取得
      */

@@ -49,9 +49,9 @@ public class Products {
     private int price;
     
     /**
-     * 在庫数（not null）
+     * 在庫数（デフォルト100）
      */
-    @Column(name = "stock", nullable = false)
+    @Column(name = "stock", nullable = true)
     private Integer stock;
     
     /**
@@ -108,5 +108,4 @@ public class Products {
     	//更新時に更新日時を自動で設定
         this.updatedAt = LocalDateTime.now().withSecond(0).withNano(0);
     }
-    
 }

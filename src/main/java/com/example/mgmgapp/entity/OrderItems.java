@@ -46,9 +46,9 @@ public class OrderItems {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-//    /**
-//     * 注文時の商品単価（not null、小数点以下2桁まで）
-//     */
-//    @Column(name = "price", nullable = false, precision = 10, scale = 2)
-//    private BigDecimal price;
+    /**
+     * 注文時の商品単価（not null、小数点以下2桁まで）
+     */
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    private int price;
 }

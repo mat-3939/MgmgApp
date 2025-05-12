@@ -28,9 +28,10 @@ public class CartController {
 public String cart(Model model, HttpSession session) {
 
 		 // テスト用に仮のセッションIDをセット
-	    String sessionId = "sessionId1";  // ← 仮のセッションID
+		// 仮のセッションID
+//	    String sessionId = "sessionId1";
 		//	    // セッションIDを取得
-//	    String sessionId = session.getId();
+	    String sessionId = session.getId();
 
 	    // DBからカートアイテム一覧を取得
 	    List<CartItems> cartItems = cartService.getCartItems(sessionId);
@@ -52,6 +53,22 @@ public String cart(Model model, HttpSession session) {
 //	        System.out.println(item.getProduct());
 //	        System.out.println("〇〇〇");
 //	    }
+	    
+	    System.out.println("Cart Items: " + cartItems);
+	    System.out.println("Session ID: " + sessionId);
+	    
+	    int uniqueItemCount = (int) cartItems.stream()
+	    		.filter(item -> sessionId != null && sessionId.equals(item.getSessionId()))  // セッションIDでフィルタリング
+	    		.map(item -> item.getProduct().getName() != null ? item.getProduct().getName() : "Unknown Product")  // 商品名を取得
+	    		.distinct()  // 重複を除く
+	    		.count();  // ユニークな商品の数をカウント（int型にキャスト）
+
+	    model.addAttribute("uniqueItemCount", uniqueItemCount);
+	    
+	    int subtotal = cartItems.stream()
+	    		.mapToInt(item -> item.getProduct().getPrice() * item.getQuantity())
+	    		.sum();
+	    model.addAttribute("subtotal", subtotal);
 
 	    int total = cartItems.stream()
 	    		.mapToInt(item -> item.getProduct().getPrice() * item.getQuantity())
@@ -90,12 +107,13 @@ public String cart(Model model, HttpSession session) {
 	        HttpSession session) {
 
 	    // 本番ではセッションから取得
-	    String sessionId = "sessionId1"; // session.getId();
-
+//	    String sessionId = "sessionId1";
+	    String sessionId = session.getId();
+	    
 	    cartService.addToCart(sessionId, productId, quantity);
+	    System.out.println("カート追加時のセッションID: " + session.getId());
 
 	    return "redirect:/cart";
 	}
-
 	
 }

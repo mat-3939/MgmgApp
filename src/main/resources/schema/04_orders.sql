@@ -23,11 +23,14 @@ CREATE TABLE IF NOT EXISTS orders (
     -- 住所（not null）
     address_line VARCHAR(50) NOT NULL,
     
-    -- 建物名（null）
+    -- 建物名
     building VARCHAR(50),
     
-    -- 電話番号（not null）
+    -- 電話番号
     tel VARCHAR(50) ,
+    
+    -- 支払方法
+    pay_method VARCHAR(10) DEFAULT 'クレジットカード',
 
     -- 合計金額（not null）
     total_price NUMERIC(10, 2) ,
@@ -35,6 +38,6 @@ CREATE TABLE IF NOT EXISTS orders (
     -- 注文日時（not null）
     order_date TIMESTAMP WITHOUT TIME ZONE,
     
-    -- 注文ステータス（not null）
-    status BOOLEAN NOT NULL DEFAULT FALSE
+    -- 注文ステータス
+    status VARCHAR(10) DEFAULT '未対応'
     );

@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>カート</title>
-    <link rel="stylesheet" th:href="@{/css/cart.css}" type="text/css">
+    <title>MGMG | カート</title>
+	<link rel="stylesheet" th:href="@{/css/user/fragments.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/user/cart.css}" type="text/css">
 </head>
 <body>
 	<div class="wrapper">
+		<header th:replace="user/fragments :: siteHeader"></header>
+		
 		<!--パンくず-->
 		<div class="p-list">
 			<p>
@@ -48,14 +51,14 @@
 									</td>
 				                    <td>
 										<div class="quantity_del">
-					                        <form th:action="@{/cart/update/{id}(id=${cartItem.id})}" method="post">
-					                            <button type="submit" name="delta" value="-1">-</button>
+					                        <form class="quantity-wrapper" th:action="@{/cart/update/{id}(id=${cartItem.id})}" method="post">
+					                            <button class="quantity-btn" type="submit" name="delta" value="-1">－</button>
 					                            <span th:text="${cartItem.quantity}">数量</span>
-					                            <button type="submit" name="delta" value="1">+</button>
+					                            <button class="quantity-btn" type="submit" name="delta" value="1">＋</button>
 					                        </form>
 					                        <form th:action="@{/cart/remove/{id}(id=${cartItem.id})}" method="post">
-					                            <button>
-													<img class="delete-icon" th:src="@{/img/icon/gomibako.png}"/>
+					                            <button class="delete-icon">
+													<img th:src="@{/img/icon/gomibako.png}"/>
 												</button>
 					                        </form>
 										</div>
@@ -81,7 +84,7 @@
 		        <!-- カートが空でない場合：購入手続き ＋ ショッピングを続ける -->
 				<div class="confirm" th:if="${cartItems != null and !cartItems.isEmpty()}">
 				    <a th:href="@{/products}" class="continue-btn">ショッピングを続ける</a>
-				    <a th:href="@{/checkout}" class="confirm-btn">購入手続きに進む</a>
+				    <a th:href="@{/orders/form}" class="confirm-btn">購入手続きに進む</a>
 				</div>
 				
 				<!-- カートが空の場合：ショッピングを続ける のみ -->
@@ -91,10 +94,12 @@
 		    </div>
 		</main>
 		
+		<footer th:replace="user/fragments :: siteFooter"></footer>
+		
 		<!-- コピーライト -->
-		<footer class="copyright">
+		<copyright>
 			<span>©2025 MgmgApp ALL Rights Reserved.</span>
-		</footer>
+		</copyright>
 	</div>
 </body>
 </html>

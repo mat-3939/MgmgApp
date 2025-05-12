@@ -1,4 +1,4 @@
-package com.example.mgmgapp.repository;
+package com.example.mgmgapp.repository.user;
 
 import java.util.List;
 
@@ -17,7 +17,9 @@ public interface CartItemRepository extends JpaRepository<CartItems, Integer>{
 	List<CartItems> findByQuantity(int quantity);
 	
 	// セッションIDに基づいてカートアイテムを取得し、関連する商品情報も一緒に取得
-    @Query("SELECT c FROM CartItems c JOIN FETCH c.product WHERE c.sessionId = :sessionId")
+    @Query("SELECT c FROM CartItems c JOIN FETCH c.product WHERE c.sessionId = :sessionId ORDER BY c.id ASC")
     List<CartItems> findBySessionIdWithProducts(@Param("sessionId") String sessionId);
+    
+    void deleteBySessionId(String sessionId);
     
 }

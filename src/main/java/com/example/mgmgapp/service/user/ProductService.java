@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,17 @@ public class ProductService {
 //                return productRepository.findAll(); // ソートなし
 //        }
 //    }
+	
+	// 商品名で検索（部分一致）
+    public List<Products> searchByName(String query) {
+        // クエリが空でないかチェック
+        if (query == null || query.isEmpty()) {
+            return Collections.emptyList(); // 空ならば空のリストを返す
+        }
+
+        // 商品名に部分一致する商品を検索
+        return productRepository.findByNameContainingIgnoreCase(query);
+    }
     
     /**
      * 指定したカテゴリの商品一覧を取得する

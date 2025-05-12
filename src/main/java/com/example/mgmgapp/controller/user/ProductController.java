@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.service.user.CategoryService;
@@ -82,6 +83,21 @@ public class ProductController {
         model.addAttribute("sort", sort);
 
         return "user/products";
+    }
+    
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam("q") String query, Model model, RedirectAttributes redirectAttributes) {
+        List<Products> results = productService.searchByName(query);
+
+        if (results.size() == 1) {
+            // 商品が1件だけ一致 → 詳細ページにリダイレクト
+            return "redirect:/products_detail/" + results.get(0).getId();
+        } else {
+            // 複数または0件 → 検索結果ページへ
+            model.addAttribute("results", results);
+            model.addAttribute("searchQuery", query);
+            return "user/products";
+        }
     }
     
     /**

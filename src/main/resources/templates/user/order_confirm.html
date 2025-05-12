@@ -1,0 +1,68 @@
+<!-- order_confirm.html - 確認画面：バインドされた注文情報とカート内容を表示 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注文内容確認</title>
+	<link rel="stylesheet" th:href="@{/css/user/fragments.css}" type="text/css">
+</head>
+<body>
+	<header th:replace="user/fragments :: siteHeader"></header>
+	
+<h1>ご注文内容の確認</h1>
+<form th:action="@{/orders/complete}" th:object="${orderForm}" method="post">
+    <section style="width: 50%; float: left;">
+        <h2><strong>連絡先</strong></h2>
+        <p>メールアドレス：<span th:text="*{email}"></span></p>
+		<input type="hidden" th:field="*{email}" />
+
+        <h2><strong>お届け先</strong></h2>
+        <p>姓：<span th:text="*{lastName}"></span></p>
+		<input type="hidden" th:field="*{lastName}" />
+        <p>名：<span th:text="*{firstName}"></span></p>
+		<input type="hidden" th:field="*{firstName}" />
+        <p>郵便番号：<span th:text="*{postcode}"></span></p>
+		<input type="hidden" th:field="*{postcode}" />
+        <p>都道府県：<span th:text="*{prefecture}"></span></p>
+		<input type="hidden" th:field="*{prefecture}" />
+        <p>市区町村：<span th:text="*{city}"></span></p>
+		<input type="hidden" th:field="*{city}" />
+        <p>住所：<span th:text="*{addressLine}"></span></p>
+		<input type="hidden" th:field="*{addressLine}" />
+        <p>建物名：<span th:text="*{building}"></span></p>
+		<input type="hidden" th:field="*{building}" />
+        <p>電話番号：<span th:text="*{tel}"></span></p>
+		<input type="hidden" th:field="*{tel}" />
+
+        <h2><strong>お支払い情報</strong></h2>
+        <p>カード番号：****-****-****-<span th:text="${#strings.substring(orderForm.cardNumber, orderForm.cardNumber.length() - 4)}"></span></p>
+		<input type="hidden" th:field="*{cardNumber}" />
+		<p>有効期限：<span th:text="*{cardExpiry}"></span></p>
+		<input type="hidden" th:field="*{cardExpiry}" placeholder="MM/YY" />
+        <p>セキュリティコード（CVV）：<span th:text="*{cardCvv}"></span></p>
+		<input type="hidden" th:field="*{cardCvv}" />
+		<p>名義人：<span th:text="*{cardHolderName}"></span></p>
+		<input type="hidden" th:field="*{cardHolderName}" />
+<!--		<p>ステータス：<span th:text="*{status}"></span></p>-->
+<!--		<input type="hidden" th:field="*{status}" value="false"/>-->
+    </section>
+
+    <section style="width: 40%; float: right;">
+        <h2>ご注文商品</h2>
+        <div th:each="item : ${cartItems}">
+            <img th:src="@{${item.product.imagePath}}" alt="商品画像" width="50">
+            <p th:text="${item.product.name}"></p>
+            <p>価格: ¥<span th:text="${item.product.price}"></span></p>
+            <p>数量: <span th:text="${item.quantity}"></span></p>
+            <hr>
+        </div>
+        <h3>合計（税込）: ¥<span th:text="${totalPrice}"></span></h3>
+    </section>
+
+    <div style="clear: both; text-align: center; margin-top: 30px;">
+        <button type="submit">注文を確定する</button>
+        <p><a th:href="@{/orders/form}">← 戻って修正する</a></p>
+    </div>
+</form>
+</body>
+</html>

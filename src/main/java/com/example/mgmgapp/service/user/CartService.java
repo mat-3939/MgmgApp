@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.mgmgapp.entity.CartItems;
 import com.example.mgmgapp.entity.Products;
-import com.example.mgmgapp.repository.CartItemRepository;
-import com.example.mgmgapp.repository.ProductsRepository;
+import com.example.mgmgapp.repository.user.CartItemRepository;
+import com.example.mgmgapp.repository.user.ProductRepository;
 
 @Service
 public class CartService {
@@ -37,7 +37,7 @@ public class CartService {
     
     //商品IDから単価を取得する 
     @Autowired
-    private ProductsRepository productsRepository;
+    private ProductRepository productRepository;
 
 //    public int getProductPrice(int productId) {
 //    	Integer price = productsRepository.findPriceById(productId);
@@ -70,7 +70,7 @@ public class CartService {
 		        item.setQuantity(item.getQuantity() + quantity);
 		        cartItemRepository.save(item);
 		    } else {
-		        Products product = productsRepository.findById(productId).orElse(null);
+		        Products product = productRepository.findById(productId).orElse(null);
 		        if (product != null) {
 		            CartItems newItem = new CartItems();
 		            newItem.setSessionId(sessionId);
@@ -80,6 +80,12 @@ public class CartService {
 		        }
 		    }
 		}
+		
+		// カート内商品の合計個数をカウント
+		public int getTotalQuantity(String sessionId) {
+		    return cartItemRepository.findBySessionId(sessionId).stream()
+		            .mapToInt(CartItems::getQuantity)
+		            .sum();
+		}
 
-	
 }

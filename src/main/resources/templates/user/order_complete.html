@@ -1,0 +1,45 @@
+<!-- order_complete.html - 注文完了画面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注文完了</title>
+	<link rel="stylesheet" th:href="@{/css/user/fragments.css}" type="text/css">
+</head>
+<body>
+	<header th:replace="user/fragments :: siteHeader"></header>
+	
+<h1>ご注文ありがとうございます</h1>
+
+<p>ご注文を受け付けました。</p>
+<p>ご注文内容は配信されたご注文確認メールよりご確認ください。</p>
+
+<h2>注文番号：<span id="orderNumber" th:attr="data-order-id=${order.id}"></span></h2>
+<p>注文日時：<span th:text="${order.orderDate}"></span></p>
+<p>合計金額：<span th:text="${@priceFormatter.format(order.totalPrice)}"></span></p>
+
+<p>商品は以下の住所へ配送されます：</p>
+<p th:text="${order.prefecture} + ' ' + ${order.city} + ' ' + ${order.addressLine} + ' ' + ${order.building}"></p>
+
+<p>今後ともごちそうお弁当通販・モグモグをご利用いただけますようお願いいたします！</p>
+<a th:href="@{/}">トップへ</a>
+
+<script>
+	function generateRandomString(length) {
+		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		let result = '';
+		for (let i = 0; i < length; i++) {
+			result += chars.charAt(Math.floor(Math.random() * chars.length));
+		}
+		return result;
+	}
+	
+	// data属性から注文IDを取得
+	const span = document.getElementById('orderNumber');
+	const orderId = span.dataset.orderId;
+	
+	// ランダム文字列 + 注文ID を表示
+	span.textContent = generateRandomString(15) + orderId;
+</script>
+</body>
+</html>

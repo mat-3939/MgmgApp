@@ -2,81 +2,140 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>トップページ</title>
-<link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+<title>MGMG | トップ</title>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Slick本体 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<link rel="stylesheet" th:href="@{/css/user/fragments.css}" type="text/css">
+<link rel="stylesheet" th:href="@{/css/user/index.css}" type="text/css">
 </head>
 <body>
-	<section>
-		<!--カルーセル-->
-		<div class="carousel">
-			<ul>
-				<li><a href="/"><img src="/img/banner/dummy01.png" alt="ダミーバナー01"></a></li>
-				<li><a href="/"><img src="/img/banner/dummy02.png" alt="ダミーバナー02"></a></li>
-				<li><a href="/"><img src="/img/banner/dummy03.png" alt="ダミーバナー03"></a></li>
-				<li><a href="/"><img src="/img/banner/dummy04.png" alt="ダミーバナー04"></a></li>
-			</ul>
-			<!--ドットナビ-->
-			<div class="dots">
-			    <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-			  </div>
-		</div>		
-		
-		<!--人気５-->
-		<div class="pickUp">
-			<h3>オンラインショップで人気の商品</h3>
-			<ul>
-				<li th:each="pickUp : ${pickUp}">
-					<a th:href="@{/products_detail/{id}(id=${pickUp.id})}">
-						<img th:src="@{${pickUp.imagePath}}" 
-							 th:attr="data-img=${pickUp.imagePath}, alt=${pickUp.name}"/>
-					</a>
-				</li>
-			</ul>
+	
+		<div class="wrapper">
+	<header th:replace="user/fragments :: siteHeader"></header>
+			<div class="carousel-container">
+				<!-- カルーセル -->
+				<div class="carousel-wrapper">
+				  <button class="arrow prev">&#10094;　</button>
+				  <div class="slider">
+				    <div><img src="/img/banner/dummy01.png" alt=""></div>
+				    <div><img src="/img/banner/dummy02.png" alt=""></div>
+				    <div><img src="/img/banner/dummy03.png" alt=""></div>
+				    <div><img src="/img/banner/dummy04.png" alt=""></div>
+				  </div>
+				  <button class="arrow next">&#10095;　</button>
+				</div>
+			</div>
 			
-			<p class="moreBtn"><a href="/products">もっと見る</a></p>
+			<!--人気５-->
+			<div class="pickUp">
+				<h3>オンラインショップで人気の商品</h3>
+				<ul>
+					<li th:each="pickUp : ${pickUp}">
+						<a th:href="@{/products_detail/{id}(id=${pickUp.id})}">
+							<img th:src="@{${pickUp.imagePath}}" 
+								 th:attr="data-img=${pickUp.imagePath}, alt=${pickUp.name}"/>
+						</a>
+					</li>
+				</ul>
+				
+				<div class="continue">
+					<a th:href="@{/products}" class="continue-btn">もっと見る</a>
+				</div>
+			</div>
+			
+	<footer th:replace="user/fragments :: siteFooter"></footer>
+	
+	<!-- コピーライト -->
+	<copyright>
+		<span>©2025 MgmgApp ALL Rights Reserved.</span>
+	</copyright>
 		</div>
 		
-	</section>
-	
 	<!--カルーセルのjs-->
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-		  const carousel = document.querySelector(".carousel ul");
-		  const dots = document.querySelectorAll(".dot");
-		  const slides = document.querySelectorAll(".carousel li");
-		  const totalSlides = slides.length;
-		  let currentIndex = 0;
-		  let autoSlide;
+	  $(document).ready(function() {
+	    $('.slider').on('setPosition', function() {
+	      adjustArrowPosition();
+	    });
 
-		  function updateCarousel() {
-		    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-		    dots.forEach((dot, i) => {
-		      dot.classList.toggle("active", i === currentIndex);
-		    });
+	    function adjustArrowPosition() {
+	      const $carousel = $('.carousel-wrapper');
+	      const $centerSlide = $('.slick-center'); // 現在の中央スライド
+	      const $prevArrow = $('.arrow.prev');
+	      const $nextArrow = $('.arrow.next');
+		  const $dots = $('.slick-dots');
+
+		  if ($carousel.length && $centerSlide.length) {
+			// アローの縦幅
+			const carouselHeight = $carousel.outerHeight();  // カルーセルの高さ
+			const dotsHeight = $dots.outerHeight();  // ドット部分の高さ
+			const arrowHeight = $prevArrow.outerHeight();   // アローの高さ
+			
+			// ドットの高さを差し引いた縦の高さを計算
+			const adjustedCarouselHeight = carouselHeight - dotsHeight;
+			const arrowTopPosition = (adjustedCarouselHeight - arrowHeight) / 2;  // アローを中央に配置
+
+		    // アローの縦位置を調整
+		    $prevArrow.css('top', arrowTopPosition + 'px');
+		    $nextArrow.css('top', arrowTopPosition + 'px');
+		          
+		    // アローの横幅
+		    const carouselWidth = $carousel.outerWidth();  // カルーセルの幅
+		    const centerWidth = $centerSlide.outerWidth();  // 中央のスライドの幅
+		    const sideWidth = (carouselWidth - centerWidth) / 2;  // 両端の幅
+
+		    // アローの横幅を設定
+		    $prevArrow.css('width', sideWidth + 'px');
+		    $nextArrow.css('width', sideWidth + 'px');
 		  }
+	    }
 
-		  function startAutoSlide() {
-		    autoSlide = setInterval(() => {
-		      currentIndex = (currentIndex + 1) % totalSlides;
-		      updateCarousel();
-		    }, 4000); // 5秒ごと
-		  }
+	    // 最初のレンダリング後にも適用
+	    $('.slider').on('init', function() {
+	      adjustArrowPosition();
+	    });
 
-		  // ドットクリックでスライド切り替え
-		  dots.forEach((dot, i) => {
-		    dot.addEventListener("click", () => {
-		      currentIndex = i;
-		      updateCarousel();
+	    // リサイズ時にも再調整
+	    $(window).on('resize', function() {
+	      adjustArrowPosition();
+	    });
 
-		      // 自動スライドをリセット
-		      clearInterval(autoSlide);
-		      startAutoSlide();
-		    });
-		  });
+	    // 初期化をトリガー
+	    $('.slider').slick({
+	      centerMode: true,
+	      centerPadding: '20%',
+	      slidesToShow: 1,
+	      slidesToScroll: 1,
+	      arrows: false,
+	      dots: true,
+	      autoplay: true,
+	      autoplaySpeed: 3000,
+	      infinite: true,
+	      responsive: [
+	        {
+	          breakpoint: 768,
+	          settings: {
+	            centerMode: false,
+	            centerPadding: '0px',
+	            slidesToShow: 1,
+	          }
+	        }
+	      ]
+	    });
 
-		  updateCarousel();   // 初期表示の更新
-		  startAutoSlide();   // 自動スライド開始
-		});
+	    $('.arrow.prev').on('click', function() {
+	      $('.slider').slick('slickPrev');
+	    });
+
+	    $('.arrow.next').on('click', function() {
+	      $('.slider').slick('slickNext');
+	    });
+	  });
 	</script>
 </body>
 </html>
