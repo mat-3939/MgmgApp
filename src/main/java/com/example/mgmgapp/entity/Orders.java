@@ -80,7 +80,7 @@ public class Orders {
      */
     @Column(name = "building", nullable = true)
     private String building;
-    
+
     /**
      * 電話番号
      */

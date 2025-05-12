@@ -32,6 +32,9 @@ CREATE TABLE IF NOT EXISTS orders (
     -- 支払方法
     pay_method VARCHAR(10) DEFAULT 'クレジットカード',
 
+    -- 支払い方法（not null）
+    payment_method VARCHAR(10) NOT NULL DEFAULT 'クレジットカード',
+
     -- 合計金額（not null）
     total_price NUMERIC(10, 2) ,
     
