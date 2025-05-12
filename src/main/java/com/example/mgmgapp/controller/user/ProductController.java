@@ -92,9 +92,12 @@ public class ProductController {
         if (results.size() == 1) {
             // 商品が1件だけ一致 → 詳細ページにリダイレクト
             return "redirect:/products_detail/" + results.get(0).getId();
+        } else if (results.isEmpty()){
+        	// 0件 → 一覧ページにリダイレクト
+        	return "redirect:/products";
         } else {
-            // 複数または0件 → 検索結果ページへ
-            model.addAttribute("results", results);
+        	// 複数件 → 検索結果一覧ページへ
+            model.addAttribute("products", results);
             model.addAttribute("searchQuery", query);
             return "user/products";
         }

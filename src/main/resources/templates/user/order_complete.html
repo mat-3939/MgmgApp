@@ -5,41 +5,53 @@
     <meta charset="UTF-8">
     <title>注文完了</title>
 	<link rel="stylesheet" th:href="@{/css/user/fragments.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/user/order_complete.css}" type="text/css">
 </head>
 <body>
-	<header th:replace="user/fragments :: siteHeader"></header>
+  <header th:replace="user/fragments :: siteHeader"></header>
+
+  <main class="order-complete-container">
+    <div class="icon-success">&#10004;</div>
+    <h1>ご注文ありがとうございます！</h1>
+	<div class="text">
+	    <p>ご注文を受け付けました。</p>
+	    <p>ご注文内容はご注文確認メールよりご確認ください。</p>
+	</div>
+
+	<div class="text">
+	    <p>注文番号：<span id="orderNumber" th:attr="data-order-id=${order.id}"></span></p>
+	    <p>注文日時：<span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+	    <p>合計金額：<span th:text="${@priceFormatter.format(order.totalPrice)}"></span></p>
 	
-<h1>ご注文ありがとうございます</h1>
+	    <p>配送先：〒
+			<span th:text="${order.postcode}"></span>
+			<span class="shipping-address" th:text="' ' + ${order.prefecture} + ' ' + ${order.city} + ' ' + ${order.addressLine} + ' ' + ${order.building}"></span>
+		</p>
+	</div>
 
-<p>ご注文を受け付けました。</p>
-<p>ご注文内容は配信されたご注文確認メールよりご確認ください。</p>
+    <p class="thanks-message">またのご利用を心よりお待ちしております！</p>
 
-<h2>注文番号：<span id="orderNumber" th:attr="data-order-id=${order.id}"></span></h2>
-<p>注文日時：<span th:text="${order.orderDate}"></span></p>
-<p>合計金額：<span th:text="${@priceFormatter.format(order.totalPrice)}"></span></p>
+    <a th:href="@{/}" class="btn-top">トップへ</a>
+  </main>
 
-<p>商品は以下の住所へ配送されます：</p>
-<p th:text="${order.prefecture} + ' ' + ${order.city} + ' ' + ${order.addressLine} + ' ' + ${order.building}"></p>
-
-<p>今後ともごちそうお弁当通販・モグモグをご利用いただけますようお願いいたします！</p>
-<a th:href="@{/}">トップへ</a>
-
-<script>
-	function generateRandomString(length) {
-		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		let result = '';
-		for (let i = 0; i < length; i++) {
-			result += chars.charAt(Math.floor(Math.random() * chars.length));
-		}
-		return result;
-	}
-	
-	// data属性から注文IDを取得
-	const span = document.getElementById('orderNumber');
-	const orderId = span.dataset.orderId;
-	
-	// ランダム文字列 + 注文ID を表示
-	span.textContent = generateRandomString(15) + orderId;
-</script>
+  <footer th:replace="user/fragments :: siteFooter"></footer>
+  
+  <script>
+  	function generateRandomString(length) {
+  		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  		let result = '';
+  		for (let i = 0; i < length; i++) {
+  			result += chars.charAt(Math.floor(Math.random() * chars.length));
+  		}
+  		return result;
+  	}
+  	
+  	// data属性から注文IDを取得
+  	const span = document.getElementById('orderNumber');
+  	const orderId = span.dataset.orderId;
+  	
+  	// ランダム文字列 + 注文ID を表示
+  	span.textContent = generateRandomString(2) + "-" + generateRandomString(11) + orderId;
+  </script>
 </body>
 </html>

@@ -146,7 +146,7 @@
 	    </div>
 	</div>
 
-    <button type="submit" class="checkout-button">注文を確定する</button>
+    <button type="submit" class="checkout-button">注文内容を確認する</button>
     <a th:href="@{/cart}" class="back-to-cart">カートに戻る</a>
   </form>
 
@@ -169,11 +169,6 @@
 		
 		<span class="quantity-badge" th:text="${cartItem.quantity}"></span>
     </div>
-
-<!--	<div class="price-container">-->
-<!--		<span th:text="'小計・' + ${uniqueItemCount + 'アイテム'}"></span>-->
-<!--		<p class="cart-total" th:text="${@priceFormatter.format(totalPrice)}"></p>-->
-<!--	</div>-->
 	<div class="price-container">
 		<span class="tax-label">合計（税込）</span>
 		<p class="cart-total" th:text="${@priceFormatter.format(totalPrice)}"></p>

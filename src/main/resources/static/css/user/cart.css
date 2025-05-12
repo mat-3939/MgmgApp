@@ -94,6 +94,10 @@ td a {
 	justify-content: space-between;
 }
 
+.quantity-btn {
+	background-color: rgba(255,255,255);
+}
+
 .sum-price {
     max-width: 55%;
     margin: 10px auto 0 auto;
@@ -146,6 +150,7 @@ td a {
 .continue-btn {
 	color: rgba(255, 255, 255);
 	background-color: rgba(102,102,102);
+	box-shadow: 0 6px 0 rgba(51, 51, 51, 1);
 /*	border: 1px solid rgba(255, 168, 95);*/
 }
 
@@ -154,12 +159,14 @@ td a {
 	color: rgba(255, 255, 255);
 	background-color: rgba(255, 168, 95);
 	border: 1px solid rgba(255, 168, 95);
+	box-shadow: 0 6px 0 rgba(255, 120, 40, 1);
 }
 
 .continue-btn:hover {
 /*	color: rgba(255, 255, 255);*/
 /*	background-color: rgba(255, 168, 95);*/
-	transform: translateY(-10px);
+    transform: translateY(6px);
+	box-shadow: none;
 }
 
 .confirm-btn:hover,
@@ -167,7 +174,8 @@ td a {
 /*	color: rgba(255, 168, 95);*/
 /*	background-color: rgba(255, 255, 255);*/
 /*	border: 1px solid rgba(255, 168, 95);*/
-    transform: translateY(-10px);
+    transform: translateY(6px);
+	box-shadow: none;
 }
 
 .delete-icon,

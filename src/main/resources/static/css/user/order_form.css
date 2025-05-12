@@ -56,7 +56,7 @@ select {
   width: 100%;
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -101,7 +101,7 @@ select {
 
 input:focus,
 select:focus {
-    border-color: rgba(51,51,51);
+    border-color: rgba(0,123,255);
     outline: none;
 }
 
@@ -118,10 +118,10 @@ select:focus {
   left: auto;
   max-width: 440px;
   width: 100%;
-  background-color: #f9f9f9;
+/*  background-color: #f9f9f9;*/
   border-radius: 8px;
 /*  padding: 20px;*/
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+/*  box-shadow: 0 4px 10px rgba(0,0,0,0.1);*/
   z-index: 1000;
 }
 
@@ -150,6 +150,7 @@ select:focus {
   object-fit: cover;
   border-radius: 4px;
   margin-right: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .item-left {
@@ -170,14 +171,14 @@ select:focus {
 
 .quantity-badge {
   position: absolute;
-  top: -6px;
-  left: 46px;
-  background: rgba(255,168,91);
+  top: -12px;
+  left: 50px;
+  background: rgba(102,102,102);
   color: rgba(255,255,255);
   border-radius: 50%;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
+  font-size: 14px;
+  width: 24px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -214,7 +215,7 @@ select:focus {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
-  background-color: #007bff;
+  background-color: rgba(0,123,255);
   color: white;
   border: none;
   border-radius: 6px;
@@ -222,14 +223,14 @@ select:focus {
   transition: 0.3s ease;
 }
 .checkout-button:hover {
-  background-color: #0056b3;
+  background-color: rgba(0,86,179);
 }
 
 .back-to-cart {
   display: block;
   margin-top: 30px;
   text-align: center;
-  color: #007bff;
+  color: rgba(0,123,255);
   text-decoration: underline;
 }
 

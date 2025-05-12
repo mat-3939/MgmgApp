@@ -151,12 +151,14 @@ h3 {
 	color: rgba(255, 255, 255);
 	background-color: rgba(255, 168, 95);
 	border: 1px solid rgba(255, 168, 95);
+	box-shadow: 0 6px 0 rgba(255, 120, 40, 1);
 }
 
 .continue-btn:hover {
 /*	color: rgba(255, 168, 95);*/
 /*	background-color: rgba(255, 255, 255);*/
-	transform: translateY(-10px);
+	transform: translateY(6px);
+	box-shadow: none;
 }
 
 copyright {
@@ -174,13 +176,22 @@ copyright {
 	justify-content:space-between;
 	padding: 0 40px;
 }
+
 .pickUp ul li{
 	list-style: none;
 	width:calc(95% / 5);
 	overflow: hidden;
 	border-radius: 8px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
 .pickUp ul li img {
     width: 100%;
+	height: auto;
+	display: block;
+}
+
+.pickUp ul li:hover {
+  transform: translateY(-6px);
 }
