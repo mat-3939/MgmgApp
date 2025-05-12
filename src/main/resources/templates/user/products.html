@@ -21,9 +21,10 @@
 	
 	<div class="search-select">
 		<div class="search-left">
-			<form method="get" th:action="@{/products/category/{categoryId}}">
+			<form method="get">
 			     <div class="select-wrapper">
 					<span class="select-label">カテゴリ：</span>
+					<input type="hidden" name="q" th:value="${searchQuery}" />
 					<select class="dropdown" onchange="location.href=this.value">
 						<option th:value="@{/products}"
 								th:selected="${selectedCategoryId == null}">

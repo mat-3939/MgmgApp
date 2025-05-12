@@ -57,6 +57,14 @@ public class ProductService {
     }
     
     /**
+     * キーワード検索＆カテゴリ絞り込み
+     */
+    public List<Products> searchByNameAndCategory(String keyword, Integer categoryId) {
+        return productRepository.findByNameContainingAndCategoryId(keyword, categoryId);
+    }
+
+    
+    /**
      * 指定したカテゴリの商品一覧を取得する
      */
     public List<Products> findByCategoryId(Integer categoryId) {
