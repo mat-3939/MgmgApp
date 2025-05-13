@@ -177,6 +177,30 @@ header {
     text-align: center;
 }
 
+/*パンくず*/
+.p-list {
+	font-size: 12px;
+	font-weight: 600;
+	margin: 0 0 20px 40px;
+	gap: 10px;
+}
+
+.p-list a {
+	text-decoration: none;
+	color: rgba(255, 168, 95);
+}
+
+.breadcrumb a,
+.breadcrumb span {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+
+.breadcrumb .separator {
+  margin: 0 0.5em;
+/*  color: #888;*/
+}
+
 /*人気５*/
 .pickUp ul {
     display: flex;

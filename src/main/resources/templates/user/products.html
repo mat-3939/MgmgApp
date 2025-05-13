@@ -10,16 +10,27 @@
 	
 	<div class="wrapper">
 	<header th:replace="user/fragments :: siteHeader"></header>
+	
 	<!--パンくず-->
 	<div class="p-list">
-	  <p>
-	    <a th:href="@{/}">トップ</a>　&gt;　
+	  <p class="breadcrumb">
+	    <a th:href="@{/}">トップ</a>
+		<span class="separator">&gt;</span>
 	    <a th:if="${q != null and !q.isEmpty()}" th:href="@{/products}">商品一覧</a>
 		<span th:if="${q == null or q.isEmpty()}">商品一覧</span>
-	    <span th:if="${q != null and !q.isEmpty()}">　&gt;　<span th:text="${q}"></span></span>
+		<span th:if="${q != null and !q.isEmpty()}">
+			<span class="separator">&gt;</span>
+			<span th:text="${q}"></span>
+		</span>
 	  </p>
 	</div>
+	
 	<h1>商品一覧</h1>
+<!--	<h1 th:if="${q == null or q.isEmpty()}">商品一覧</h1>-->
+<!--	<h1 th:if="${q != null and !q.isEmpty()}" -->
+<!--	    th:text="${q} + '　検索結果：' + ${#lists.size(products)} + '件'">-->
+<!--		キーワード　検索結果：件数-->
+<!--	</h1>-->
 	
 	<div class="search-select">
 		<div class="search-left">

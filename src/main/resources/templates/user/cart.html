@@ -13,10 +13,12 @@
 		
 		<!--パンくず-->
 		<div class="p-list">
-			<p>
-			  <a th:href="@{/}">トップ</a>　&gt;　
-			  <a th:href="@{/products}">商品一覧</a>　&gt;　
-			  <span>カート</span>
+			<p class="breadcrumb">
+				<a th:href="@{/}">トップ</a>
+				<span class="separator">&gt;</span>
+			    <a th:href="@{/products}">商品一覧</a>
+				<span class="separator">&gt;</span>
+				<span>カート</span>
 			</p>
 		</div>
 		
