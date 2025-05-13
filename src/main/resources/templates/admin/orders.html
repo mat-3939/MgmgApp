@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注文一覧 - 管理画面</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="/css/admin/common.css">
     <link rel="stylesheet" href="/css/admin/orders.css">
 </head>
@@ -16,21 +17,23 @@
 
     <!-- メインコンテンツ -->
     <div class="main">
-        <div class="container">
-            <div class="page-header">
-                <h1>注文一覧 注文管理</h1>
-            </div>
+		<div class="top-bar">
+			<h1>注文一覧 <span class="sub-title">注文管理</span></h1>
+		</div>
+<!--            <div class="page-header">-->
+<!--                <h1>注文一覧 注文管理</h1>-->
+<!--            </div>-->
 
             <!-- 検索フォーム -->
-            <div class="search-section">
+            <div class="search-container">
                 <form th:action="@{/admin/orders/search}" method="get">
-                    <div class="form-group">
-                        <label for="keyword">注文ID・お名前・メールアドレス・電話番号</label>
-                        <input type="text" id="keyword" name="keyword" th:value="${keyword}">
+                    <div class="search-box">
+<!--                        <label for="keyword">注文ID・お名前・メールアドレス・電話番号</label>-->
+                        <input type="text" class="keyword" name="keyword" th:value="${keyword}" placeholder="注文ID・お名前・メールアドレス・電話番号">
                     </div>
                     
                     <div class="form-group">
-                        <button type="button" class="secondary-button toggle-button" id="toggleDetailSearch">
+                        <button type="button" class="toggle" id="toggleDetailSearch">
                             <span class="button-content">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -41,66 +44,76 @@
                     </div>
                     
                     <!-- 詳細検索（トグルで表示/非表示） -->
-                    <div class="detail-search" id="detailSearchSection">
-                        <div class="form-row">
-                            <div class="form-group half">
-                                <label for="startDate">注文日（開始）</label>
-                                <input type="date" id="startDate" name="startDate" th:value="${startDate}">
-                            </div>
-                            <div class="form-group half">
-                                <label for="endDate">注文日（終了）</label>
-                                <input type="date" id="endDate" name="endDate" th:value="${endDate}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="minAmount">最低金額</label>
-                            <input type="number" id="minAmount" name="minAmount" th:value="${minAmount}">
-                        </div>
-                    </div>
+					<div class="detail-search" id="detailSearchSection">
+					  <div class="form-row date-range-row">
+					    <div class="form-group third">
+					      <input type="text" id="startDate" name="startDate" th:value="${startDate}" placeholder="注文日（開始）">
+					    </div>
+					    <div class="form-group tilde">〜</div>
+					    <div class="form-group third">
+					      <input type="text" id="endDate" name="endDate" th:value="${endDate}" placeholder="注文日（終了）">
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="form-group full">
+					      <input type="number" id="minAmount" name="minAmount" th:value="${minAmount}" placeholder="最低金額">
+					    </div>
+					  </div>
+					</div>
                     
-                    <button type="submit" class="primary-button">検索</button>
+                    <button type="submit" class="search-button" id="ordersSearch">検索</button>
                 </form>
             </div>
 
             <!-- 注文一覧テーブル -->
-            <div class="table-controls">
+            <div class="search-select">
                 <div class="pagination-info">
                     <!-- ページネーション情報などを表示する場所 -->
                 </div>
+				
                 <div class="filter-controls">
-                    <form th:action="@{/admin/orders}" method="get" class="filter-form">
-                        <select id="statusFilter" name="status" onchange="this.form.submit()">
-                            <option value="" th:selected="${status == null}">絞り込み</option>
-                            <option value="all" th:selected="${status == 'all'}">すべて</option>
-                            <option value="true" th:selected="${status == 'true'}">対応済み</option>
-                            <option value="false" th:selected="${status == 'false'}">未対応</option>
-                        </select>
-                        <!-- 現在の検索条件とソート条件を維持 -->
-                        <input type="hidden" name="keyword" th:value="${keyword}" th:if="${keyword != null}">
-                        <input type="hidden" name="sort" th:value="${sort}" th:if="${sort != null}">
+					<!-- ステータス絞り込みセレクトボックス -->
+                    <form th:action="@{/admin/orders}" method="get">
+						<div class="select-wrapper">
+							<span class="select-label">ステータス：</span>
+	                        <select class="dropdown" id="statusFilter" name="status" onchange="this.form.submit()">
+<!--	                            <option value="" th:selected="${status == null}">絞り込み</option>-->
+	                            <option value="all" th:selected="${status == 'all'}">すべて</option>
+	                            <option value="true" th:selected="${status == 'true'}">対応済み</option>
+	                            <option value="false" th:selected="${status == 'false'}">未対応</option>
+	                        </select>
+	                        <!-- 現在の検索条件とソート条件を維持 -->
+	                        <input type="hidden" name="keyword" th:value="${keyword}" th:if="${keyword != null}">
+	                        <input type="hidden" name="sort" th:value="${sort}" th:if="${sort != null}">
+						</div>
                     </form>
-                    <form th:action="@{/admin/orders}" method="get" class="sort-form">
-                        <select id="sortOrder" name="sort" onchange="this.form.submit()">
-                            <option value="" th:selected="${sort == null}">並び替え</option>
-                            <option value="new" th:selected="${sort == 'new'}">注文日（新しい順）</option>
-                            <option value="old" th:selected="${sort == 'old'}">注文日（古い順）</option>
-                            <option value="price_high" th:selected="${sort == 'price_high'}">金額（高い順）</option>
-                            <option value="price_low" th:selected="${sort == 'price_low'}">金額（安い順）</option>
-                            <option value="id_new" th:selected="${sort == 'id_new'}">ID（新しい順）</option>
-                            <option value="id_old" th:selected="${sort == 'id_old'}">ID（古い順）</option>
-                        </select>
-                        <!-- 現在の検索条件と絞り込み条件を維持 -->
-                        <input type="hidden" name="keyword" th:value="${keyword}" th:if="${keyword != null}">
-                        <input type="hidden" name="status" th:value="${status}" th:if="${status != null}">
+					
+					<!-- ソートセレクトボックス -->
+                    <form th:action="@{/admin/orders}" method="get">
+						<div class="select-wrapper">
+							<span class="select-label">並び替え：</span>
+	                        <select class="dropdown" id="sortOrder" name="sort" onchange="this.form.submit()">
+<!--	                            <option value="" th:selected="${sort == null}">並び替え</option>-->
+	                            <option value="new" th:selected="${sort == 'new'}">注文日（新しい順）</option>
+	                            <option value="old" th:selected="${sort == 'old'}">注文日（古い順）</option>
+	                            <option value="price_high" th:selected="${sort == 'price_high'}">金額（高い順）</option>
+	                            <option value="price_low" th:selected="${sort == 'price_low'}">金額（安い順）</option>
+	                            <option value="id_new" th:selected="${sort == 'id_new'}">ID（新しい順）</option>
+	                            <option value="id_old" th:selected="${sort == 'id_old'}">ID（古い順）</option>
+	                        </select>
+	                        <!-- 現在の検索条件と絞り込み条件を維持 -->
+	                        <input type="hidden" name="keyword" th:value="${keyword}" th:if="${keyword != null}">
+	                        <input type="hidden" name="status" th:value="${status}" th:if="${status != null}">
+						</div>
                     </form>
                 </div>
             </div>
 
-            <div class="table-container">
-                <table class="data-table">
+            <div class="table-wrapper">
+                <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th class="id">ID</th>
                             <th>注文者</th>
                             <th>支払い方法</th>
                             <th>購入金額</th>
@@ -110,18 +123,20 @@
                     </thead>
                     <tbody>
                         <tr th:each="order : ${orders}">
-                            <td th:text="${order.id}">10</td>
+                            <td th:text="${order.id}" class="id">10</td>
                             <td>
-                                <a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.firstName + ' ' + order.lastName}">太郎 山田</a>
+                                <a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.firstName + ' ' + order.lastName}" class="product-name">太郎 山田</a>
                             </td>
                             <td th:text="${order.payMethod}">クレジットカード</td>
                             <td th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}">¥6,000</td>
                             <td>
                                 <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post">
-                                    <select class="status-select" name="status" onchange="this.form.submit()">
-                                        <option value="false" th:selected="${!order.status}">未対応</option>
-                                        <option value="true" th:selected="${order.status}">対応済み</option>
-                                    </select>
+									<div class="select-wrapper-table">
+	                                    <select class="dropdown" id="status" name="status" onchange="this.form.submit()">
+	                                        <option value="false" th:selected="${!order.status}">未対応</option>
+	                                        <option value="true" th:selected="${order.status}">対応済み</option>
+	                                    </select>
+									</div>
                                 </form>
                             </td>
                             <td th:text="${#temporals.format(order.orderDate, 'yyyy/MM/dd')}">2025/04/22</td>
@@ -129,7 +144,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
     </div>
 
     <script>
@@ -139,5 +153,27 @@
             detailSection.classList.toggle('show');
         });
     </script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+	<script>
+	  const startInput = document.getElementById('startDate');
+	  const endInput = document.getElementById('endDate');
+
+	  const startPicker = flatpickr(startInput, {
+	    locale: 'ja',
+	    dateFormat: 'Y-m-d',
+	    onChange: function(selectedDates, dateStr, instance) {
+	      endPicker.set('minDate', dateStr);
+	    }
+	  });
+
+	  const endPicker = flatpickr(endInput, {
+	    locale: 'ja',
+	    dateFormat: 'Y-m-d',
+	    onChange: function(selectedDates, dateStr, instance) {
+	      startPicker.set('maxDate', dateStr);
+	    }
+	  });
+	</script>
 </body>
 </html>

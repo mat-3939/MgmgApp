@@ -15,7 +15,7 @@
 
 	<div class="main">
 		<div class="top-bar">
-		    <h1><a th:href="@{/admin/products}" class="ttl">商品一覧</a> <span class="sub-title">商品管理</span></h1>
+		    <h1>商品一覧 <span class="sub-title">商品管理</span></h1>
 		    <a class="new-button" th:href="@{/admin/products/new}">新規登録</a>
 		</div>
 		
@@ -23,7 +23,7 @@
 			<form th:action="@{/admin/products/search}" method="get">
 				<div class="search-box">
 					<!--<label for="keyword">商品名で検索</label>-->
-			        <input type="text" class="keyword" name="keyword" th:value="${keyword}" placeholder="商品名で検索">
+			        <input type="text" class="keyword" name="keyword" th:value="${keyword}" placeholder="商品名">
 			        <button class="search-button">検索</button>
 				</div>
 				<!-- エラーメッセージ表示 -->

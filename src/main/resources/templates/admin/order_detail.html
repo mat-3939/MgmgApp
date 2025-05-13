@@ -16,10 +16,10 @@
 
     <!-- メインコンテンツ -->
     <div class="main">
+		<div class="top-bar">
+			<h1>注文詳細 <span class="sub-title">注文管理</span></h1>
+		</div>
         <div class="container">
-            <div class="page-header">
-                <h1>注文詳細 注文管理</h1>
-            </div>
 
             <!-- 注文情報 -->
             <div class="detail-card">
@@ -37,10 +37,12 @@
                                 <th>ステータス</th>
                                 <td>
                                     <form th:action="@{/admin/orders/{id}/status/detail(id=${order.id})}" method="post">
-                                        <select class="status-select" id="orderStatus" name="status" onchange="this.form.submit()">
-                                            <option value="false" th:selected="${!order.status}">未対応</option>
-                                            <option value="true" th:selected="${order.status}">対応済み</option>
-                                        </select>
+										<div class="select-wrapper">
+	                                        <select class="dropdown" id="orderStatus" name="status" onchange="this.form.submit()">
+	                                            <option value="false" th:selected="${!order.status}">未対応</option>
+	                                            <option value="true" th:selected="${order.status}">対応済み</option>
+	                                        </select>
+										</div>
                                     </form>
                                 </td>
                             </tr>
@@ -118,20 +120,34 @@
                                 <td th:text="${'¥' + #numbers.formatInteger(item.price * item.quantity, 1, 'COMMA')}">¥1,180</td>
                             </tr>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th colspan="3" class="text-right">合計</th>
-                                <td th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}">¥2,360</td>
-                            </tr>
-                        </tfoot>
                     </table>
+					<div class="sub-total">
+						<div class="row">
+							<span>小計</span>
+							<span th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}"></span>
+						</div>
+						<div class="row">
+							<span>送料</span>
+							<span>¥0</span>
+						</div>
+						<div class="row">
+							<span>手数料</span>
+							<span>¥0</span>
+						</div>
+					</div>
+					<div class="total">
+						<div class="row total-row">
+							<span>合計</span>
+							<span th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}"></span>
+						</div>
+					</div>
                 </div>
             </div>
 
             <!-- 戻るボタン -->
             <div class="button-container">
-                <a th:href="@{/admin/orders}" class="secondary-button">
-                    <span class="button-content">
+                <a th:href="@{/admin/orders}" class="search-button">
+                    <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                         </svg>

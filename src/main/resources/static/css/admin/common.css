@@ -55,7 +55,8 @@ h1 .sub-title {
 .search-button,
 .new-button,
 .list-button,
-.open-dialog-btn {
+.open-dialog-btn,
+.lodout-btn {
 	color: rgba(255,255,255);
 	font-size: 14px;
 	font-weight: 400;
@@ -86,6 +87,11 @@ h1 .sub-title {
 	max-width: 24px;
 	    height: auto;
 	    object-fit: cover;
+}
+
+.lodout-btn {
+	color: rgba(255,145,48);
+	background-color: rgba(255,255,255);
 }
 
 .search-button:hover,
@@ -229,29 +235,13 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 32px;
   z-index: 1000;
 }
 
 .logo-img {
 	width: 140px;
 	height: auto;
-}
-
-header div.logout-button form button {
-  background-color: rgba(255,255,255);
-  border: double 3px rgba(255,168,91);
-  color: rgba(255,168,91);
-  border-radius: 6px;
-  padding: 4px 18px;
-  text-decoration: none;
-  font-size: 0.85em;
-  display: inline-block;
-  vertical-align: middle;
-  margin: 5px 0;
-  line-height: 1.2;
-  position: relative;
-  top: -1px;
 }
 
 .user-menu span {

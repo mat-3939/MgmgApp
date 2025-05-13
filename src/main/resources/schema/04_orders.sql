@@ -42,5 +42,5 @@ CREATE TABLE IF NOT EXISTS orders (
     order_date TIMESTAMP WITHOUT TIME ZONE,
     
     -- 注文ステータス
-    status VARCHAR(10) DEFAULT '未対応'
+    status BOOLEAN DEFAULT 'false'
     );
