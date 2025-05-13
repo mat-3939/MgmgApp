@@ -12,25 +12,28 @@
 	<header th:replace="user/fragments :: siteHeader"></header>
 	<!--パンくず-->
 	<div class="p-list">
-		<p>
-			<a th:href="@{/}">トップ</a>　&gt;　
-			<span>商品一覧</span>
-		</p>
+	  <p>
+	    <a th:href="@{/}">トップ</a>　&gt;　
+	    <a th:if="${q != null and !q.isEmpty()}" th:href="@{/products}">商品一覧</a>
+		<span th:if="${q == null or q.isEmpty()}">商品一覧</span>
+	    <span th:if="${q != null and !q.isEmpty()}">　&gt;　<span th:text="${q}"></span></span>
+	  </p>
 	</div>
 	<h1>商品一覧</h1>
 	
 	<div class="search-select">
 		<div class="search-left">
-			<form method="get" th:action="@{/products/category/{categoryId}}">
-			     <div class="select-wrapper">
+			<form method="get" action="/products">
+				<input type="hidden" name="q" th:value="${q}" />
+				<input type="hidden" name="sort" th:value="${sort}" />
+				<div class="select-wrapper">
 					<span class="select-label">カテゴリ：</span>
-					<select class="dropdown" onchange="location.href=this.value">
-						<option th:value="@{/products}"
-								th:selected="${selectedCategoryId == null}">
+					<select class="dropdown" name="categoryId" onchange="this.form.submit()">
+						<option th:value="''" th:selected="${selectedCategoryId == null}">
 								すべて
 						</option>
 						<option th:each="category : ${categories}" 
-								th:value="@{/products/category/{id}(id=${category.id})}" 
+								th:value="${category.id}" 
 								th:text="${category.name}" 
 								th:selected="${category.id == selectedCategoryId}">
 						</option>
@@ -39,21 +42,27 @@
 			 </form>
 		</div>
 		<div class="search-right">
-		     <div class="select-wrapper">
-				<span class="select-label">並び順：</span>
-				<select class="dropdown" onchange="location.href=this.value">
-					<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='new')}" 
-							th:selected="${sort == 'new'}">新着順</option>
-					<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='priceAsc')}" 
-							th:selected="${sort == 'priceAsc'}">価格が安い順</option>
-					<option th:value="@{/products(categoryId=${selectedCategoryId}, sort='priceDesc')}" 
-							th:selected="${sort == 'priceDesc'}">価格が高い順</option>
-				</select>
-			</div>
+		    <form method="get" action="/products">
+		      <input type="hidden" name="q" th:value="${q}" />
+		      <input type="hidden" name="categoryId" th:value="${selectedCategoryId}" />
+
+		      <div class="select-wrapper">
+		        <span class="select-label">並び順：</span>
+		        <select class="dropdown" name="sort" onchange="this.form.submit()">
+		          <option th:value="new" th:selected="${sort == 'new'}">新着順</option>
+		          <option th:value="priceAsc" th:selected="${sort == 'priceAsc'}">価格が安い順</option>
+		          <option th:value="priceDesc" th:selected="${sort == 'priceDesc'}">価格が高い順</option>
+		        </select>
+		      </div>
+		    </form>
 		</div>
 	</div>
+	
+	<div th:if="${#lists.isEmpty(products)}" class="no-results">
+		該当する商品が見つかりませんでした。
+	</div>
 
-	<div class="list_wrap">
+	<div class="list_wrap" th:unless="${#lists.isEmpty(products)}">
 		<div class="list_cell" th:each="product : ${products}">
 		    <a th:href="@{/products_detail/{id}(id=${product.id})}" class="product-card">
 				<div class="img-wrapper">
