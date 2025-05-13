@@ -1,12 +1,8 @@
 package com.example.mgmgapp.form;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -48,9 +44,8 @@ public class ProductForm {
      * 商品価格（必須、小数点以下2桁まで）
      */
 	@NotNull(message = "価格を入力してください")
-    @DecimalMin(value = "0.01", inclusive = true, message = "価格は0.01以上を入力してください")
-    @Digits(integer = 8, fraction = 2, message = "価格は整数8桁以内、小数2桁以内で入力してください")
-    private BigDecimal price;
+    @Min(value = 1, message = "価格は1以上を入力してください")
+    private Integer price;
 
     /**
      * 在庫数（必須）

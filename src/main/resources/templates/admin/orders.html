@@ -114,7 +114,7 @@
                             <td>
                                 <a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.firstName + ' ' + order.lastName}">太郎 山田</a>
                             </td>
-                            <td th:text="${order.paymentMethod}">クレジットカード</td>
+                            <td th:text="${order.payMethod}">クレジットカード</td>
                             <td th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}">¥6,000</td>
                             <td>
                                 <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post">

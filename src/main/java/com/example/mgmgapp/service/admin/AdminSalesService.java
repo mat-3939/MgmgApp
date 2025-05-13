@@ -70,33 +70,27 @@ public class AdminSalesService {
     }
 
     /*週間の売上金額を取得*/
-    public BigDecimal getWeeklySalesAmount() {
+    public int getWeeklySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
-            .map(orderItem -> orderItem.getPrice() != null ? 
-                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
-                BigDecimal.ZERO)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+            .sum();
     }
 
     /*月間の売上金額を取得*/
-    public BigDecimal getMonthlySalesAmount() {
+    public int getMonthlySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusMonths(1)))
-            .map(orderItem -> orderItem.getPrice() != null ? 
-                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
-                BigDecimal.ZERO)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+            .sum();
     }
 
     /*年間の売上金額を取得*/
-    public BigDecimal getYearlySalesAmount() {
+    public int getYearlySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
             .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusYears(1)))
-            .map(orderItem -> orderItem.getPrice() != null ? 
-                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())) : 
-                BigDecimal.ZERO)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+            .sum();
     }
 
     /*週間の売上件数を取得*/

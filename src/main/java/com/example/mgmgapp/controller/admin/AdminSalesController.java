@@ -42,11 +42,11 @@ public class AdminSalesController {
         /*本日の売上金額 - 整数に変換*/
         model.addAttribute("todaySalesAmount", todaySales.intValue());
         /*週間の売上金額 - 整数に変換*/
-        model.addAttribute("weeklySalesAmount", adminSalesService.getWeeklySalesAmount().intValue());
+        model.addAttribute("weeklySalesAmount", adminSalesService.getWeeklySalesAmount());
         /*月間の売上金額 - 整数に変換*/
-        model.addAttribute("monthlySalesAmount", adminSalesService.getMonthlySalesAmount().intValue());
+        model.addAttribute("monthlySalesAmount", adminSalesService.getMonthlySalesAmount());
         /*年間の売上金額 - 整数に変換*/
-        model.addAttribute("yearlySalesAmount", adminSalesService.getYearlySalesAmount().intValue());
+        model.addAttribute("yearlySalesAmount", adminSalesService.getYearlySalesAmount());
 
         /*週間の売上件数*/
         model.addAttribute("weeklySalesCount", adminSalesService.getWeeklySalesCount());
@@ -65,15 +65,15 @@ public class AdminSalesController {
         
         switch (period) {
             case "weekly":
-                response.put("amount", adminSalesService.getWeeklySalesAmount().intValue());
+                response.put("amount", adminSalesService.getWeeklySalesAmount());
                 response.put("count", adminSalesService.getWeeklySalesCount());
                 break;
             case "monthly":
-                response.put("amount", adminSalesService.getMonthlySalesAmount().intValue());
+                response.put("amount", adminSalesService.getMonthlySalesAmount());
                 response.put("count", adminSalesService.getMonthlySalesCount());
                 break;
             case "yearly":
-                response.put("amount", adminSalesService.getYearlySalesAmount().intValue());
+                response.put("amount", adminSalesService.getYearlySalesAmount());
                 response.put("count", adminSalesService.getYearlySalesCount());
                 break;
         }

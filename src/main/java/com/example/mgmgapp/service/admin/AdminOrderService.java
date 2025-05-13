@@ -8,12 +8,14 @@ import java.util.Comparator;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.mgmgapp.entity.Orders;
 import com.example.mgmgapp.repository.admin.AdminOrderRepository;
+import com.example.mgmgapp.repository.admin.AdminOrderItemRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminOrderService {
     /*DI*/
     private final AdminOrderRepository adminOrderRepository;
+    private final AdminOrderItemRepository adminOrderItemRepository;
 
     /*注文一覧取得*/
     public List<Orders> findAllOrders() {
@@ -200,10 +203,17 @@ public class AdminOrderService {
      * @param minAmount 最低金額
      * @return フィルタリングされた注文リスト
      */
-    public List<Orders> filterOrdersByMinAmount(List<Orders> orders, BigDecimal minAmount) {
+    public List<Orders> filterOrdersByMinAmount(List<Orders> orders, int minAmount) {
         return orders.stream()
-            .filter(order -> order.getTotalPrice().compareTo(minAmount) >= 0)
+            .filter(order -> order.getTotalPrice() >= minAmount)
             .collect(Collectors.toList());
+    }
+
+    public int getWeeklySalesAmount() {
+        return adminOrderItemRepository.findAll().stream()
+            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
+            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+            .sum();
     }
 
 }

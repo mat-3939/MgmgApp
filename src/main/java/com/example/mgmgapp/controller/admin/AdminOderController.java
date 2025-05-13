@@ -160,7 +160,7 @@ public class AdminOderController
         boolean hasAmountFilter = false;
         if (minAmount != null && !minAmount.isEmpty()) {
             try {
-                BigDecimal minAmountValue = new BigDecimal(minAmount);
+                int minAmountValue = Integer.parseInt(minAmount);
                 orders = adminOrderService.filterOrdersByMinAmount(orders, minAmountValue);
                 hasAmountFilter = true;
             } catch (NumberFormatException e) {
