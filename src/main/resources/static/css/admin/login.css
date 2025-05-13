@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-    background-color: rgba(242, 242, 242);
+	background-color: rgba(255,246,237);
 /*	background-color: rgba(0,110,188);*/
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
@@ -13,14 +13,23 @@ form label {
     display: none;
 }
 
-form {
-    background-color: rgba(255,255,255);
+.outer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
     width: 420px;
-    margin: 100px auto;
-    padding: 40px 30px 6px 40px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border-radius: 6px;
+}
+
+.inner {
+	position: absolute;
+	background-color: rgba(255,255,255);
+	width: 300px;
+	top: 50%;
+	left: 50%;
+	padding: 40px 40px 0 40px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	transform: translateY(-50%) translateX(-50%);
 }
 
 form div {
@@ -47,16 +56,17 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: rgba(0,110,188);
+    border-color: rgba(255,168,91);
     outline: none;
 }
 
 input[type="submit"] {
     width: 100%;
-    background-color: rgba(0,110,188);
+    background-color: rgba(255,168,91);
     color: rgba(255,255,255);
     border: none;
     padding: 12px;
+	margin-top: 36px;
     font-size: 14px;
     border-radius: 4px;
     cursor: pointer;
@@ -64,12 +74,13 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: rgba(0, 86, 179);
+    background-color: rgba(255,145,48);
 }
 
 .logo-img {
 	width: 100%;
 	border-radius: 4px;
+	margin-bottom: 40px;
 }
 
 .error {
@@ -87,5 +98,5 @@ form span {
 
 .copyright {
 	margin-top: 80px;
-	margin-bottom: 0;
+	margin-bottom: 10px;
 }

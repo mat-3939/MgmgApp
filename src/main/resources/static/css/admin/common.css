@@ -8,7 +8,7 @@ html {
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: rgba(242, 242, 242);
+    background-color: rgba(255,246,237);
     margin: 0;
     color: rgba(51, 51, 51);
 }
@@ -28,7 +28,7 @@ h1 .sub-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-	background-color: rgba(255, 255, 255);
+	background-color: rgba(255,255,255);
     margin: 0 0 50px 0;
 	padding: 0 40px 0 40px;
 }
@@ -59,7 +59,7 @@ h1 .sub-title {
 	color: rgba(255,255,255);
 	font-size: 14px;
 	font-weight: 400;
-	background-color: rgba(0,110,188);
+	background-color: rgba(255,168,91);
 	border-radius: 6px;
 	padding: 10px 30px;
 	text-decoration: none;
@@ -92,7 +92,7 @@ h1 .sub-title {
 .new-button:hover,
 .list-button:hover,
 .open-dialog-btn:hover {
-	background-color: rgba(0, 86, 179);
+	background-color: rgba(255,145,48);
 }
 
 .no-result-message {
@@ -132,7 +132,7 @@ select {
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: rgba(0,110,188);
+    border-color: rgba(255,168,91);
     outline: none;
 }
 
@@ -167,7 +167,7 @@ label {
   width: 200px;
   height: 100vh;
   margin-top: 60px;
-  background-color: rgba(242, 242, 242);
+  background-color: rgba(255,255,255);
   border-right: 1px solid rgba(206,206,206);
   position: fixed;
   top: 0;
@@ -224,23 +224,24 @@ header {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #ffa85b;
+  background-color: rgba(255,168,91);
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 40px;
   z-index: 1000;
 }
 
 .logo-img {
-	height: 40px;
+	width: 140px;
+	height: auto;
 }
 
 header div.logout-button form button {
-  background-color: #fff;
-  border: double 3px #ffa85b;
-  color: #ffa85b;
+  background-color: rgba(255,255,255);
+  border: double 3px rgba(255,168,91);
+  color: rgba(255,168,91);
   border-radius: 6px;
   padding: 4px 18px;
   text-decoration: none;
