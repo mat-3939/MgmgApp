@@ -10,11 +10,14 @@
 	
 	<div class="wrapper">
 	<header th:replace="user/fragments :: siteHeader"></header>
+	
 	<!--パンくず-->
 	<div class="p-list">
-		<p>
-			<a th:href="@{/}">トップ</a>　&gt;　
-			<a th:href="@{/products}">商品一覧</a>　&gt;　
+		<p class="breadcrumb">
+			<a th:href="@{/}">トップ</a>
+			<span class="separator">&gt;</span>
+			<a th:href="@{/products}">商品一覧</a>
+			<span class="separator">&gt;</span>
 			<span th:text="${product.name}"></span>
 		</p>
 	</div>
