@@ -15,9 +15,19 @@ public interface ProductRepository extends JpaRepository<Products, Integer>{
     List<Products> findByNameContainingIgnoreCase(String name);
     
     /**
+     * キーワード検索＆ソート
+     */
+    List<Products> findByNameContainingIgnoreCase(String name, Sort sort);
+    
+    /**
      * キーワード検索＆カテゴリ絞り込み
      */
     List<Products> findByNameContainingAndCategoryId(String name, Integer categoryId);
+    
+    /**
+     * キーワード検索＆カテゴリ絞り込み＆ソート
+     */
+    List<Products> findByNameContainingAndCategoryId(String name, Integer categoryId, Sort sort);
 	
 	/**
      * 指定したカテゴリの商品一覧を取得

@@ -41,6 +41,7 @@ public class ProductController {
     public String showProducts(
 //        @RequestParam(defaultValue = "id") String sortBy,
 //        @RequestParam(defaultValue = "asc") String order,
+    	  @RequestParam(required = false) String q,
     	  @RequestParam(required = false) Integer categoryId,
     	  @RequestParam(required = false, defaultValue = "new") String sort,
         Model model
@@ -59,11 +60,19 @@ public class ProductController {
     	List<Products> products;
     	
     	// フィルタリング条件の分岐
-    	if (categoryId != null) {
-    		products = productService.findByCategoryIdSorted(categoryId, sort);
-    	} else {
-    		products = productService.getSortedProducts(sort);
-    	}
+    	if (q != null && !q.isEmpty()) {
+            if (categoryId != null) {
+                products = productService.searchByKeywordAndCategorySorted(q, categoryId, sort);
+            } else {
+                products = productService.searchByKeywordSorted(q, sort);
+            }
+        } else {
+            if (categoryId != null) {
+                products = productService.findByCategoryIdSorted(categoryId, sort);
+            } else {
+                products = productService.getSortedProducts(sort);
+            }
+        }
 
         // ソートされた順で取得
 //        List<Products> products = productService.getSortedProducts(sort);
@@ -80,6 +89,7 @@ public class ProductController {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("sort", sort);
+        model.addAttribute("q", q);
 
         return "user/products";
     }
@@ -87,39 +97,39 @@ public class ProductController {
     /**
      * キーワード検索＆カテゴリ絞り込み
      */
-    @GetMapping("/search")
-    public String searchProducts(@RequestParam(value = "q", required = false) String query,
-                                 @RequestParam(value = "category", required = false) Integer categoryId,
-                                 Model model) {
-        
-        List<Products> results;
-
-        if ((query == null || query.isEmpty()) && categoryId != null) {
-            // キーワードなしでカテゴリだけ指定 → カテゴリ絞り込みのみ
-            results = productService.findByCategoryId(categoryId);
-        } else if (query != null && !query.isEmpty() && categoryId != null) {
-            // 両方指定 → 両方で絞り込み
-            results = productService.searchByNameAndCategory(query, categoryId);
-        } else if (query != null && !query.isEmpty()) {
-            // キーワードだけ指定
-            results = productService.searchByName(query);
-        } else {
-            // どちらも指定なし → 全件表示またはリダイレクト
-            return "redirect:/products";
-        }
-
-        if (results.size() == 1) {
-            return "redirect:/products_detail/" + results.get(0).getId();
-        } else if (results.isEmpty()) {
-            return "redirect:/products";
-        } else {
-            model.addAttribute("products", results);
-            model.addAttribute("searchQuery", query);
-            model.addAttribute("selectedCategoryId", categoryId);
-            model.addAttribute("categories", categoryService.findAll());
-            return "user/products";
-        }
-    }
+//    @GetMapping("/search")
+//    public String searchProducts(@RequestParam(value = "q", required = false) String query,
+//                                 @RequestParam(value = "category", required = false) Integer categoryId,
+//                                 Model model) {
+//        
+//        List<Products> results;
+//
+//        if ((query == null || query.isEmpty()) && categoryId != null) {
+//            // キーワードなしでカテゴリだけ指定 → カテゴリ絞り込みのみ
+//            results = productService.findByCategoryId(categoryId);
+//        } else if (query != null && !query.isEmpty() && categoryId != null) {
+//            // 両方指定 → 両方で絞り込み
+//            results = productService.searchByNameAndCategory(query, categoryId);
+//        } else if (query != null && !query.isEmpty()) {
+//            // キーワードだけ指定
+//            results = productService.searchByName(query);
+//        } else {
+//            // どちらも指定なし → 全件表示またはリダイレクト
+//            return "redirect:/products";
+//        }
+//
+//        if (results.size() == 1) {
+//            return "redirect:/products_detail/" + results.get(0).getId();
+//        } else if (results.isEmpty()) {
+//            return "redirect:/products";
+//        } else {
+//            model.addAttribute("products", results);
+//            model.addAttribute("searchQuery", query);
+//            model.addAttribute("selectedCategoryId", categoryId);
+//            model.addAttribute("categories", categoryService.findAll());
+//            return "user/products";
+//        }
+//    }
     
     /**
 	 * 指定したカテゴリの商品一覧を表示

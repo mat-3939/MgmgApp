@@ -56,11 +56,46 @@ public class ProductService {
         return productRepository.findByNameContainingIgnoreCase(query);
     }
     
+    public List<Products> searchByKeywordAndCategorySorted(String keyword, Integer categoryId, String sort) {
+    	Sort sorting;
+        switch (sort) {
+            case "priceAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "price");
+                break;
+            case "priceDesc":
+                sorting = Sort.by(Sort.Direction.DESC, "price");
+                break;
+            default:
+                sorting = Sort.by(Sort.Direction.DESC, "createdAt");
+                break;
+        }
+    	return productRepository.findByNameContainingAndCategoryId(keyword, categoryId, sorting);
+    }
+    
     /**
      * キーワード検索＆カテゴリ絞り込み
      */
     public List<Products> searchByNameAndCategory(String keyword, Integer categoryId) {
         return productRepository.findByNameContainingAndCategoryId(keyword, categoryId);
+    }
+    
+    /**
+     * キーワード検索＆ソート
+     */
+    public List<Products> searchByKeywordSorted(String keyword, String sort) {
+    	Sort sorting;
+        switch (sort) {
+            case "priceAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "price");
+                break;
+            case "priceDesc":
+                sorting = Sort.by(Sort.Direction.DESC, "price");
+                break;
+            default:
+                sorting = Sort.by(Sort.Direction.DESC, "createdAt");
+                break;
+        }
+        return productRepository.findByNameContainingIgnoreCase(keyword, sorting);
     }
 
     

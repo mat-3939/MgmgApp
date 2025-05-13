@@ -34,8 +34,8 @@
 
         <div class="search-bar">
 <!--			以下で検索クエリを商品一覧ページで処理するようにしてる。→user/product側のコントローラとかが必要だけど未作成-->
-          <form action="/search" method="get">
-            <input type="text" name="q" placeholder="商品名で検索" th:value="${searchQuery}" />
+          <form action="/products" method="get">
+            <input type="text" name="q" placeholder="商品名で検索" th:value="${q}" />
             <button type="submit"><img th:src="@{/img/icon/search.svg}" alt="検索マーク"></button>
           </form>
         </div>
