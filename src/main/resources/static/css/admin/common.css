@@ -103,7 +103,7 @@ h1 .sub-title {
 
 .no-result-message {
 	font-size: 20px;
-	font-weight: bold;
+	font-weight: 600;
 	display: flex;
 	justify-content: center;
 }
@@ -186,13 +186,7 @@ label {
   padding: 12px 20px;
   font-weight: 600;
   color: rgba(51, 51, 51);
-/*  cursor: pointer;*/
 }
-
-/*.sidebar-item:hover,*/
-/*.submenu-item:hover {*/
-/*  background-color: #eee;*/
-/*}*/
 
 .sidebar-item.active,
 .submenu-item.active {
@@ -208,7 +202,6 @@ label {
 .submenu-item {
   padding: 8px 20px;
   font-weight: 400;
-/*  color: #555;*/
   cursor: pointer;
 }
 
@@ -217,10 +210,18 @@ label {
 	text-decoration: none;
 	font-size: 14px;
 	color: rgba(51, 51, 51);
+	transition: all 0.2s ease;
 }
 
 #sidebar-home a {
 	font-size: 16px;
+	transition: all 0.2s ease;
+}
+
+.sidebar-item a:hover,
+.submenu-item a:hover,
+#sidebar-home a:hover {
+	color: rgba(255,168,91);
 }
 
 /* ヘッダー */

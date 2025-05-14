@@ -111,17 +111,6 @@
 			<p class="cart-total" th:text="${@priceFormatter.format(totalPrice)}"></p>
 		</div>
 	 </div>
-<!--	<div class="cart-summary">-->
-<!--	        <h3>ご注文内容</h3>-->
-<!--	        <div th:each="item : ${cartItems}" class="cart-item">-->
-<!--	            <img th:src="@{${item.product.imagePath}}" alt="商品画像" width="50">-->
-<!--	            <p th:text="${item.product.name}"></p>-->
-<!--	            <p>価格: ¥<span th:text="${item.product.price}"></span></p>-->
-<!--	            <p>数量: <span th:text="${item.quantity}"></span></p>-->
-<!--	            <hr>-->
-<!--	        </div>-->
-<!--	        <h3>合計（税込）: ¥<span th:text="${totalPrice}"></span></h3>-->
-<!--	    </div>-->
 </div>
 <script>
 	function formatPostcode(input) {

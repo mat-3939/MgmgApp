@@ -20,15 +20,10 @@
 		<div class="top-bar">
 			<h1>注文一覧 <span class="sub-title">注文管理</span></h1>
 		</div>
-<!--            <div class="page-header">-->
-<!--                <h1>注文一覧 注文管理</h1>-->
-<!--            </div>-->
-
             <!-- 検索フォーム -->
             <div class="search-container">
                 <form th:action="@{/admin/orders/search}" method="get">
                     <div class="search-box">
-<!--                        <label for="keyword">注文ID・お名前・メールアドレス・電話番号</label>-->
                         <input type="text" class="keyword" name="keyword" th:value="${keyword}" placeholder="注文ID・お名前・メールアドレス・電話番号">
                     </div>
                     
@@ -93,7 +88,6 @@
 						<div class="select-wrapper">
 							<span class="select-label">並び替え：</span>
 	                        <select class="dropdown" id="sortOrder" name="sort" onchange="this.form.submit()">
-<!--	                            <option value="" th:selected="${sort == null}">並び替え</option>-->
 	                            <option value="new" th:selected="${sort == 'new'}">注文日（新しい順）</option>
 	                            <option value="old" th:selected="${sort == 'old'}">注文日（古い順）</option>
 	                            <option value="price_high" th:selected="${sort == 'price_high'}">金額（高い順）</option>

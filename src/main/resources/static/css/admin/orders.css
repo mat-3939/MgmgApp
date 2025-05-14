@@ -1,23 +1,14 @@
 @charset "UTF-8";
 
 /* 注文一覧ページのスタイル */
-/*.container {*/
-/*    padding: 20px;*/
-/*    max-width: 1200px;*/
-/*    margin: 0 auto;*/
-/*}*/
-
 .page-header {
     margin-bottom: 20px;
 }
 
 /* 検索セクション */
 .search-container {
-/*    background-color: rgba(255,255,255);*/
-/*    padding: 20px;*/
     margin: 0 40px 40px;
     border-radius: 10px;
-/*    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);*/
 }
 
 .search-box {
@@ -38,17 +29,15 @@
 	border-width: 1px;
 	display: flex;
 	flex-shrink: 0;
-/*	height: 24px;*/
-/*	margin-top: 4px;*/
 }
 
 /* 詳細検索トグル */
 .detail-search {
   display: none;
-  max-width: 300px; /* フォーム全体の最大幅を制限 */
+  max-width: 300px;
   margin-bottom: 30px;
-  margin-left: 0;    /* 左寄せ */
-  margin-right: auto; /* 念のため右は自動 */
+  margin-left: 0;
+  margin-right: auto;
 }
 
 .form-group {
@@ -59,7 +48,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-/*  margin-bottom: 12px;*/
 }
 
 .form-group.third {
@@ -67,8 +55,8 @@
 }
 
 .form-group.half {
-  flex: 1; /* 均等に広がる */
-  min-width: 200px; /* 折り返しの基準になる最小幅 */
+  flex: 1;
+  min-width: 200px;
 }
 
 .form-group.full {
@@ -91,13 +79,6 @@
   font-size: 14px;
   box-sizing: border-box;
 }
-
-/*.detail-search {*/
-/*    display: none;*/
-/*    margin-top: 15px;*/
-/*    padding-top: 15px;*/
-/*    border-top: 1px solid rgba(0, 0, 0, 0.1);*/
-/*}*/
 
 .search-box {
 	align-items: start;
@@ -209,7 +190,6 @@ tr:not(:last-child) {
 .product-name {
 	text-decoration: none;
 	color: rgba(0,110,188);
-/*	text-align: left;*/
 }
 
 .select-wrapper-table {
@@ -221,10 +201,10 @@ tr:not(:last-child) {
 	appearance: none;
 	width: 90%;
 	align-items: stretch;
-/*	gap: 25px;*/
-	padding: 10px;
 	box-sizing: border-box;
 	cursor: pointer;
+	border-color: rgba(255,255,255);
+	right: 10px;
 }
 
 .select-wrapper-table::after {
@@ -260,7 +240,7 @@ tr:not(:last-child) {
 
 .secondary-button {
     background-color: rgba(108, 117, 125);
-    color: white;
+    color: rgba(255,255,255);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -278,7 +258,6 @@ tr:not(:last-child) {
 	font-weight: 600;
 	color: rgba(51, 51, 51);
 	background-color: transparent;
-/*	border: 1px solid rgba(0, 0, 0, 0.2);*/
 	padding: 0;
 }
 

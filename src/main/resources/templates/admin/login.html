@@ -7,10 +7,6 @@
 </head>
 <body>
 	<h2>ログイン</h2>
-	<!-- ログアウト表示 -->
-	<div th:if="${param.logout}">
-		<p style="color: blue">ログアウトしました</p>
-	</div>
 
 	<div class="outer">
 		<!-- ログインフォーム -->
@@ -19,6 +15,11 @@
 				<!-- ロゴ -->
 				<div>
 					<img class="logo-img" th:src="@{/img/logo/logo_or.svg}"/>
+				</div>
+				
+				<!-- ログアウト表示 -->
+				<div th:if="${param.logout}" class="logout">
+					<p>ログアウトしました</p>
 				</div>
 				
 				<!-- ユーザーネーム -->

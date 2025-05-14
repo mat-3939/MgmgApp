@@ -32,7 +32,6 @@ body, html {
 
 .form-group {
   margin-bottom: 20px;
-/*  width: 100%;*/
 }
 
 .form-group label {
@@ -118,10 +117,7 @@ select:focus {
   left: auto;
   max-width: 440px;
   width: 100%;
-/*  background-color: #f9f9f9;*/
   border-radius: 8px;
-/*  padding: 20px;*/
-/*  box-shadow: 0 4px 10px rgba(0,0,0,0.1);*/
   z-index: 1000;
 }
 
@@ -216,7 +212,7 @@ select:focus {
   padding: 12px;
   font-size: 1rem;
   background-color: rgba(0,123,255);
-  color: white;
+  color: rgba(255,255,255);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -237,5 +233,5 @@ select:focus {
 div .error {
 	font-size: 12px;
 	font-weight: 400;
-	color: red;
+	color: rgba(244, 67, 54);
 }

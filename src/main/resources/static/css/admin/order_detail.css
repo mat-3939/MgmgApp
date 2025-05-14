@@ -1,12 +1,6 @@
 @charset "UTF-8";
 
 /* 注文詳細ページのスタイル */
-/*.container {*/
-/*    padding: 20px;*/
-/*    max-width: 1000px;*/
-/*    margin: 0 auto;*/
-/*}*/
-
 .container {
     width: 100%;
     padding: 0 40px 80px 40px;
@@ -43,8 +37,6 @@
 .card-body {
     padding: 0;
 	margin: 20px;
-/*	border: 1px solid rgba(0, 0, 0, 0.2);*/
-/*	border-radius: 6px;*/
 	font-size: 14px;
 }
 
@@ -66,7 +58,7 @@ table {
 }
 
 .detail-table th {
-    background-color: rgba(242, 242, 242);
+    background-color: rgba(255,221,191);
     width: 20%;
     font-weight: 600;
 }
@@ -78,7 +70,7 @@ table {
 
 /* 商品テーブル特有のスタイル */
 .product-table thead th {
-    background-color: rgba(242, 242, 242);
+    background-color: rgba(255,221,191);
     font-weight: 600;
 }
 
@@ -103,7 +95,6 @@ table {
 .total .row.total-row {
   font-weight: bold;
   font-size: 16px;
-/*  border-top: 1px solid #ccc;*/
   padding-top: 8px;
   margin-top: 8px;
 }
@@ -111,21 +102,10 @@ table {
 .sub-total,
 .total {
   max-width: 300px;
-  margin-left: auto; /* 右寄せしたい場合 */
+  margin-left: auto;
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
-/* ステータス選択 */
-/*.status-select {*/
-/*    width: 100%;*/
-/*    max-width: 200px;*/
-/*    padding: 8px 12px;*/
-/*    border: 1px solid rgba(0, 0, 0, 0.2);*/
-/*    border-radius: 4px;*/
-/*    background-color: #fff;*/
-/*    font-size: 14px;*/
-/*}*/
 
 .select-wrapper {
     position: relative;
@@ -140,10 +120,15 @@ table {
 	cursor: pointer;
 }
 
+#orderStatus.dropdown {
+	padding: 10px 0;
+	border-color: rgba(255, 255, 255);
+}
+
 .select-wrapper::after {
   content: '▼';
   position: absolute;
-  left: 180px;
+  left: 100px;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
@@ -157,21 +142,6 @@ table {
     justify-content: center;
     margin: 30px 0;
 }
-
-/* 戻るボタン */
-/*.secondary-button {*/
-/*    background-color: rgba(108, 117, 125);*/
-/*    color: white;*/
-/*    border: none;*/
-/*    padding: 10px 20px;*/
-/*    border-radius: 4px;*/
-/*    cursor: pointer;*/
-/*    font-size: 14px;*/
-/*    text-decoration: none;*/
-/*    display: inline-flex;*/
-/*    align-items: center;*/
-/*    transition: background-color 0.2s;*/
-/*}*/
 
 .search-button {
 	background-color: rgba(108, 117, 125);

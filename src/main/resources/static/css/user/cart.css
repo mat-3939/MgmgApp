@@ -5,7 +5,6 @@
 html,
 body {
     font-family: 'Segoe UI', sans-serif;
-/*    background-color: rgba(242, 242, 242);*/
 	height: 100%;
     margin: 0;
     color: rgba(51, 51, 51);
@@ -51,12 +50,10 @@ h1 {
 
 table {
     width: 60%;
-    background-color: #fff;
+    background-color: rgba(255,255,255);
     border-collapse: separate;
     border-spacing: 0;
-/*    border-radius: 10px;*/
 	border-bottom: 1px solid rgba(0,0,0,0.2);
-/*    box-shadow: 0 2px 8px rgba(0,0,0,0.06);*/
 	white-space: nowrap;
 	table-layout: fixed;
 }
@@ -111,7 +108,6 @@ td a {
 	
 .null-wrapper {
 	width: 40%;
-/*	background-color: rgba(102,102,102,0.4);*/
 	border-radius: 10px;
 	margin: auto;
 }
@@ -151,7 +147,6 @@ td a {
 	color: rgba(255, 255, 255);
 	background-color: rgba(102,102,102);
 	box-shadow: 0 6px 0 rgba(51, 51, 51, 1);
-/*	border: 1px solid rgba(255, 168, 95);*/
 }
 
 .confirm-btn,
@@ -163,17 +158,12 @@ td a {
 }
 
 .continue-btn:hover {
-/*	color: rgba(255, 255, 255);*/
-/*	background-color: rgba(255, 168, 95);*/
     transform: translateY(6px);
 	box-shadow: none;
 }
 
 .confirm-btn:hover,
 .add-cart-btn:hover {
-/*	color: rgba(255, 168, 95);*/
-/*	background-color: rgba(255, 255, 255);*/
-/*	border: 1px solid rgba(255, 168, 95);*/
     transform: translateY(6px);
 	box-shadow: none;
 }

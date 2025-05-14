@@ -15,41 +15,42 @@
 
     <!-- ホーム画面 -->
     <div class="main">
-        <div class="home-container">
-            <h1>ホーム</h1>
-            
+		<div class="top-bar">
+			<h1>ホーム</h1>
+		</div>        
+		<div class="home-container">
             <!-- 注文状況と売上状況のカード -->
             <div class="dashboard-row">
                 <!-- 注文状況カード -->
-                <div class="dashboard-card">
+                <div class="dashboard-card" id="order">
                     <div class="card-header">
                         <h5 class="card-title">注文状況</h5>
                     </div>
                     <div class="card-body">
                         <div class="data-row">
                             <div class="data-label">注文件数</div>
-                            <div class="data-value" th:text="${orderCount}">0</div>
+                            <div class="data-value" th:text="${orderCount} + ' 件'">0</div>
                         </div>
                         <div class="data-row">
                             <div class="data-label">対応済み</div>
-                            <div class="data-value" th:text="${completedOrderCount}">0</div>
+                            <div class="data-value" th:text="${completedOrderCount} + ' 件'">0</div>
                         </div>
                         <div class="data-row">
                             <div class="data-label">未対応</div>
-                            <div class="data-value" th:text="${pendingOrderCount}">0</div>
+                            <div class="data-value" th:text="${pendingOrderCount} + ' 件'">0</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 売上状況カード -->
-                <div class="dashboard-card">
+                <div class="dashboard-card" id="sell">
                     <div class="card-header">
                         <h5 class="card-title">売上状況</h5>
                     </div>
                     <div class="card-body">
                         <div class="data-row margin-bottom">
                             <div class="data-label">本日の売上金額</div>
-                            <div class="data-value" th:text="${todaySalesAmount}">0</div>
+                            <div class="data-value" th:text="${@priceFormatter.format(todaySalesAmount)}">0</div>
                         </div>
                         <div class="button-group">
                             <button class="period-button active" onclick="updateSalesData('weekly')">週間</button>
@@ -58,11 +59,11 @@
                         </div>
                         <div class="data-row margin-top">
                             <div class="data-label">売上金額</div>
-                            <div class="data-value" id="salesAmount" th:text="${weeklySalesAmount}">0</div>
+                            <div class="data-value" id="salesAmount" th:text="${@priceFormatter.format(weeklySalesAmount)}">0</div>
                         </div>
                         <div class="data-row">
                             <div class="data-label">売上件数</div>
-                            <div class="data-value" id="salesCount" th:text="${weeklySalesCount}">0</div>
+                            <div class="data-value" id="salesCount" th:text="${weeklySalesCount} + ' 件'">0</div>
                         </div>
                     </div>
                 </div>
@@ -71,29 +72,39 @@
     </div>
 
     <script>
-        function updateSalesData(period) {
-            // ボタンのスタイルを更新
-            document.querySelectorAll('.period-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+		function updateSalesData(period) {
+		    document.querySelectorAll('.period-button').forEach(btn => {
+		        btn.classList.remove('active');
+		    });
+		    event.target.classList.add('active');
 
-            // データを更新
-            fetch(`/admin/sales-data?period=${period}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('データの取得に失敗しました');
-                }
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById('salesAmount').textContent = data.amount ?? '0';
-                document.getElementById('salesCount').textContent = data.count ?? '0';
-            })
-            .catch(error => {
-                console.error('データの取得に失敗しました:', error);
-            });
-        }
+		    fetch(`/admin/sales-data?period=${period}`)
+		        .then(response => {
+		            if (!response.ok) {
+		                throw new Error('データの取得に失敗しました');
+		            }
+		            return response.json();
+		        })
+		        .then(data => {
+		            document.getElementById('salesAmount').textContent = formatPrice(data.amount);
+		            document.getElementById('salesCount').textContent = data.count ?? '0';
+		        })
+		        .catch(error => {
+		            console.error('データの取得に失敗しました:', error);
+		        });
+		}
+
+		function formatPrice(amount) {
+		    if (typeof amount !== 'number') {
+		        amount = Number(amount);
+		    }
+		    if (isNaN(amount)) return '¥0';
+
+		    return new Intl.NumberFormat('ja-JP', {
+		        style: 'currency',
+		        currency: 'JPY'
+		    }).format(amount);
+		}
     </script>
 </body>
 </html>

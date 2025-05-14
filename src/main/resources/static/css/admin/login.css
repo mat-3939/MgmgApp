@@ -2,7 +2,6 @@
 
 body {
 	background-color: rgba(255,246,237);
-/*	background-color: rgba(0,110,188);*/
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
@@ -11,6 +10,10 @@ body {
 h2,
 form label {
     display: none;
+}
+
+.logout p {
+	color: rgba(244, 67, 54);
 }
 
 .outer {

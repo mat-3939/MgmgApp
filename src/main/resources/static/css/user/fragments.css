@@ -21,7 +21,6 @@ section{
 	margin: 100px auto 0;
 }
 a:hover{
-/*	opacity: .7;*/
 	transition-duration: 0.3s;
 }
 
@@ -45,7 +44,6 @@ header {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-/*  max-width: 1600px;*/
   margin: 0 auto;
   box-sizing: border-box;
   padding: 0 10px;
@@ -72,10 +70,10 @@ header {
 .search-bar form {
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: rgba(255,255,255);
   border-radius: 6px;
   height: 36px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(204,204,204);
   overflow: hidden;
 }
 
@@ -132,7 +130,6 @@ header {
 .nav-button.products:hover {
   transform: translateY(4px);
   box-shadow: none;
-/*  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);*/
 }
 
 .nav-button.cart {
@@ -154,11 +151,6 @@ header {
 	transition: 0.3s;
 }
 
-/*.cart-button:hover {*/
-/*  transform: translateY(-4px);*/
-/*  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);*/
-/*}*/
-
 .cart-button span {
 	color: rgba(255, 255, 255);
 	font-size: 14px;
@@ -169,7 +161,7 @@ header {
     top: -5px;
     right: 34px;
     background: rgba(102,102,102);
-    color: white;
+    color: rgba(255,255,255);
     border-radius: 50%;
     font-size: 12px;
     width: 22px;
@@ -198,7 +190,6 @@ header {
 
 .breadcrumb .separator {
   margin: 0 0.5em;
-/*  color: #888;*/
 }
 
 /*人気５*/
@@ -211,7 +202,7 @@ header {
 .pickUp ul li{
 	list-style: none;
 	width:calc(95% / 5);
-		overflow: hidden;
+	overflow: hidden;
 }
 
 .pickUp ul li img {
@@ -245,9 +236,9 @@ header {
 
 .footer-left h4 {
 	font-size: 20px;
-	  font-weight: 600;
-	  margin-bottom: 14px;
-	  color: rgba(255, 168, 95);
+	font-weight: 600;
+	margin-bottom: 14px;
+	color: rgba(255, 168, 95);
 }
 
 .footer-logo img {
@@ -261,7 +252,6 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-/*  gap: 12px;*/
   position: relative;
   cursor: pointer;
 }
@@ -269,9 +259,7 @@ header {
 .footer-column {
   display: flex;
   flex-direction: column;
-/*  gap: 8px;*/
   min-width: 120px;
-/*  margin-left: 12px;*/
 }
 
 .footer-column h4 {
@@ -299,7 +287,7 @@ header {
 
 .footer-sns a {
   text-decoration: none;
-  color: #555;
+  color: rgba(85,85,85);
   font-size: 14px;
 }
 

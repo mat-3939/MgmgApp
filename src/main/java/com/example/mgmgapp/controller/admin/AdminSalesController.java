@@ -1,18 +1,17 @@
 package com.example.mgmgapp.controller.admin;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.mgmgapp.service.admin.AdminSalesService;
 
-import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.math.BigDecimal;
 
 /*ページURL(ホーム):http://localhost:8080/admin*/
 @Controller
@@ -25,7 +24,7 @@ public class AdminSalesController {
     @GetMapping("/admin")
     public String showAdminHome(Model model) {
         // デバッグ情報を追加
-        BigDecimal todaySales = adminSalesService.getTodaySalesAmount();
+        int todaySales = adminSalesService.getTodaySalesAmount();
         System.out.println("本日の売上金額: " + todaySales);
         
         // 本日の注文数も確認
@@ -40,7 +39,7 @@ public class AdminSalesController {
         model.addAttribute("pendingOrderCount", adminSalesService.getPendingOrderCount());
         
         /*本日の売上金額 - 整数に変換*/
-        model.addAttribute("todaySalesAmount", todaySales.intValue());
+        model.addAttribute("todaySalesAmount", todaySales);
         /*週間の売上金額 - 整数に変換*/
         model.addAttribute("weeklySalesAmount", adminSalesService.getWeeklySalesAmount());
         /*月間の売上金額 - 整数に変換*/

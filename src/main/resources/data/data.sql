@@ -40,23 +40,23 @@ VALUES
 ('バターチキンカレーライス', 'インドレストラン ラナ人気No.1のバターチキンカレーのお弁当です。バターが入るので、まろやかなカレーライスです。お口直しにもなるミニサラダと、タンドールで焼いたチキンティッカも付きます。', 940, 135, '/img/other/s_02.jpg', 4, '2025-04-28 12:00:00', '2025-04-30 18:00:00'),
 ('ほうれん草チキンカレーライス', 'チキンとほうれん草カレーのお弁当です。ほうれん草ペーストのカレーでチキンがゴロッと入ったカレーライスです。お口直しにもなるミニサラダと、タンドールで焼いたチキンティッカも付きます。', 750, 120, '/img/other/s_03.jpg', 4, '2025-04-30 13:00:00', '2025-05-01 11:00:00');
 
-INSERT INTO orders (id, first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
-(1, '大阪', '太郎', 'osaka@gmail.com', '123-4567', '大阪府', '大阪市', '大阪1-1-1', '大阪マンション101号室', '090-1234-5678', 'クレジットカード', 2360, '2025-05-13 10:00:00', FALSE);
+INSERT INTO orders (first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
+('大阪', '太郎', 'osaka@gmail.com', '123-4567', '大阪府', '大阪市', '大阪1-1-1', '大阪マンション101号室', '090-1234-5678', 'クレジットカード', 2360, '2025-05-14 10:00:00', FALSE);
 
-INSERT INTO orders (id, first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
-(2, '京都', '次郎', 'kyoto@gmail.com', '765-4321', '京都府', '京都市', '京都1-1-1', '京都マンション101号室', '090-8765-4321', 'クレジットカード', 1180, '2025-04-13 10:00:00', TRUE);
+INSERT INTO orders (first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
+('京都', '次郎', 'kyoto@gmail.com', '765-4321', '京都府', '京都市', '京都1-1-1', '京都マンション101号室', '090-8765-4321', 'クレジットカード', 1180, '2025-04-13 10:00:00', TRUE);
 
-INSERT INTO orders (id, first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
-(3, '東京', '三郎', 'tokyo@gmail.com', '876-5432', '東京都', '東京市', '東京1-1-1', '東京マンション101号室', '090-7654-3210', 'クレジットカード', 2160, '2025-03-13 10:00:00', FALSE);
+INSERT INTO orders (first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
+('東京', '三郎', 'tokyo@gmail.com', '876-5432', '東京都', '東京市', '東京1-1-1', '東京マンション101号室', '090-7654-3210', 'クレジットカード', 2160, '2025-03-13 10:00:00', FALSE);
 
-INSERT INTO orders (id, first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
-(4, '大阪', '花子', 'osaka-hanako@gmail.com', '123-4567', '大阪府', '大阪市', '大阪1-1-1', '大阪マンション101号室', '090-1234-5678', 'クレジットカード', 1720, '2025-02-13 10:00:00', FALSE);
+INSERT INTO orders (first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
+('大阪', '花子', 'osaka-hanako@gmail.com', '123-4567', '大阪府', '大阪市', '大阪1-1-1', '大阪マンション101号室', '090-1234-5678', 'クレジットカード', 1720, '2025-02-13 10:00:00', FALSE);
 
-INSERT INTO orders (id, first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
-(5, '名古屋', '四郎', 'nagoya@gmail.com', '456-7890', '愛知県', '名古屋市', '名古屋1-1-1', '名古屋マンション101号室', '090-9876-5432', 'クレジットカード', 1880, '2025-01-13 10:00:00', FALSE);
+INSERT INTO orders (first_name, last_name, email, postcode, prefecture, city, address_line, building, tel, pay_method, total_price, order_date, status) VALUES 
+('名古屋', '四郎', 'nagoya@gmail.com', '456-7890', '愛知県', '名古屋市', '名古屋1-1-1', '名古屋マンション101号室', '090-9876-5432', 'クレジットカード', 1880, '2025-01-13 10:00:00', FALSE);
 
-INSERT INTO order_items (id, order_id, product_id, quantity, price) VALUES (1, 1, 1, 2, 1180);
-INSERT INTO order_items (id, order_id, product_id, quantity, price) VALUES (2, 2, 1, 1, 1180);
-INSERT INTO order_items (id, order_id, product_id, quantity, price) VALUES (3, 3, 2, 2, 1080);
-INSERT INTO order_items (id, order_id, product_id, quantity, price) VALUES (4, 4, 7, 2, 860);
-INSERT INTO order_items (id, order_id, product_id, quantity, price) VALUES (5, 5, 13, 2, 940);
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (1, 1, 2, 1180);
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (2, 1, 1, 1180);
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (3, 2, 2, 1080);
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (4, 7, 2, 860);
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (5, 13, 2, 940);

@@ -1,15 +1,14 @@
 package com.example.mgmgapp.service.admin;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.example.mgmgapp.repository.admin.AdminOrderItemRepository;
 import com.example.mgmgapp.repository.admin.AdminOrderRepository;
-
-import jakarta.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -53,9 +52,9 @@ public class AdminSalesService {
     }
 
     /*本日の売上金額を取得*/
-    public BigDecimal getTodaySalesAmount() {
-        BigDecimal amount = adminOrderItemRepository.findTodaySalesAmount();
-        return amount != null ? amount : BigDecimal.ZERO;
+    public int getTodaySalesAmount() {
+        Integer amount = adminOrderItemRepository.findTodaySalesAmount();
+        return amount != null ? amount : 0;
     }
 
     /**
@@ -70,25 +69,61 @@ public class AdminSalesService {
     }
 
     /*週間の売上金額を取得*/
+//    public int getWeeklySalesAmount() {
+//        return adminOrderItemRepository.findAll().stream()
+//            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
+//            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+//            .sum();
+//    }
+    
+    /* 週間の売上金額を取得（status=true） */
     public int getWeeklySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
-            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
+            .filter(orderItem -> {
+                var order = orderItem.getOrder();
+                return Boolean.TRUE.equals(order.getStatus()) &&
+                       order.getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7));
+            })
             .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
             .sum();
     }
 
     /*月間の売上金額を取得*/
+//    public int getMonthlySalesAmount() {
+//        return adminOrderItemRepository.findAll().stream()
+//            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusMonths(1)))
+//            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+//            .sum();
+//    }
+    
+    /* 月間の売上金額を取得（status=true） */
     public int getMonthlySalesAmount() {
-        return adminOrderItemRepository.findAll().stream()
-            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusMonths(1)))
-            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
-            .sum();
+    	return adminOrderItemRepository.findAll().stream()
+    			.filter(orderItem -> {
+    				var order = orderItem.getOrder();
+    				return Boolean.TRUE.equals(order.getStatus()) &&
+    						order.getOrderDate().toLocalDate().isAfter(LocalDate.now().minusMonths(1));
+    			})
+    			.mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+    			.sum();
     }
 
     /*年間の売上金額を取得*/
+//    public int getYearlySalesAmount() {
+//        return adminOrderItemRepository.findAll().stream()
+//            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusYears(1)))
+//            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+//            .sum();
+//    }
+    
+    /* 年間の売上金額を取得（status=true） */
     public int getYearlySalesAmount() {
         return adminOrderItemRepository.findAll().stream()
-            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusYears(1)))
+            .filter(orderItem -> {
+                var order = orderItem.getOrder();
+                return Boolean.TRUE.equals(order.getStatus()) &&
+                       order.getOrderDate().toLocalDate().isAfter(LocalDate.now().minusYears(1));
+            })
             .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
             .sum();
     }
