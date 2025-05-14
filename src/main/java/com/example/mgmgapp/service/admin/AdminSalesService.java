@@ -67,14 +67,6 @@ public class AdminSalesService {
         
         return adminOrderRepository.countByOrderDateBetween(startOfDay, endOfDay);
     }
-
-    /*週間の売上金額を取得*/
-//    public int getWeeklySalesAmount() {
-//        return adminOrderItemRepository.findAll().stream()
-//            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
-//            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
-//            .sum();
-//    }
     
     /* 週間の売上金額を取得（status=true） */
     public int getWeeklySalesAmount() {
@@ -87,14 +79,6 @@ public class AdminSalesService {
             .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
             .sum();
     }
-
-    /*月間の売上金額を取得*/
-//    public int getMonthlySalesAmount() {
-//        return adminOrderItemRepository.findAll().stream()
-//            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusMonths(1)))
-//            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
-//            .sum();
-//    }
     
     /* 月間の売上金額を取得（status=true） */
     public int getMonthlySalesAmount() {
@@ -107,14 +91,6 @@ public class AdminSalesService {
     			.mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
     			.sum();
     }
-
-    /*年間の売上金額を取得*/
-//    public int getYearlySalesAmount() {
-//        return adminOrderItemRepository.findAll().stream()
-//            .filter(orderItem -> orderItem.getOrder().getOrderDate().toLocalDate().isAfter(LocalDate.now().minusYears(1)))
-//            .mapToInt(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
-//            .sum();
-//    }
     
     /* 年間の売上金額を取得（status=true） */
     public int getYearlySalesAmount() {
