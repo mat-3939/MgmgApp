@@ -166,22 +166,33 @@ select:focus {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content:center;
+	gap: 20px;
+	margin: 80px 0;
+	height: 580px;
 }
 
 .detail_wrap .detail_left{
-	width:50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .detail_wrap .detail_left img {
-    width: 75%;
-    margin: 0 0 0 20%;
+    width: 100%;
+	height: 100%;
 	border-radius: 14px;
 	border: 2px solid rgba(0, 0, 0, 0.2);
+	object-fit: cover;
 }
 
 .detail_wrap .detail_right{
-	width:30%;
+	width:20%;
 	margin-left:20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-bottom: 20px;
 }
 
 .price-container {
@@ -219,7 +230,7 @@ select:focus {
 	height: 33px;
 	border: 1px solid rgba(206,206,206);
 	border-radius: 6px;
-	margin-top: 10px;
+	margin: 10px 0;
 	gap: 14px;
 	align-items: center;
 }
