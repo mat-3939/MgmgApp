@@ -58,11 +58,11 @@
                             <button class="period-button" onclick="updateSalesData('yearly')">年間</button>
                         </div>
                         <div class="data-row margin-top">
-                            <div class="data-label">売上金額</div>
+                            <div class="data-label">合計売上金額</div>
                             <div class="data-value" id="salesAmount" th:text="${@priceFormatter.format(weeklySalesAmount)}">0</div>
                         </div>
                         <div class="data-row">
-                            <div class="data-label">売上件数</div>
+                            <div class="data-label">合計売上件数</div>
                             <div class="data-value" id="salesCount" th:text="${weeklySalesCount} + ' 件'">0</div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
 		        })
 		        .then(data => {
 		            document.getElementById('salesAmount').textContent = formatPrice(data.amount);
-		            document.getElementById('salesCount').textContent = data.count ?? '0';
+		            document.getElementById('salesCount').textContent = formatCount(data.count);
 		        })
 		        .catch(error => {
 		            console.error('データの取得に失敗しました:', error);
@@ -104,6 +104,15 @@
 		        style: 'currency',
 		        currency: 'JPY'
 		    }).format(amount);
+		}
+
+		function formatCount(count) {
+		    if (typeof count !== 'number') {
+		        count = Number(count);
+		    }
+		    if (isNaN(count)) return '0 件';
+
+		    return count.toLocaleString() + ' 件';
 		}
     </script>
 </body>

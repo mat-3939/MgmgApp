@@ -46,7 +46,7 @@ body {
 		}
 
 		.thanks-message {
-		  margin: 60px;
+		  margin: 40px;
 		}
 
 		.btn-top {
@@ -54,7 +54,6 @@ body {
 		  font-size: 14px;
 		  font-weight: 400;
 		  display: inline-block;
-		  margin-top: 30px;
 		  padding: 14px 28px;
 		  background-color: rgba(255, 168, 95);
 		  border: 1px solid rgba(255, 168, 95);

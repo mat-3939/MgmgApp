@@ -72,7 +72,6 @@
 						<div class="select-wrapper">
 							<span class="select-label">ステータス：</span>
 	                        <select class="dropdown" id="statusFilter" name="status" onchange="this.form.submit()">
-<!--	                            <option value="" th:selected="${status == null}">絞り込み</option>-->
 	                            <option value="all" th:selected="${status == 'all'}">すべて</option>
 	                            <option value="true" th:selected="${status == 'true'}">対応済み</option>
 	                            <option value="false" th:selected="${status == 'false'}">未対応</option>
@@ -139,7 +138,6 @@
                 </table>
             </div>
     </div>
-
     <script>
         // 詳細検索の表示/非表示を切り替える
         document.getElementById('toggleDetailSearch').addEventListener('click', function() {
