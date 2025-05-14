@@ -62,6 +62,41 @@ public class AdminProductService {
     public Optional<Products> getProductByName(String name) {
         return adminProductRepository.findByName(name);
     }
+    
+    public List<Products> searchByKeywordAndCategorySorted(String keyword, Integer categoryId, String sort) {
+    	Sort sorting;
+        switch (sort) {
+            case "priceAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "price");
+                break;
+            case "priceDesc":
+                sorting = Sort.by(Sort.Direction.DESC, "price");
+                break;
+            default:
+                sorting = Sort.by(Sort.Direction.DESC, "createdAt");
+                break;
+        }
+    	return adminProductRepository.findByNameContainingAndCategoryId(keyword, categoryId, sorting);
+    }
+    
+    /**
+     * キーワード検索＆ソート
+     */
+    public List<Products> searchByKeywordSorted(String keyword, String sort) {
+    	Sort sorting;
+        switch (sort) {
+            case "priceAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "price");
+                break;
+            case "priceDesc":
+                sorting = Sort.by(Sort.Direction.DESC, "price");
+                break;
+            default:
+                sorting = Sort.by(Sort.Direction.DESC, "createdAt");
+                break;
+        }
+        return adminProductRepository.findByNameContainingIgnoreCase(keyword, sorting);
+    }
 
     /**
      * 商品を新規登録する

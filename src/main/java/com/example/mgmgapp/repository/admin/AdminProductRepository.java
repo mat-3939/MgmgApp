@@ -83,6 +83,16 @@ public interface AdminProductRepository extends JpaRepository<Products, Integer>
     List<Products> findAllByOrderByNameDesc();
     
     /**
+     * キーワード検索＆ソート
+     */
+    List<Products> findByNameContainingIgnoreCase(String name, Sort sort);
+    
+    /**
+     * キーワード検索＆カテゴリ絞り込み＆ソート
+     */
+    List<Products> findByNameContainingAndCategoryId(String name, Integer categoryId, Sort sort);
+    
+    /**
      * カテゴリ指定＆ソート条件
      */
     List<Products> findByCategoryId(Integer categoryId, Sort sort);
