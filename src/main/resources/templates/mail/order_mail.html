@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>ご注文ありがとうございます</title>
+	<meta charset="UTF-8">
+	<title>ご注文ありがとうございます</title>
 </head>
+
 <body>
-    <h1>ご注文確認メール</h1>
+	<h1>ご注文確認メール</h1>
 
-    <p>以下の内容でご注文を承りました。</p>
+	<p>以下の内容でご注文を承りました。</p>
 
-    <h2>ご注文者情報</h2>
-    <p>お名前：<span th:text="${form.lastName} + ' ' + ${form.firstName}"></span></p>
-    <p>メールアドレス：<span th:text="${form.email}"></span></p>
-    <p>住所：<span th:text="${form.postcode} + ' ' + ${form.prefecture} + ' ' + ${form.city} + ' ' + ${form.addressLine} + ' ' + ${form.building}"></span></p>
-    <p>電話番号：<span th:text="${form.tel}"></span></p>
+	<h2>ご注文者情報</h2>
+	<p>お名前：<span th:text="${form.lastName} + ' ' + ${form.firstName}"></span></p>
+	<p>メールアドレス：<span th:text="${form.email}"></span></p>
+	<p>住所：<span
+			th:text="${form.postcode} + ' ' + ${form.prefecture} + ' ' + ${form.city} + ' ' + ${form.addressLine} + ' ' + ${form.building}"></span>
+	</p>
+	<p>電話番号：<span th:text="${form.tel}"></span></p>
 
-    <h2>ご注文商品</h2>
-    <ul>
-        <li th:each="item : ${cartItems}">
-            <span th:text="${item.product.name}">商品名</span> × <span th:text="${item.quantity}">1</span><br>
-            ¥<span th:text="${item.product.price}">0</span>
-        </li>
-    </ul>
+	<h2>ご注文商品</h2>
+	<ul>
+		<li th:each="item : ${cartItems}">
+			<span th:text="${item.product.name}">商品名</span> × <span th:text="${item.quantity}">1</span><br>
+			¥<span th:text="${item.product.price}">0</span>
+		</li>
+	</ul>
 
 	<p>お支払方法：クレジットカード</p>
-    <h3>合計金額（税込）：¥<span th:text="${total}">0</span></h3>
+	<h3>合計金額（税込）：¥<span th:text="${total}">0</span></h3>
 
-    <hr>
-    <p>ご注文ありがとうございました。</p>
+	<hr>
+	<p>ご注文ありがとうございました。</p>
 </body>
+
 </html>

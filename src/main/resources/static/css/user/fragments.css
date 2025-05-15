@@ -20,6 +20,7 @@ section{
 
 	margin: 100px auto 0;
 }
+
 a:hover{
 	transition-duration: 0.3s;
 }
@@ -213,7 +214,7 @@ header {
 .footer {
   background-color: rgba(255, 255, 255);
   padding: 40px 80px;
-  font-size: 16px;
+  font-size: 14px;
   color: rgba(51, 51, 51);
   border-top: 1px solid rgba(255, 168, 95);
   margin-top: 200px;
@@ -253,7 +254,6 @@ header {
   flex-wrap: wrap;
   justify-content: space-between;
   position: relative;
-  cursor: pointer;
 }
 
 .footer-column {
@@ -270,7 +270,7 @@ header {
 }
 
 .footer-column a {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   margin-bottom: 10px;
   color: rgba(51, 51, 51);
@@ -294,6 +294,7 @@ header {
 .footer a {
   text-decoration: none;
   color: rgba(51, 51, 51);
+  cursor: pointer;
 }
 
 .footer a:hover {
@@ -302,6 +303,14 @@ header {
 
 .footer-sns a:hover {
   color: rgba(255, 168, 95);
+}
+
+copyright {
+	font-size: 12px;
+	color: rgba(255, 255, 255);
+	background-color: rgba(255, 168, 95);
+	text-align: center;
+	padding: 10px 0;
 }
 
 /* レスポンシブ対応 */
