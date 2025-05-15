@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>商品登録/編集</title>
+	<title th:text="${productForm.id != null ? '商品編集  | Management' : '商品登録  | Management'}">商品登録/編集</title>
 	<link rel="icon" th:href="@{/favicon.ico?v=1}" type="image/x-icon">
 	<link rel="stylesheet" th:href="@{/css/admin/common.css}">
 	<link rel="stylesheet" th:href="@{/css/admin/product_form.css}">
