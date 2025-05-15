@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!--meta head-->
 <head>
-	<div th:fragment="meta(title)">
 		<meta charset="UTF-8">
 		<title th:text="${title}">Default Title</title>
 		<!--共通css-->
 		<link th:href="@{/css/user/fragments.css}" rel="stylesheet" type="text/css">
+<!--	<div th:fragment="meta(title)">-->
 
 
 		<!--　　以下は必要なのがあれば使う！　　-->
@@ -22,7 +22,7 @@
 		<!--<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		※実際のURLに差し替えて使う→<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap" rel="stylesheet">-->
-	</div>
+<!--	</div>-->
 </head>
 <body>
   <!-- ヘッダー -->
