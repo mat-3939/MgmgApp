@@ -43,13 +43,13 @@
 							<tbody>
 								<tr th:each="cartItem : ${cartItems}">
 									<td>
-										<a th:href="@{/products_detail/{id}(id=${cartItem.product.id})}">
+										<a th:href="@{/products/{id}(id=${cartItem.product.id})}">
 											<img th:src="@{${cartItem.product.imagePath}}"
 												th:attr="data-img=${cartItem.product.imagePath}, alt=${cartItem.product.name}" />
 										</a>
 									</td>
 									<td>
-										<a th:href="@{/products_detail/{id}(id=${cartItem.product.id})}">
+										<a th:href="@{/products/{id}(id=${cartItem.product.id})}">
 											<div><span th:text="${cartItem.product.name}">商品名</span></div>
 											<div><span
 													th:text="${@priceFormatter.format(cartItem.product.price)}">価格</span>

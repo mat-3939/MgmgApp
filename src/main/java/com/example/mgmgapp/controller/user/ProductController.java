@@ -84,7 +84,7 @@ public class ProductController {
 	}
     
     //詳細ページへ
-    @GetMapping("/products_detail/{id}")
+    @GetMapping("/products/{id}")
     public String showProductDetail(@PathVariable("id") Integer id, Model model) {
         Products product = productService.getProductById(id);
 

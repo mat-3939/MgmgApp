@@ -71,7 +71,7 @@
 
 		<div class="list_wrap" th:unless="${#lists.isEmpty(products)}">
 			<div class="list_cell" th:each="product : ${products}">
-				<a th:href="@{/products_detail/{id}(id=${product.id})}" class="product-card">
+				<a th:href="@{/products/{id}(id=${product.id})}" class="product-card">
 					<div class="img-wrapper">
 						<img th:src="@{${product.imagePath}}"
 							th:attr="data-img=${product.imagePath}, alt=${product.name}" />
