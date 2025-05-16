@@ -1,37 +1,145 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--	<meta charset="UTF-8">-->
+<!--	<title>ご注文ありがとうございます</title>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--	<h1>ご注文確認メール</h1>-->
+
+<!--	<p>以下の内容でご注文を承りました。</p>-->
+
+<!--	<h2>ご注文者情報</h2>-->
+<!--	<p>お名前：<span th:text="${form.lastName} + ' ' + ${form.firstName}"></span></p>-->
+<!--	<p>メールアドレス：<span th:text="${form.email}"></span></p>-->
+<!--	<p>住所：<span-->
+<!--			th:text="${form.postcode} + ' ' + ${form.prefecture} + ' ' + ${form.city} + ' ' + ${form.addressLine} + ' ' + ${form.building}"></span>-->
+<!--	</p>-->
+<!--	<p>電話番号：<span th:text="${form.tel}"></span></p>-->
+
+<!--	<h2>ご注文商品</h2>-->
+<!--	<ul>-->
+<!--		<li th:each="item : ${cartItems}">-->
+<!--			<span th:text="${item.product.name}">商品名</span> × <span th:text="${item.quantity}">1</span><br>-->
+<!--			¥<span th:text="${item.product.price}">0</span>-->
+<!--		</li>-->
+<!--	</ul>-->
+
+<!--	<p>お支払方法：クレジットカード</p>-->
+<!--	<h3>合計金額（税込）：¥<span th:text="${total}">0</span></h3>-->
+
+<!--	<hr>-->
+<!--	<p>ご注文ありがとうございました。</p>-->
+<!--</body>-->
+
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-	<meta charset="UTF-8">
-	<title>ご注文ありがとうございます</title>
+    <meta charset="UTF-8">
+    <title>ご注文ありがとうございます</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 700px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        h1, h2, h3 {
+            color: #555555;
+            text-align: center;
+        }
+        .section {
+            margin-top: 40px;
+        }
+        .info-label {
+            color: #888888;
+            font-size: 14px;
+        }
+        .info-content {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .product {
+            border-top: 1px solid #ddd;
+            padding: 20px 0;
+        }
+        .product:last-child {
+            border-bottom: 1px solid #ddd;
+        }
+        .product-name {
+            font-size: 16px;
+            color: #333333;
+            font-weight: bold;
+        }
+        .product-price {
+            font-size: 14px;
+            color: #888888;
+        }
+        .total {
+            font-size: 22px;
+            color: #333333;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
 </head>
-
 <body>
-	<h1>ご注文確認メール</h1>
-
-	<p>以下の内容でご注文を承りました。</p>
-
-	<h2>ご注文者情報</h2>
-	<p>お名前：<span th:text="${form.lastName} + ' ' + ${form.firstName}"></span></p>
-	<p>メールアドレス：<span th:text="${form.email}"></span></p>
-	<p>住所：<span
-			th:text="${form.postcode} + ' ' + ${form.prefecture} + ' ' + ${form.city} + ' ' + ${form.addressLine} + ' ' + ${form.building}"></span>
-	</p>
-	<p>電話番号：<span th:text="${form.tel}"></span></p>
-
-	<h2>ご注文商品</h2>
-	<ul>
-		<li th:each="item : ${cartItems}">
-			<span th:text="${item.product.name}">商品名</span> × <span th:text="${item.quantity}">1</span><br>
-			¥<span th:text="${item.product.price}">0</span>
-		</li>
-	</ul>
-
-	<p>お支払方法：クレジットカード</p>
-	<h3>合計金額（税込）：¥<span th:text="${total}">0</span></h3>
-
-	<hr>
-	<p>ご注文ありがとうございました。</p>
+	<div class="container">
+		<div style="text-align: center; margin-bottom: 30px;">
+			<a th:href="http://localhost:8080/" target="_blank">
+				<img th:src="`{/img/logo/logo_or.svg" alt="ロゴ" style="height: 60px;">
+			</a>
+		</div>
+		<h1 th:text="${form.lastName} + ' ' + ${form.firstName} + ' 様'">お名前 様</h1>
+		<h2>ご注文ありがとうございます</h2>
+	
+		<div class="section">
+			<h3>ご注文者情報</h3>
+			<p class="info-content">メールアドレス：<span th:text="${form.email}">sample@example.com</span></p>
+			<p class="info-content">電話番号：<span th:text="${form.tel}">090-xxxx-xxxx</span></p>
+			<p class="info-content">
+				住所：<span
+					th:text="${form.postcode} + ' ' + ${form.prefecture} + ' ' + ${form.city} + ' ' + ${form.addressLine} + ' ' + ${form.building}">〒123-4567
+					東京都新宿区西新宿1-1-1 マンション101</span>
+			</p>
+		</div>
+	
+		<div class="section">
+			<h3>ご注文商品</h3>
+			<div th:each="item : ${cartItems}" class="product">
+				<div class="product-name" th:text="${item.product.name}">商品名</div>
+				<div class="product-price">
+					<span th:text="${@priceFormatter.format(item.product.price)}">0</span> × <span th:text="${item.quantity}">1</span>
+				</div>
+			</div>
+		</div>
+	
+		<div class="section">
+			<p class="info-content">お支払方法：<strong>クレジットカード</strong></p>
+			<div class="total">合計金額（税込）：<span th:text="${@priceFormatter.format(total)}">0</span></div>
+		</div>
+	
+		<div class="footer">
+			<p>この度はご注文いただき誠にありがとうございました。</p>
+		</div>
+	</div>
 </body>
-
 </html>
