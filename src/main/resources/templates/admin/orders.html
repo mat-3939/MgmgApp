@@ -127,7 +127,7 @@
 						<td th:text="${order.id}" class="id">10</td>
 						<td>
 							<a th:href="@{/admin/orders/{id}(id=${order.id})}"
-								th:text="${order.firstName + ' ' + order.lastName}" class="product-name">太郎 山田</a>
+								th:text="${order.lastName + ' ' + order.firstName}" class="product-name">太郎 山田</a>
 						</td>
 						<td th:text="${order.payMethod}">クレジットカード</td>
 						<td th:text="${'¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}">¥6,000</td>
