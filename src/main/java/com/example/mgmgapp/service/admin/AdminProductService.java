@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.mgmgapp.entity.Categories;
 import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.repository.admin.AdminProductRepository;
+import com.example.mgmgapp.repository.user.CartItemRepository;
 import com.example.mgmgapp.util.CategoryDirectoryMapper;
 
 /**
@@ -30,11 +31,14 @@ import com.example.mgmgapp.util.CategoryDirectoryMapper;
 public class AdminProductService {
 
     private final AdminProductRepository adminProductRepository;
+    private final CartItemRepository cartItemRepository;
 
-    @Autowired
-    public AdminProductService(AdminProductRepository adminProductRepository) {
-        this.adminProductRepository = adminProductRepository;
-    }
+	@Autowired
+	public AdminProductService(AdminProductRepository adminProductRepository,
+			                   CartItemRepository cartItemRepository) {
+		this.adminProductRepository = adminProductRepository;
+		this.cartItemRepository = cartItemRepository;
+	}
 
     /**
      * 全商品の一覧を取得（登録日が新しい順）
@@ -127,6 +131,7 @@ public class AdminProductService {
      */
     @Transactional
     public void deleteProduct(Integer id) {
+    	cartItemRepository.deleteByProductId(id);
     	adminProductRepository.deleteById(id);
     }
 

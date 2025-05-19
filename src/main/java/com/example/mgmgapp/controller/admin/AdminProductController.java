@@ -21,6 +21,7 @@ import com.example.mgmgapp.entity.Products;
 import com.example.mgmgapp.form.ProductForm;
 import com.example.mgmgapp.service.admin.AdminCategoryService;
 import com.example.mgmgapp.service.admin.AdminProductService;
+import com.example.mgmgapp.service.user.CartService;
 
 /**
  * 管理者用の商品操作コントローラ
@@ -32,12 +33,15 @@ public class AdminProductController {
 
 	private final AdminProductService adminProductService;
 	private final AdminCategoryService adminCategoryService;
+	private final CartService cartService;
 
 	@Autowired
 	public AdminProductController(AdminProductService adminProductService,
-	                              AdminCategoryService adminCategoryService) {
+	                              AdminCategoryService adminCategoryService,
+	                              CartService cartService) {
 		this.adminProductService = adminProductService;
 		this.adminCategoryService = adminCategoryService;
+		this.cartService = cartService;
 	}
 
 	/**

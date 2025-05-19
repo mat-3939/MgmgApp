@@ -176,6 +176,20 @@
 			}
 		});
 	</script>
+	<script>
+	  document.addEventListener('DOMContentLoaded', function () {
+	    const searchButton = document.querySelector('.search-button');
+	    if (searchButton) {
+	      searchButton.addEventListener('click', function (event) {
+	        const keywordInput = document.querySelector('.keyword');
+	        if (keywordInput && keywordInput.value.trim() === "") {
+	          event.preventDefault();
+	          alert("注文者・メールアドレス・電話番号を入力してください");
+	        }
+	      });
+	    }
+	  });
+	</script>
 </body>
 
 </html>
