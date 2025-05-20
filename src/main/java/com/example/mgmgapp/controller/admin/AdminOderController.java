@@ -40,7 +40,7 @@ public class AdminOderController
     	
     	// キーワード検索
     	if (keyword != null && !keyword.isEmpty()) {
-    		orders = adminOrderService.searchOrders(keyword); // ← 絞り込み型メソッドにしておくと連携しやすい
+    		orders = adminOrderService.searchOrders(keyword);
     	}
     	
     	// 日付範囲検索
