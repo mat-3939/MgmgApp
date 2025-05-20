@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.mgmgapp.entity.OrderItems;
 import com.example.mgmgapp.entity.Orders;
@@ -109,9 +110,26 @@ public class AdminOderController
 
     /*注文ステータス更新*/
     @PostMapping("/admin/orders/{id}/status")
-    public String updateOrderStatus(@PathVariable Integer id, @RequestParam Boolean status) 
-    {
+    public String updateOrderStatus(
+    		@PathVariable Integer id, 
+    		@RequestParam boolean status,
+    		@RequestParam(required = false) String keyword,
+    		@RequestParam(required = false) String startDate,
+    		@RequestParam(required = false) String endDate,
+    		@RequestParam(required = false) String minAmount,
+    		@RequestParam(required = false, name = "statusParam") String statusParam,
+    		@RequestParam(required = false) String sort,
+    		RedirectAttributes redirectAttributes){
+    	
         adminOrderService.updateOrderStatus(id, status);
+        
+        redirectAttributes.addAttribute("keyword", keyword);
+        redirectAttributes.addAttribute("startDate", startDate);
+        redirectAttributes.addAttribute("endDate", endDate);
+        redirectAttributes.addAttribute("minAmount", minAmount);
+        redirectAttributes.addAttribute("status", statusParam);
+        redirectAttributes.addAttribute("sort", sort);
+        
         return "redirect:/admin/orders";
     }
     
