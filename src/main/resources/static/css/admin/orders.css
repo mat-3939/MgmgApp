@@ -131,11 +131,6 @@
   white-space: nowrap;
 }
 
-.dropdown {
-  padding: 4px 8px;
-  font-size: 14px;
-}
-
 /* テーブルコントロール */
 .search-select {
 	align-items: flex-end;
@@ -160,7 +155,7 @@
 
 .dropdown {
 	appearance: none;
-	width: 200px;
+	width: 180px;
 	align-items: stretch;
 	gap: 25px;
 	padding: 10px;

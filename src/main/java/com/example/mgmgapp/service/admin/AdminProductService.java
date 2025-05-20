@@ -76,6 +76,9 @@ public class AdminProductService {
             case "priceDesc":
                 sorting = Sort.by(Sort.Direction.DESC, "price");
                 break;
+            case "createdAtAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "createdAt");
+                break;
             default:
                 sorting = Sort.by(Sort.Direction.DESC, "createdAt");
                 break;
@@ -94,6 +97,9 @@ public class AdminProductService {
                 break;
             case "priceDesc":
                 sorting = Sort.by(Sort.Direction.DESC, "price");
+                break;
+            case "createdAtAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "createdAt");
                 break;
             default:
                 sorting = Sort.by(Sort.Direction.DESC, "createdAt");
@@ -168,6 +174,7 @@ public class AdminProductService {
             case "priceDesc" -> adminProductRepository.findAllByOrderByPriceDesc();
             case "name" -> adminProductRepository.findAllByOrderByNameAsc();
             case "update" -> adminProductRepository.findAllByOrderByUpdatedAtDesc();
+            case "createdAtAsc" -> adminProductRepository.findAllByOrderByCreatedAtAsc();
             default -> adminProductRepository.findAllByOrderByCreatedAtDesc(); // "new" またはデフォルト
         };
     }
@@ -189,6 +196,9 @@ public class AdminProductService {
                 break;
             case "priceDesc":
                 sorting = Sort.by(Sort.Direction.DESC, "price");
+                break;
+            case "createdAtAsc":
+                sorting = Sort.by(Sort.Direction.ASC, "createdAt");
                 break;
             default:
                 sorting = Sort.by(Sort.Direction.DESC, "createdAt");
