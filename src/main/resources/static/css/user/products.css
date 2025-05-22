@@ -147,7 +147,7 @@ select:focus {
 }
 
 .product-price {
-	font-family: 'Jost', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 20px;
 	font-weight: 500;
 	display: flex;
@@ -159,6 +159,7 @@ select:focus {
 	font-size: 12px;
 	font-weight: 400;
 	color: rgba(102, 102, 102);
+	margin-left: 10px;
 }
 
 
@@ -202,15 +203,10 @@ select:focus {
 }
 
 .detail-price {
-	font-family: 'Jost', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 24px;
 	font-weight: 500;
 	margin: 0;
-}
-
-.tax-label {
-	font-size: 14px;
-	color: rgba(102, 102, 102);
 }
 
 .description {
