@@ -63,9 +63,9 @@ public class ProductController {
 
         model.addAttribute("products", products);
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("q", q);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("sort", sort);
-        model.addAttribute("q", q);
 
         return "user/products";
     }
@@ -73,15 +73,15 @@ public class ProductController {
     /**
 	 * 指定したカテゴリの商品一覧を表示
 	 */
-	@GetMapping("/products/category/{categoryId}")
-	public String listByCategory(@PathVariable Integer categoryId, Model model) {
-		List<Products> products = productService.findByCategoryId(categoryId);
-		model.addAttribute("products", products);
-		model.addAttribute("searchQuery", null);
-		model.addAttribute("categories", categoryService.findAll());
-		model.addAttribute("selectedCategoryId", categoryId);
-		return "user/products";
-	}
+//	@GetMapping("/products/category/{categoryId}")
+//	public String listByCategory(@PathVariable Integer categoryId, Model model) {
+//		List<Products> products = productService.findByCategoryId(categoryId);
+//		model.addAttribute("products", products);
+//		model.addAttribute("searchQuery", null);
+//		model.addAttribute("categories", categoryService.findAll());
+//		model.addAttribute("selectedCategoryId", categoryId);
+//		return "user/products";
+//	}
     
     //詳細ページへ
     @GetMapping("/products/{id}")
